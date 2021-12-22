@@ -62,13 +62,13 @@ uma comunidade ativa em sua implementação.
 > Tidyverse: um conjunto de pacotes para análise de dados
 
 Nesse minicurso, **usaremos o** `R` **na perspectiva do** ***tidyverse***.
-Então, não será objetivo nosso um aprofundamento na linguagem `R` (que é algo 
+Então, não será nosso objetivo um aprofundamento na linguagem `R` (que é algo 
 muito maior e demandaria muito tempo).
-Apenas falaremos, brevemente, sobre aspectos essencias dessa linguagem que 
+Apenas falaremos, brevemente, sobre aspectos essenciais dessa linguagem que 
 utilizaremos nos pacotes do *tidyverse*.
 
 Esse texto foi planejado para aprenderemos alguns aspectos básicos da linguagem 
-`R` que nos fornecerão instrumentos para desenvolvermos nossa raspagem de dados
+`R` que nos fornecerão instrumentos para o desenvolvimento da extração de dados
 na web com as ferramentas e linguagem do *tidyverse*.
 
 Vamos começar?
@@ -102,7 +102,7 @@ log(exp(1)) + 3 ^ 2 - sqrt(100)
 ```
 
 Mas, não para por aí!
-O `R` também é uma excelente calculadora estatística!
+O `R` também é, principalmente, uma excelente calculadora estatística!
 Existem testes e funções específicas que auxiliam muito as análises estatísticas
 para qualquer conjunto de dados.
 Vale a pena um aprofundamento depois desse minicurso!
@@ -137,7 +137,7 @@ c <- -sqrt(100)
 a + b + c
 ```
 
-Observe que, quando você atribui um valor a um objeto, ele fica "armazenado".
+Observe que, quando atribuimos um valor a um objeto, ele fica "armazenado".
 Para aparecer, deve retornar o objeto novamente.
 
 ```{r, echo=TRUE, eval=FALSE}
@@ -159,10 +159,12 @@ download.file("url", "destino/nome-e-extensao-do-arquivo", mode = "xx")
 Onde,
 
 - **url**: é o *link* do arquivo que você deseja fazer o *download*;
-- **destino/nome-e-extensao-do-arquivo**: pasta (diretório) e o nome do arquivo
-  explicitando a sua extensão. A barra "/" delimita o caminho relativo;
-- **mode**: por padrão é "w", para arquivos de texto plano. Mas, se for, por exemplo,
-  arquivos `.pdf`, deve-se colocar o argumento "wb" (arquivos binários).
+- **destino/nome-e-extensao-do-arquivo**: diretório (pasta) e o nome do arquivo
+  explicitando a sua extensão. 
+  A barra "/" delimita o caminho relativo;
+- **mode**: por padrão é "w", para arquivos de texto plano. 
+  Mas, se for, por exemplo, arquivos `.pdf`, deve-se colocar o argumento "wb" 
+  (arquivos binários).
 
 Vamos fazer dois exemplos para deixar claro as coisas:
 
@@ -171,24 +173,27 @@ Vamos fazer dois exemplos para deixar claro as coisas:
     **Exemplo 01:**  *download* de arquivo `.R`
   </summary>
   
-Vamos fazer o *download* do arquivo de texto que se encontra na página:
+Vamos fazer o *download* do arquivo de texto `CIR.00_apresentacao.R`, que se encontra 
+na página:
 
 <p align='center'>
-  https://nbcgib.uesc.br/lec/download/R/ir/C0_apresentacao.R
+  https://lec.pro.br/avale-es/r
 </p>
 
-Vamos atribuir à variável `url_uesc` esse endereço de *link* (notem as aspas):
+Vamos atribuir à variável `url_uesc` o endereço do *link* desse arquivo (notem 
+as aspas):
 
 ```{r}
-url_uesc <- "https://nbcgib.uesc.br/lec/download/R/ir/C0_apresentacao.R"
+url_uesc <- "https://lec.pro.br/download/R/cir/CIR.00_apresentacao.R"
 ```
 
-Além disso, vamos determinar que o arquivo "C0_apresentacao.R" seja colocado na
-pasta "arquivos_teste".
-Logo, podemos fazer a seguinte atribuição para o caminho relativo desse arquivo:
+Além disso, vamos determinar que o arquivo "CIR.00_apresentacao.R" seja colocado 
+na pasta "arquivos_teste".
+Logo, depois de criar esse diretório, podemos fazer a seguinte atribuição para o 
+caminho relativo desse arquivo:
 
 ```{r}
-destino_arquivo <- "arquivos_teste/C0_apresentacao.R"
+destino_arquivo <- "arquivos_teste/CIR.00_apresentacao.R"
 ```
 
 Portanto, o *download* pode ser feito assim:
@@ -212,8 +217,8 @@ url_sbm <- "https://sbm.org.br/wp-content/uploads/2021/10/belos-problemas-de-mat
 destino <- "arquivos_teste/belos-problemas.pdf"
 ```
 
-Agora, para fazermos o *download* corretamente, precisamos colocar o argrumento
-`mode = "wb"`:
+Agora, se você usa o sistema operacional Windows, para que seja feito o *download* 
+corretamente precisamos colocar o argrumento `mode = "wb"`:
 
 ```{r, eval=FALSE}
 download.file(url_sbm, destino, mode = "wb")
@@ -276,15 +281,15 @@ Quando nos deparamos com dados, as variáveis que os representam podem ser,
 basicamente: *quantitativas* (fruto de alguma medição, ou relacionado a contagem) 
 ou *qualitativas* (relacionadas a algum atributo).
 
-> Variáveis **quantitativas** tabmbém são chamadas de **numéricas**. </br>
-Variáveis **qualitativas** também são chamdas de **categóricas**.
+> Variáveis **quantitativas** também são chamadas de **numéricas**. </br>
+Variáveis **qualitativas** também são chamadas de **categóricas**.
 
 O `R` possui uma forma própria de relacionar esses dados e os separam em algumas 
 categorias, por exemplo:
 
 - *numeric* (**numéricos**); são os números reais (1, 1/2, $\sqrt{3}$, $\pi$, etc.)
-  + *integer* (inteiros); devemos colocar "L" ($1L$, $2L$, etc.)
-  + *complex* (números complexos); representados assim: $1+3i,\, 5+i\sqrt{5}$, etc.
+- *integer* (inteiros); devemos colocar "L" ($1L$, $2L$, etc.)
+- *complex* (números complexos); representados assim: $1+3i,\, 5+i\sqrt{5}$, etc.
 - *character* (**caracteres**); sempre entre aspas ("1", "Olá pessoal!", "3<4", 
   "livros", etc.)
   + *factor* (fatores) quando há ordenação por níveis ("classe baixa", 
@@ -367,8 +372,8 @@ classe *list* (lista), do `R`.
 
 ### 3.5.2 Listas
 
-As listas são estruturações mais gerais do `R`, pois podem conter outras 
-estruturas já vistas, bem como outra lista!!
+As listas são estruturações mais gerais do `R`, pois podem conter outros
+agrupamentos já vistos, bem como outra lista!!
 
 O comando para criar uma lista é `list()`.
 
