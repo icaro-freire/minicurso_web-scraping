@@ -1,0 +1,127 @@
+---
+title: "Raspando os Dados da Web"
+description: |
+  Uma Indrodução ao R
+site: distill::distill_website
+author:
+  - name: Ícaro Vidal Freire
+    affiliation: "<a href='https://ufrb.edu.br/portal/'> Centro de Formação de Professores</a>, UFRB, Amargosa"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+xaringanExtra::use_panelset()
+```
+
+# Objetivo do Minicurso
+
+Antes de falarmos formalmente sobre o objetivo do Minicurso, considereremos as 
+seguintes situações:
+
+::: {.panelset}
+::: {.panel}
+### 1º Situação
+
+Encontramos um *site* que disponibiliza, gratuitamente, vários materiais que
+julgamos importantes armazenar também em nosso computador --- para o caso de 
+usá-los quando não estiver com *internet* disponível, por exemplo.
+
+Vamos supor que são 30 arquivos no formato `pdf`.
+
+O que faríamos?
+
+Clicaríamos em cada um deles e faríamos *download* desses arquivos manualmente?
+Bom, essa é uma opção válida, mas seria muito mais produtivo e elegante, se 
+pudéssemos fazer o *download* de forma automatizada, não?
+Todos os 30 arquivos, de "uma só vez", salvos num diretório (pasta) específico 
+de nosso computador!
+Seria uma maravilha, não?
+
+:::
+::: {.panel}
+### 2º Situação
+
+Suponha, agora, que desejamos comprar alguns livros de um *site* que sempre 
+oferece promoções interessantes.
+Mas, previamente estabelecemos que a compra seria realizada se esses livros 
+estivessem com 30% de desconto.
+
+Obviamente poderíamos entrar no *site* todos os dias; procurar um a um; e, 
+calcularmos se o desconto aconteceu.
+Mas, e se criássemos um *script* (uma sequência, encadeada, de comandos para que 
+um programa execute uma ação) que possui como resultado uma tabela com os preços
+diários exibidos, já com o desconto efetivado, para que pudéssemos tomar uma 
+decisão rapidamente?
+
+::: 
+:::
+
+### Formalizando o objetivo
+
+Essas duas situações são comumente encontradas no trabalho do professor ou 
+estudante.
+
+O objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as duas
+situações, acima expostas, possam ser resolvidas de maneira racional, rápida
+e prazerosa.
+
+Para isso, introduziremos uma **linguagem** (e **ambiente**) de programação, 
+denominada **R**. 
+Na realidade, nosso foco será voltado a certos pacotes desenvolvidos que 
+unificam uma estrutura de linguagem em **R**.
+Veremos que tal característica facilita muito o aprendizado das funções e 
+potencialidades do **R**.
+
+> **Não** é objetivo desse minicurso uma exaustiva análise ou exibição de funções, estruturas, ou objetos em **R**.
+
+Apenas tangenciaremos alguns pacotes para usarmos as funções neles contidas, 
+necessárias para solucionarmos as duas situações expostas no início desse texto.
+Logo, será uma **Introdução ao R**, mostrando que, dentre outras coisas, podemos
+fazer **web scrape** ("raspagem" de dados na *internet*) de maneira bem intuitiva
+e racional, ao mesmo tempo!
+
+Para isso, dividimos esse minicurso em três dias, para que a sedimentação das 
+informações seja adequada e, assim, o minicurso seja usufruído da melhor maneira
+possível.
+
+Espero que gostem! 
+
+# Estruturação do Minicurso
+
+::: {.panelset}
+::: {.panel}
+### 1º Dia
+  
+  - Apresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;
+  - O que é Webscraping?
+  - Tangenciando a estrutura de um arquivo `html`;
+  - Usando o *SelectorGadget*;
+  - INTERVALO (~ 15 min)
+  - Vendo como funciona na prática!
+    + Download simultâneo de vários arquivos de texto plano
+
+:::
+
+::: {.panel}
+### 2º Dia
+  
+  - Introdução ao R
+    + O que é o `R`?
+    + Objetos e Funções Básicas no R
+  - INTERVALO (~ 15 min)
+  - Algo sobre o Tidyverse
+    + tibble, dplyr;
+    + stringr;
+    + rvest
+  - Duas funções do pacote `fs` (File System)
+:::
+
+::: {.panel}  
+### 3º Dia
+  - Download simultâneo de vários arquivos binários (pdf);
+  - Download e limpeza de vários arquivos binários (pdf);
+  - Montando uma lista de preços para tomada de decisão;
+  - Raspagem de dados em mais de uma página.
+
+:::
+:::

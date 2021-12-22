@@ -1,0 +1,18 @@
+{
+  "articles": [
+    {
+      "path": "index.html",
+      "title": "Raspando os Dados da Web",
+      "description": "Uma Indrodução ao R\n",
+      "author": [
+        {
+          "name": "Ícaro Vidal Freire",
+          "url": {}
+        }
+      ],
+      "contents": "\nObjetivo do Minicurso\nAntes de falarmos formalmente sobre o objetivo do Minicurso, considereremos as seguintes situações:\n\n1º Situação\nEncontramos um site que disponibiliza, gratuitamente, vários materiais que julgamos importantes armazenar também em nosso computador — para o caso de usá-los quando não estiver com internet disponível, por exemplo.\nVamos supor que são 30 arquivos no formato pdf.\nO que faríamos?\nClicaríamos em cada um deles e faríamos download desses arquivos manualmente? Bom, essa é uma opção válida, mas seria muito mais produtivo e elegante, se pudéssemos fazer o download de forma automatizada, não? Todos os 30 arquivos, de “uma só vez”, salvos num diretório (pasta) específico de nosso computador! Seria uma maravilha, não?\n2º Situação\nSuponha, agora, que desejamos comprar alguns livros de um site que sempre oferece promoções interessantes. Mas, previamente estabelecemos que a compra seria realizada se esses livros estivessem com 30% de desconto.\nObviamente poderíamos entrar no site todos os dias; procurar um a um; e, calcularmos se o desconto aconteceu. Mas, e se criássemos um script (uma sequência, encadeada, de comandos para que um programa execute uma ação) que possui como resultado uma tabela com os preços diários exibidos, já com o desconto efetivado, para que pudéssemos tomar uma decisão rapidamente?\n\nFormalizando o objetivo\nEssas duas situações são comumente encontradas no trabalho do professor ou estudante.\nO objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as duas situações, acima expostas, possam ser resolvidas de maneira racional, rápida e prazerosa.\nPara isso, introduziremos uma linguagem (e ambiente) de programação, denominada R. Na realidade, nosso foco será voltado a certos pacotes desenvolvidos que unificam uma estrutura de linguagem em R. Veremos que tal característica facilita muito o aprendizado das funções e potencialidades do R.\n\nNão é objetivo desse minicurso uma exaustiva análise ou exibição de funções, estruturas, ou objetos em R.\n\nApenas tangenciaremos alguns pacotes para usarmos as funções neles contidas, necessárias para solucionarmos as duas situações expostas no início desse texto. Logo, será uma Introdução ao R, mostrando que, dentre outras coisas, podemos fazer web scrape (“raspagem” de dados na internet) de maneira bem intuitiva e racional, ao mesmo tempo!\nPara isso, dividimos esse minicurso em três dias, para que a sedimentação das informações seja adequada e, assim, o minicurso seja usufruído da melhor maneira possível.\nEspero que gostem!\nEstruturação do Minicurso\n\n1º Dia\nApresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;\nO que é Webscraping?\nTangenciando a estrutura de um arquivo html;\nUsando o SelectorGadget;\nINTERVALO (~ 15 min)\nVendo como funciona na prática!\nDownload simultâneo de vários arquivos de texto plano\n\n2º Dia\nIntrodução ao R\nO que é o R?\nObjetos e Funções Básicas no R\n\nINTERVALO (~ 15 min)\nAlgo sobre o Tidyverse\ntibble, dplyr;\nstringr;\nrvest\n\nDuas funções do pacote fs (File System)\n3º Dia\nDownload simultâneo de vários arquivos binários (pdf);\nDownload e limpeza de vários arquivos binários (pdf);\nMontando uma lista de preços para tomada de decisão;\nRaspagem de dados em mais de uma página.\n\n\n\n\n",
+      "last_modified": "2021-12-22T18:28:01-03:00"
+    }
+  ],
+  "collections": []
+}
