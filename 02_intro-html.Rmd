@@ -33,9 +33,9 @@ Algumas coisas saltam aos olhos nesse código:
   - Na linha 1 é exibida a classe que o texto foi escrito;
   - Da linha 2 até a linha 5 está uma parte do texto (delimitda pelo elemento `head`). 
     Essa parte não contém elementos que aparecem explicitamente na página gerada, 
-    mas é de extrema importancia para configurações;
+    mas é de extrema importância para configurações;
   - Da linha 5 até a linha 22 está o corpo do texto (delimitado pelo elemento `body`).
-    Encontra-se nessa parte o conteúdo principal do texto.
+    Encontra-se, nessa parte, o conteúdo principal do texto.
   
 Ou seja, há uma certa estrutura no html que podemos resumir, graficamente, assim:
   
@@ -83,7 +83,7 @@ Nele, encontram-se:
       + cujo **valor** é *https://github.com/icaro-freire/site_webscraping*, 
       geralmente delimitado por aspas (simples ou dupla).
 
-Por curiosidade, um das características do elemento "a" (*anchor*, que significa
+Por curiosidade, uma das características do elemento "a" (*anchor*, que significa
 "âncora") é colocar hiperlinks em algum objeto (texto, figuras, etc.).
 Por isso, um atribulo de "a" é o "href" (**h**(ypertext) **re**f(erence), ou seja,
 "referência para hipertexto").
@@ -93,7 +93,7 @@ Por isso, há um elemento-filho "b" que demarca o negrito.
 
 Obviamente, não cobriremos nem a décima parte do total de "elementos" que compõem
 o html.
-Ficaremos com aqueles que usaremos nesse minicurso [^mozilla]
+Ficaremos com aqueles que serão usados nesse minicurso [^mozilla]
 
 ```{r}
 df <- tibble::tibble(
@@ -114,7 +114,7 @@ df <- tibble::tibble(
 knitr::kable(df)
 ```
 
-Com essas informações, já estamos minimamente familizarizados com o html 
+Com essas informações, já estamos minimamente familiarizados com o html 
 **para os objetivos desse curso**, claro.
 
 [^mozilla]: Para mais, veja: https://developer.mozilla.org/pt-BR/docs/Web/HTML/Element
@@ -124,12 +124,13 @@ Com essas informações, já estamos minimamente familizarizados com o html
 Com tudo que aprendemos sobre html, podemos escrever um texto simples e direto,
 salvando em `.html` que nosso *browser* irá interpretar como uma página web.
 
-Caso queira fazer um teste, copie e cole o código abaixo num bloco de notas e salve em html por nome, por exemlo, `index.html`.
+Caso queira fazer um teste, copie e cole o código abaixo num bloco de notas e 
+salve em html por nome, por exemlo, `index.html`.
 Além disso, escolha uma figura e deixe-a na mesma pasta onde se encontra o arquivo
 html. 
 Chame essa sua figura por `minha-figura.png` (aqui estou supondo que a extensão
 da figura seja `png`).
-Depois abra-o com seu navegador de internet padrão.
+Depois abra o arquivo `index.html` com seu navegador de internet padrão.
 
 ```{bash, eval=FALSE, echo=TRUE}
 <html>
@@ -156,7 +157,7 @@ Depois abra-o com seu navegador de internet padrão.
 </body>
 ```
 
-Bom, mas convenhamos ... fica feio, não?
+Bom ... convenhamos ... fica feio, não?
 
 Porém, para modificarmos a posição dos objetos numa página web, bem como cores,
 espaçamentos, fontes, etc., precisamos do CSS (*Cascading Style Sheets*).
@@ -172,15 +173,15 @@ Usaremos o [SelectorGadget](https://selectorgadget.com/).
 
 ## 3.1 Como funciona o SelectorGadget?
 
-Ao ativar a ferramenta, retângulos coloridos serão exibidos para que selecione
+Ao ativar a ferramenta, retângulos coloridos serão exibidos para que selecionemos
 o objeto desejado.
-Mas, geralmente, quando fazemos isso no primeiro "clique", outras partes são 
-selecionadas que não desejamos.
+Mas, geralmente, quando fazemos isso no primeiro "clique", outras partes **não** 
+desejadas também são selecionadas.
 Então, clicamos novamente sobre as partes que não desejamos!
 
-> Veja: podem ocorrer dusa etapas! 
+> Veja: podem ocorrer duas etapas! 
 > Na primeira, selecionamos o que desejamos.
-> Se algum elemento não desejamo estiver também selecionado, clicamos nele em seguida.
+> Se algum elemento não desejado estiver também selecionado, clicamos nele em seguida.
 
 A cor "amarela" indica a seleção que desejamos e a cor "vermelha" indica a região
 que eliminamos com o segundo clique.
@@ -194,22 +195,22 @@ Considere o seguinte site:
 Nosso objetivo é selecionar a região onde se encontram os livros.
 
   1. Ativamos o SelectorGadget;
-  2. Movimentamos o cursor do *mouse* até uma área que engloba o primeiro livro (
-  ficará um retângulo de borda "vermelha" englobando a imagem, o título, os valores
-  e o botão do carrinho de compras).
+  2. Movimentamos o cursor do *mouse* até uma área que engloba o primeiro livro 
+    (ficará um retângulo de borda "vermelha" englobando a imagem, o título, os 
+    valores e o botão do carrinho de compras).
   3. Clicamos nessa região. 
-  Em "verde" ficará a primeira região que clicamos e em amarelo TUDO o que 
-  desejamos selecionar.
-  Num retêngulo inferior de exibição do SelectorGadget aparecerá o elemento CSS:
-  "**.col-lg-3**".
+    Em "verde" ficará a primeira região que clicamos e em amarelo TUDO o que 
+    desejamos selecionar.
+    Num retângulo inferior de exibição do SelectorGadget aparecerá o elemento 
+    CSS: "**.col-lg-3**".
   4. Quer dizer ... nem tudo está correto! 
-  Englobamos coisas a mais!
-  Basta rolar o cursor do *mouse* até o final da página e veremos que uma pequena
-  região do "cartão de crédito" foi selecionada indevidamente!
-  Então, basta clicarmos sobre ela até ficar "vermelha".
-  Com isso, o elemento CSS foi refinado para "**#dvProdutos .col-lg-3**".
+    Englobamos coisas a mais!
+    Basta rolar o cursor do *mouse* até o final da página e veremos que uma 
+    pequena região do "cartão de crédito" foi selecionada indevidamente!
+    Então, basta clicarmos sobre ela até ficar "vermelha".
+    Com isso, o elemento CSS foi refinado para "**#dvProdutos .col-lg-3**".
   
-  Vejam as imagens abaixo...
+  Veja as imagens abaixo:
   
 ```{r, fig.align='center'}
 knitr::include_graphics("img/selectorgadget.png")
