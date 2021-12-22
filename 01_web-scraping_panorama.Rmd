@@ -20,7 +20,7 @@ um contato prazeroso, claro!
 
 Entendemos que o **R**, especificamente com o pacote do *tidyverse* denominado
 [`rvest`](https://rvest.tidyverse.org/) pode dar essa relação amigável entre 
-a linguagem do html, própria da internet, e as etapas racionalmente encadeadas
+a linguagem do **html**, própria da internet, e as etapas racionalmente encadeadas
 para extrair o que desejamos delas.
 
 Vamos, então, entender mais sobre o que é o processo de **Web Scraping**.
@@ -34,27 +34,27 @@ Então, poderíamos dizer que "Web Scraping" é um processo de "Raspagem da Rede
 Ficou estranho, né?
 Talvez porque ... não é só isso!
 
-Na internet, muita informação (**dados**) pode estar espalhada de forma não 
+Na internet, muita informação (**dados**) pode está espalhada de forma não 
 muito estruturada para análise ou tomada de decisões.
 
-> O processo de **leitura**, **seleção**, **limpeza**, **armazenagem** e 
-**análise** desses dados de forma automatizada é o que queremos dizer por 
-"Web Scraping".
+> O processo de **leitura**, **seleção**, **limpeza** e **armazenagem** desses 
+dados de forma automatizada é o que queremos dizer por "Web Scraping".
 
 Por isso, vamos falar em "Raspagem de dados" como sinônmimo de "Web Scraping" ao 
 longo desse texto.
 
 ## 1.1 Entendendo as etapas 
 
-Obviamente, existem muitas formas de explicar o processo de web scraping, todavia,
-ficaremos numa explicação intuitiva e mais direta, que resumimos em três etapas:
+Obviamente, existem muitas formas de explicar o processo de web scraping. 
+Todavia, ficaremos numa explicação intuitiva e mais direta, que resumimos em três etapas:
 
 ::: {.panelset}
 
 ::: {.panel}
 ### 1º etapa: Leitura
 
-Primeiro, você deve saber que a página de um *site* é fruto de uma compilação/construção.
+Primeiro, você deve saber que a página de um *site* é fruto de uma 
+compilação/construção.
 Existe uma [linguagem de marcação][MARK] que estabelece parâmetros para 
 configurações do texto.
 
@@ -68,10 +68,10 @@ Vamos testar: aperte o seguinte conjunto de teclas em seu computador:
 
 O que você viu (caso tenha apertado as teclas citadas acima) é, na realidade, 
 como essa página foi escrita!
-A linguagem de marcação utiliazada é o [html][HTML] (abreveação para 
+A linguagem de marcação utiliazada é o [html][HTML] (abreviação para 
 *HyperText Markup Language*).
 
-Então, para que você saiba "raspar" algum dado de um site da internet, deve 
+Então, para que você saiba "raspar" algum dado de um site da internet, deve-se 
 "ler" o html associado à página do site.
 Falaremos um pouco sobre as características do html daqui a pouco, mas, por 
 enquanto, apenas considere que a leitura da página que você deseja, deve ser no
@@ -84,10 +84,11 @@ Vamos denominar essa etapa de **leitura**.
 ::: {.panel}
 ### 2º etapa: Arrumação
 
-Tudo bem, você fez a "leitura" do site, mas nem tudo ali você deseja, não?
+Tudo bem, você fez a "leitura" do site, mas nem tudo está como você deseja, não?
 Existem apenas certos "elementos" que serão úteis para o que desejamos.
 Talvez uma lista, ou um parágrafo, ou *links* , ou tabelas, etc.
-Você deve selecionar esse agrupamento específico do html que você fez a "leitura".
+Você deve selecionar esse agrupamento específico do html que foi realizado na 
+"leitura".
 Vamos chamar essa etapa de **seleção**
 
 Todavia, atrelada à etapa de "seleção", existe uma subetapa: a de **limpeza**.
