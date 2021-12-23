@@ -429,15 +429,14 @@ Vamos denominar essa variável por **site_base**.
 O código fica assim:
 
 ```{r}
-site_base <- site |> 
-  rvest::read_html()
+site_base <- rvest::read_html(site)
 
 site_base
 ```
 
 Notem que o documento possui duas partes: **head** e **body**.
 Como vimos, o que precisamos, encontra-se na *tag* **body**.
-Antes de prosseguirmos, retorne ao código em html e procure encontrar *tag* como
+Antes de prosseguirmos, retorne ao código em html e procure encontrar *tags* como
 "h1, h2, ...", "a", "p", "img", "table", etc.
 
 Suponha que desejamos extrair a tabela dessa página de exemplo.
@@ -504,7 +503,7 @@ podem aparecer e os motivos são variádos (veja mais informações
 Para sanar essa dificuldade, caso apareça algum erro de certificação SSL, devemos
 colocar, antes da leitura do html, um comando que desativa a verificação dos
 certificados SSL.
-O pacote `httr` fornece a função `GET()`, para requisição da url e  a função 
+O pacote `httr` fornece a função `GET()`, para requisição da url e a função 
 `config()`, para passarmos os parâmetros desejados (que, no nosso caso, seria 
 **ssl_verifypeer = FALSE**, ou seja, não queremos verificar o certificado SSL).
 
@@ -521,17 +520,17 @@ E todo o resto, faça como vimos anteriormente.
 ### 4.2.5 stringr
 
 Esse pacote é essencial para limpeza dos dados.
-Sim ... os dados não chegam para nós "aruumadinhos"!
-Ao contrário, na maioria das vezes, os conjuntos de dados possuem caracteres numa
-forma não formatados, ou simplesmente não estão como desejamos organizar.
+Sim ... os dados não chegam para nós "arrumadinhos"!
+Ao contrário, na maioria das vezes, os conjuntos de dados possuem caracteres não 
+formatados, ou simplesmente não estão como desejamos organizar.
 
 De fato, quando fazemos uma "raspagem de dados", estamos trabalhando com 
 "fragmentos de textos".
-Manipular esses fragmentos são fundamentais para que as análises sejam realizadas
+Manipular esses fragmentos é fundamental para que as análises sejam realizadas
 sem muitos "sustos" (geralmente não sai como desejamos quando, por exemplo, um
-caractere especial esteja presente num local onde não desejávamos).
+caractere especial está presente numa extração realizada).
 
-Seremos diretos e abordaremos as funções desse pacote que usaremos nesse curso.
+Seremos diretos ao abordar as funções desse pacote, usadas nesse curso.
 Antes, é interessante destacar que, tal como no pacote `rvest`, as funções do
 pacote `stringr` seguem determinada estruturação.
 Por exemplo, a maioria de suas funções começam com **str_** (no `rvest`, a maioria
@@ -562,7 +561,7 @@ Precisamos manipular esses conjuntos de caracteres com o pacote **stringr**.
 
 Como nosso objetivo é extrair os preços, percebemos que há um padrão: todos os
 preços começam com "R$".
-Há uma função no `stringr` que extrai uma sequência de caracteres que possuem
+Há uma função no `stringr` que extrai uma sequência de caracteres que possui
 determinado padrão.
 É a função **str_subset()**.
 Em seu argumento, colocamos, entre aspas, o padrão que desejamos.
@@ -583,7 +582,8 @@ site_base |>
 ```
 
 Ótimo!
-Mas, se desejamos apenas os valores numéricos, precisamos eliminar três caracteres: o "R", o "`$`" e o "espaço vazio"!).
+Mas, se desejamos apenas os valores numéricos, precisamos eliminar três caracteres: 
+o "R", o "`$`" e o "espaço vazio"!).
 
 A função **str_sub()** nos ajudará nessa questão.
 Sua estrutura é dada por:
@@ -595,10 +595,10 @@ stringr::str_sub(string, start = ..., end = ...)
 Onde,
 
 - *string*, é o conjunto de caracteres que estamos analisando;
-- *start = ...*, é o ponto que iniciaremos a extração. Devemos colocar aqui o
-   número da posição do caractere que desejamos começar!
-- *end = ...*, é o ponto que desejamos parar. Se não colocarmos nada, 
-   subentende-se que iremos extrair até o final da *string*.
+- *start = ...*, é o ponto que iniciaremos a extração. 
+  Devemos colocar aqui o número da posição do caractere que desejamos começar!
+- *end = ...*, é o ponto que desejamos parar. 
+  Se não colocarmos nada, subentende-se que iremos extrair até o final da *string*.
 
 Portanto, como queremos eliminar os três primeiros caracteres, vamos iniciar a 
 extração a partir do 4º caractere:
@@ -732,7 +732,7 @@ Temos, então, o suficiente do pacote `stringr` para nosso minicurso!
 
 ### 4.2.6 purrr
 
-Por fim, mas não menos importante, precisamos de estruturas de loops.
+Por fim, mas não menos importante, precisamos de estruturas de *loops*.
 De fato, quando efetuamos uma raspagem de dados que consiste, por exemplo, do
 *download* de vários arquivos, a ideia é aplicar uma estrutura de repetição do
 *download* de um deles, nos outros arquivos.
@@ -763,6 +763,7 @@ links_pdf <- c(
 ```
 
 Antes de começarmos os downloads, vamos organizar nosso espaço de trabalho.
+
 Uma coisa simples é criar um diretório para salvar os arquivos.
 Podemos fazer isso de muitas formas, mas vamos usar uma função do pacote `fs`,
 intitulada, **dir_create()**.
@@ -770,7 +771,7 @@ Isso será importante para criarmos uma variável com o mesmo nome do diretório
 onde salvaremos os arquivos; para que, possamos manipular adequadamente os 
 argumentos da função `download.file()` dentro do `purrr`.
 
-O nome do nosso diretório (pasta) será "download_arquivos" e ele é feito assim:
+O nome do nosso diretório (pasta) será "download_arquivos":
 
 ```{r, eval=FALSE}
 download_arquivos <- fs::dir_create("download_arquivos")
@@ -790,13 +791,13 @@ diretório "download_arquivos", vamos salvar um arquivo de extensão ".R", por
 nome "funcao_pi-ggplot".
 O código ficaria assim:
 
-```{reval=FALSE}
+```{r, eval=FALSE}
 download.file(links_R[1], "download_arquivos/funcao_pi-ggplot.R")
 ```
 
 Nesse ponto, já começamos perceber o quanto seria bom extraírmmos os nomes dos 
 arquivos de forma rápida, sem precisar ver o nome "um por um"; pois, caso nossa
-lista de link fosse consideravelmente maior, ficaria inviável.
+lista de link seja consideravelmente maior, ficaria inviável.
 
 Portanto, ainda falando sobre organização, vamos extrair os nomes dos arquivos 
 acima com o auxílio, mais uma vez, do pacote `fs`, já que a função **path_file()** 
@@ -849,8 +850,11 @@ purrr::walk2(arg1, arg2, função)
 ```
 
 Ou seja, ela passa os dois argumentos para a função!
-Em nosso exemplo, a função é `download.file` e os argumentos são `arg1 = links_R`
-e `arg1 = download_arquivos/nomes_links_R`.
+Em nosso exemplo, a função é `download.file` e os argumentos são: 
+
+  - `arg1 = links_R`
+  - `arg2 = download_arquivos/nomes_links_R`.
+  
 Portando, temos o seguinte código para obtermos o download de todos os arquivos
 ".R" listados:
 
@@ -865,7 +869,7 @@ purrr::walk2(links_pdf, download_arquivos/nomes_links_pdf, download.file)
 ```
 
 Mas, caso esteja no Windows, não poderemos usar mais a função `walk2`, pois ela
-APENAS passas dois argumentos, mas agora aparecerá um terceito: `mode = "wb"`.
+APENAS passas dois argumentos; todavia, agora, aparecerá um terceito: `mode = "wb"`.
 
 Para três ou mais parâmetros, a função que estamos procurando é a **pwalk()**.
 Ela possui a seguinte estrutura:
@@ -889,4 +893,4 @@ Portanto, o download de todos os arquivos ".pdf", no Windows, fica:
 purrr::pwalk(lista_args, download.file)
 ```
 
-Agora vamos para a raspagem dos dados!!!
+Todas as considerações acima, capacita-nos à raspagem dos dados!!!
