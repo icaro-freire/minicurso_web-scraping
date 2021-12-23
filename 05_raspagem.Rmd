@@ -28,11 +28,12 @@ muitas situações que frequentemente aparecem na vida profissional.
 Uma outra coisa impotante, antes de iniciarmos a prática, é sempre termos em 
 mente que nossos códigos são estabelecidos em certo momento temporal, ou seja,
 o código funciona "naquele momento" e esperamos que continue assim.
+
 Mas, sites podem mudar e, consequentemente, o nosso código pode "quebrar".
-Por isso, dependendo da época que você esteja lendo esse texto, as coisas podem
-estar diferentes.
+Por isso, dependendo da época em que você esteja lendo esse texto, as coisas 
+podem estar bem diferentes.
 A idéia é você entender os fundamentos e aplicar numa situação particular que
-desejas.
+deseja.
 
 ## 5.1 Ética no Web Scraping
 
@@ -42,7 +43,7 @@ Obviamente, muitas requisições podem tornar lento um site e isso não é desej
 por seus mantenedores.
 
 Essa é uma das razões para que alguns sites **restrinjam** o acesso em determinada
-área do site ou do próprio site!
+área, ou da totalidade do site!
 
 Por isso, conhecer as permissões de cada site é importantíssimo numa possível
 "raspagem" de dados.
@@ -50,7 +51,8 @@ Por isso, conhecer as permissões de cada site é importantíssimo numa possíve
 > Sempre leia as permissões do site, antes de iniciar qualquer atividade de web
 scraping.
 
-Uma das fromas de sabermos se um site permite a raspagem é verificando os **robots.txt**.
+Uma das formas de sabermos se um site permite a raspagem é verificando os 
+**robots.txt**.
 
 Para isso, na url de cada site, ao final da mesma, digite: "/robots.txt".
 
@@ -140,13 +142,13 @@ E, à variável **site_uesc** o html extraído com a função `read_html()`, do 
 site_uesc <- rvest::read_html(url_uesc)
 ```
 
-Agora estamos prontos para a manipulação desses dados!
+Estamos prontos para a manipulação desses dados!
 
 Com a ajuda do *SelectorGadget*, selecionamos o elemento que desejamos raspar e,
 depois, fazemos os ajustes necessários (até ficar em amarelo o que desejamos, da
 menor forma possível).
 
-Abaixo, o código mostra que o elemento CCS "sp-component li li a"
+Abaixo, o código mostra que o elemento CCS "li:nth-child(2) h5+ ul a"
 
 ```{r}
 site_uesc |> 
@@ -161,7 +163,7 @@ site que não nos interessa.
 
 Feito isso, precisamos extrair desses elementos os *links* de cada arquivo.
 O atributto "href" nos dará isso.
-Então, basta usar a função `rvest::html_attr("href")`:
+Então, basta usarmos a função `rvest::html_attr("href")`:
 
 ```{r}
 site_uesc |> 
@@ -169,12 +171,11 @@ site_uesc |>
   rvest::html_attr("href")
 ```
 
-Antes de prosseguirmos note, que há um certo "padrão" que aparece nos links que 
-desejamos.
+Antes de prosseguirmos note um certo "padrão" que aparece nos links desejados.
 Por exemplo, antes do nome dos arquivos que desejamos extrair, podemos observar
 a repetição dos caracteres "**CIR.**".
-Isso seria importante se a nossa seleção abrangesse mais arquivos do que desejamos.
-Caso isso ocorresse, poderíamos usar uma função do pacote `stringr` para 
+Isso seria importante se a nossa seleção abrangesse mais arquivos além do exposto.
+Se isso ocorresse, poderíamos usar uma função do pacote `stringr` para 
 selecionarmos esse padrão específico: **stringr::str_subset("CIR.")**.
 Mas, como a nossa seleção foi bem exitosa, afinal extraiu o que desejávamos, não
 usaremos essa função em nosso *script*.
@@ -206,13 +207,16 @@ links_uesc <- site_uesc |>
 ```
 
 Estamos quase prontos para fazerrmos o *download* dos arquivos.
-Porém, vamos organizar as coisas ...
+Entretanto, vamos organizar as coisas ...
 
 Por exemplo, quando fizermos o *download*, qual será o nome dos arquivos?
 Poderíamos criar uma lista com o nome que desejarmos, mas, por hora, vamos deixar
 os nomes que já estão no final de cada link, pois possui certo padrão: 
-"CIR.n_nome-do-arquivo.R", onde $n$ varia de 00 até 17.
+  
+  - `CIR.n_nome-do-arquivo.R`, onde $n$ varia de 00 até 17.
+  
 Mas, como extrair esses nomes?
+
 Para responder essa pergunta, vamos usar um pacote chamado `fs` (*file system*).
 Ele possui uma função denominada **path_file()**, que faz justamente o que 
 precisamos.
@@ -228,13 +232,14 @@ Já temos o *link* e, para não fazermos manualmente a criação de diretórios 
 salvar os arquivos, vamos usar uma outra função do pacote `fs`: **dir_create()**.
 Nela vamos escrever o caminho onde queremos salvar os arquivos, juntamente com
 a lista dos nomes.
+
 Como, nesse minicurso, faremos download de vários arquivos, vamos criar um
-diretório mais geral, denominado **download_arquivos/**, onde salvaremos os 
+diretório mais geral, denominado **download_arquivos/**, onde serão salvos os 
 arquivos dos sites específicos estudados.
 
 Por exemplo, para os arquivos desse site da UESC, criaremos um subdiretório por 
 nome "arquivos_uesc/".
-Vamos atribuir a variável **arquivos_uesc** todo esses procedimentos (note que
+Vamos atribuir à variável **arquivos_uesc** todo esse procedimento (note que
 o nome da variável é o mesmo nome da pasta onde salvaremos os arquivos desse site). 
 O código fica assim:
 
