@@ -1,0 +1,348 @@
+---
+title: "Raspando os dados com R"
+description: |
+  Para facilitar nossa vida!
+date: "`r Sys.Date()`"
+output: 
+  distill::distill_article:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+xaringanExtra::use_panelset()
+library(magrittr)
+```
+
+# 5. Web Scraping como uma ferramenta
+
+Antes de iniciarmos nossos códigos, nunca é demais salientar que esse texto 
+trata-se de uma introdução.
+Coletar dados da *web* pode ser uma tarefa realmente árdua e desafiadora, pois
+os sites podem dificultar o acesso de diversas formas.
+
+Abordaremos situações simples, onde o web scraping realmente é usado como uma
+ferramenta para aumentar a produtividade do professor, reduzindo seu tempo em
+muitas situações que frequentemente aparecem na vida profissional.
+
+Uma outra coisa impotante, antes de iniciarmos a prática, é sempre termos em 
+mente que nossos códigos são estabelecidos em certo momento temporal, ou seja,
+o código funciona "naquele momento" e esperamos que continue assim.
+Mas, sites podem mudar e, consequentemente, o nosso código pode "quebrar".
+Por isso, dependendo da época que você esteja lendo esse texto, as coisas podem
+estar diferentes.
+A idéia é você entender os fundamentos e aplicar numa situação particular que
+desejas.
+
+## 5.1 Ética no Web Scraping
+
+Quando usamos um programa para extrair dados de um site, estamos fazendo requisições
+ao servidor daquele site.
+Obviamente, muitas requisições podem tornar lento um site e isso não é desejado 
+por seus mantenedores.
+
+Essa é uma das razões para que alguns sites **restrinjam** o acesso em determinada
+área do site ou do próprio site!
+
+Por isso, conhecer as permissões de cada site é importantíssimo numa possível
+"raspagem" de dados.
+
+> Sempre leia as permissões do site, antes de iniciar qualquer atividade de web
+scraping.
+
+Uma das fromas de sabermos se um site permite a raspagem é verificando os **robots.txt**.
+
+Para isso, na url de cada site, ao final da mesma, digite: "/robots.txt".
+
+Essa é uma condição necessária, mas não suficiente.
+Alguns sites colocam restrições não nos robots.txt, mas em alguma seção do mesmo.
+Por isso, se não aparecer nada no texto do robots.txt, pode ser que o site não o 
+tenha.
+Então, deve-se procurar informações sobre raspagem de dados no próprio site!
+
+Por exemplo, no site da ANPMat (Associação Nacional dos Professores de Matemática
+na Educação Básica), a saber:
+
+<p align='center'>
+  <a src='https://anpmat.org.br/'> https://anpmat.org.br/ </a>
+</p>
+
+Podemos verificar se "robôs" podem acessá-lo.
+Para isso, digitamos:
+
+<p align='center'>
+  <a src='https://anpmat.org.br/robots.txt'> https://anpmat.org.br/robots.txt </a>
+</p>
+
+A seguinte mensagem aparece:
+
+```{r, eval=FALSE}
+# XML Sitemap & Google News version 5.2.7 - https://status301.net/wordpress-plugins/xml-sitemap-feed/
+Sitemap: https://anpmat.org.br/sitemap.xml
+
+User-agent: *
+Disallow: /wp-admin/
+Allow: /wp-admin/admin-ajax.php
+
+Sitemap: https://anpmat.org.br/wp-sitemap.xml
+
+```
+
+Veja que a seção "wp-admin" não está hailitada para web scraping.
+
+Uma outra questão, é quando envolve a raspagem de dados em muitas páginas.
+Mas, o pacote [polite](https://dmi3kno.github.io/polite/) pode ser usado junto 
+com o `rvest` e solucionar esse problema, visto que esse pacote respeitará as
+requisições feitas em cada site.
+
+Bom ... agora vamos à prática!
+
+## 5.2 Fazendo download de vários arquivos
+
+Uma das situações que comumente nos deparamos em nossa profissão é fazermos 
+downloads de bons materiais disponíveis gratuitamente na internet.
+Porém, se a lista de download for relativamente grande, fazer isso manualmente,
+ou seja, clicar em cada um deles e salvar num determinado local ... pode ser 
+tedioso.
+
+Mas ... graças a Deus, exite o R!
+
+### 5.2.1 Arquivos de texto
+
+Para exemplificar o *dowload* de vários arquivos de texto, vamos acessar o link
+da página do *Laboratório de Estatística Computacional -- LEC*, da UESC.
+Na seção "Material Didático/R", estão disponíveis *scripts*, em R, sobre diversos
+temas, dentre outras coisas.
+
+> **O que desejamos fazer?** . Essa pergunta sempre deve ser nosso norte, antes de 
+  iniciarmos a raspagem dos dados!
+
+Nosso objetivo, nesse exemplo, é fazer o *download* dos 18 arquivos que se 
+encontram na seção "Introdução ao R (tutor: prof. José Cláudio Faria)", 
+etiquetados como: "CIR.00_apresentação", "CIR.01_gerenciamentos_pacotes", ..., 
+"CIR.17aplicações".
+Como na figura abaixo:
+
+```{r, fig.align='center', echo=FALSE}
+knitr::include_graphics("img/uesc-pro_seta.png")
+```
+
+Agora, vamos atribuir à variável **url_uesc** o link da url em questão:
+
+```{r}
+url_uesc <- "https://lec.pro.br/avale-es/r"
+```
+
+E, à variável **site_uesc** o html extraído com a função `read_html()`, do pacote
+`rvest`:
+
+```{r}
+site_uesc <- rvest::read_html(url_uesc)
+```
+
+Agora estamos prontos para a manipulação desses dados!
+
+Com a ajuda do *SelectorGadget*, selecionamos o elemento que desejamos raspar e,
+depois, fazemos os ajustes necessários (até ficar em amarelo o que desejamos, da
+menor forma possível).
+
+Abaixo, o código mostra que o elemento CCS "sp-component li li a"
+
+```{r}
+site_uesc |> 
+  rvest::html_elements("li:nth-child(2) h5+ ul a")
+```
+
+Obviamemte o elemento CCS pode mudar um pouco.
+Dependenderá muito da seleção que você fez.
+Por exemplo, se não fossem feitos os ajustes, a *tag* "a" serviria normalmente.
+O problema dessa abordadem é que existem muitas outras *tags* "a" espalhadas pelo
+site que não nos interessa.
+
+Feito isso, precisamos extrair desses elementos os *links* de cada arquivo.
+O atributto "href" nos dará isso.
+Então, basta usar a função `rvest::html_attr("href")`:
+
+```{r}
+site_uesc |> 
+  rvest::html_elements("li:nth-child(2) h5+ ul a") |> 
+  rvest::html_attr("href")
+```
+
+Antes de prosseguirmos note, que há um certo "padrão" que aparece nos links que 
+desejamos.
+Por exemplo, antes do nome dos arquivos que desejamos extrair, podemos observar
+a repetição dos caracteres "**CIR.**".
+Isso seria importante se a nossa seleção abrangesse mais arquivos do que desejamos.
+Caso isso ocorresse, poderíamos usar uma função do pacote `stringr` para 
+selecionarmos esse padrão específico: **stringr::str_subset("CIR.")**.
+Mas, como a nossa seleção foi bem exitosa, afinal extraiu o que desejávamos, não
+usaremos essa função em nosso *script*.
+
+Nesso momento, também é importante notar que, se clicarmos diretamente em algum 
+dos links desejados, aparecerá uma parte da *url*, a saber, "https://lec.pro.br", 
+que não se encontra no conjunto acima listado.
+
+Para inserirmos essa parte da url, ANTES dos itens da lista acima, usaremos a
+função **str_c()**, do pacote `stringr`.
+Veja o código abaixo (note que usamos o pipe `%>%`, pois passaremos o argumento
+anterior na SEGUNDA posição):
+
+```{r}
+site_uesc |> 
+  rvest::html_elements("li:nth-child(2) h5+ ul a") |> 
+  rvest::html_attr("href") %>% 
+  stringr::str_c("https://lec.pro.br", .)
+```
+
+O que precisamos, agora, é fazer o *download*.
+Antes, porém, vamos salvar na variável **links_uesc** a lista extraída acima.
+
+```{r}
+links_uesc <- site_uesc |> 
+  rvest::html_elements("li:nth-child(2) h5+ ul a") |> 
+  rvest::html_attr("href") %>% 
+  stringr::str_c("https://lec.pro.br", .)
+```
+
+Estamos quase prontos para fazerrmos o *download* dos arquivos.
+Porém, vamos organizar as coisas ...
+
+Por exemplo, quando fizermos o *download*, qual será o nome dos arquivos?
+Poderíamos criar uma lista com o nome que desejarmos, mas, por hora, vamos deixar
+os nomes que já estão no final de cada link, pois possui certo padrão: 
+"CIR.n_nome-do-arquivo.R", onde $n$ varia de 00 até 17.
+Mas, como extrair esses nomes?
+Para responder essa pergunta, vamos usar um pacote chamado `fs` (*file system*).
+Ele possui uma função denominada **path_file()**, que faz justamente o que 
+precisamos.
+Podemos, então, salvar numa variável **nomes_links_uesc** tais nomes:
+
+```{r, eval=FALSE}
+nomes_links_uesc <- fs::path_file(links_uesc)
+```
+
+Vimos que a função `download.file()` precisa de dois argumentos para fazer o 
+*download* de um arquivo de texto plano: o *link* e o caminho para salvar o arquivo.
+Já temos o *link* e, para não fazermos manualmente a criação de diretórios para
+salvar os arquivos, vamos usar uma outra função do pacote `fs`: **dir_create()**.
+Nela vamos escrever o caminho onde queremos salvar os arquivos, juntamente com
+a lista dos nomes.
+Como, nesse minicurso, faremos download de vários arquivos, vamos criar um
+diretório mais geral, denominado **download_arquivos/**, onde salvaremos os 
+arquivos dos sites específicos estudados.
+
+Por exemplo, para os arquivos desse site da UESC, criaremos um subdiretório por 
+nome "arquivos_uesc/".
+Vamos atribuir a variável **arquivos_uesc** todo esses procedimentos (note que
+o nome da variável é o mesmo nome da pasta onde salvaremos os arquivos desse site). 
+O código fica assim:
+
+```{r, eval=FALSE}
+arquivos_uesc <- fs::dir_create("download_arquivos/arquivos_uesc")
+```
+
+Por fim, vamos iterar o download para todos os 18 arquivos, usando o pacote
+`purrr`, por meio da função **walk2()**:
+
+```{r, eval=FALSE}
+purrr::walk2(links_uesc, arquivos_uesc/nomes_links_uesc, download.file)
+```
+
+Maravilha, não?
+
+Você pode conferir o *script* completo abaixo:
+
+<details>
+  <summary>
+    Script para download dos arquivos, em R, disponíveis no site da UESC
+  </summary>
+  
+```{r, eval=FALSE}
+#==============================================================================
+# Raspando material sobre R
+# Ícaro Vidal Freire
+# data de acesso: 2021-12-19
+#==============================================================================
+
+# pacote usado ------------------------------------------------------------
+library(magrittr)
+
+# url do site -------------------------------------------------------------
+url_uesc <- "https://lec.pro.br/avale-es/r"
+
+# site para scraping ------------------------------------------------------
+site_uesc <- rvest::read_html(url_uesc)
+
+# raspando os materiais ---------------------------------------------------
+links_uesc <- site_uesc |> 
+  rvest::html_elements("li:nth-child(2) h5+ ul a") |> 
+  rvest::html_attr("href") %>% 
+  stringr::str_c("https://lec.pro.br", .)
+
+# preparando para download ------------------------------------------------
+arquivos_uesc <- fs::dir_create("download_arquivos/arquivos_uesc")
+nomes_links_uesc <- fs::path_file(links_uesc)
+
+# fazendo o download ------------------------------------------------------
+purrr::walk2(links_uesc, arquivos_uesc/nomes_links_uesc, download.file)
+
+#==============================================================================
+```
+  
+</details>
+
+### 5.2.2 Arquivos binários
+
+No site "https://www.obm.org.br/revista-eureka/"
+
+Você pode conferir o *script* completo abaixo:
+
+<details>
+  <summary>
+    Script para download de arquivos, em pdf, da Revista Eureka
+  </summary>
+  
+```{r,eval=FALSE}
+#==============================================================================
+# Download das revistas Eureka
+# Ícaro Vidal Freire
+# data de acesso: 2021-11-26
+#==============================================================================
+
+# url do site -------------------------------------------------------------
+url_eureka <- "https://www.obm.org.br/revista-eureka/"
+
+# preparação do site ------------------------------------------------------
+site_eureka <- rvest::read_html(url_eureka)
+
+# raspagem dos dados ------------------------------------------------------
+## extraindo links
+links_eureka <- site_eureka |> 
+  rvest::html_elements("#revistas-list a") |> 
+  rvest::html_attr("href") |> 
+  stringr::str_subset(".pdf")
+
+## modificando os nomes
+index <- c(stringr::str_c("0", seq(1, 9)), seq(10, 42))
+nomes_eureka <- stringr::str_c(index, "_eureka")
+
+## criando os diretórios e caminhos
+arquivos_eureka <- fs::dir_create("downloads/arquivos_eureka")
+
+## preparando os argumentos para download
+eureka_args <- list(links_eureka, arquivos_eureka/nomes_eureka, mode = "wb")
+
+# fazendo os downloads ----------------------------------------------------
+purrr::pwalk(eureka_args, download.file)
+
+#==============================================================================
+```
+  
+</details>
+
+
+### 5.2.3 Raspando tabelas
+
+## 5.3 Construindo uma tabela para tomada de decisão
+## 5.4 Raspagem com várias páginas
