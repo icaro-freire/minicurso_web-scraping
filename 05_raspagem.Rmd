@@ -299,7 +299,136 @@ purrr::walk2(links_uesc, arquivos_uesc/nomes_links_uesc, download.file)
 
 ### 5.2.2 Arquivos binários
 
-No site "https://www.obm.org.br/revista-eureka/"
+Nessa seção, vamos fazer o download de arquivos binários no formato `pdf`.
+O site onde se encontram esses arquivos é o da *Olimpíada Brasileira de Matemética* 
+(OBM), especificamente na área da Revista Eureka:
+
+<p align='center'>
+  <a href='https://www.obm.org.br/revista-eureka/'> 
+    https://www.obm.org.br/revista-eureka/
+  </a>
+</p>
+
+Nosso objetivo é fazer o download das 42 revistas, no formato `pdf`, e organizar
+esses arquivos com nomes seguindo determinado padrão.
+
+O primeiro passo é fazer a leitura do site.
+Antes, porém, vamos atribir à variável `url_eureka` o link do site:
+
+```{r}
+url_eureka <- "https://www.obm.org.br/revista-eureka/"
+```
+
+Prosseguimos, então, com a leitura, atribuindo à variável `site_eureka` seu 
+resultado:
+
+```{r}
+site_eureka <- rvest::read_html(url_eureka)
+```
+
+Feito isso, precisamos dos elementos que contém os links que desejamos para 
+download.
+A seleção do CSS ajuda-nos a delimitar as opções adequadamente.
+
+Entretanto, nesse ponto, perceba uma sutil diferença ao clicar sobre a imagem
+de algum arquivo do pdf e num pequeno espaço, ao seu lado.
+Para ser mais claro, vamos considerar o link associado à Revista nº 42:
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/div_a-img.png")
+```
+
+Obviamente, o link que será extraído não se encontra na *tag* de "img".
+Portanto, devemos clicar num pequeno espaço ao lado dessa imagem de pdf e depois
+fazermos os ajustes, clicando novamente nos itens que não nos interessa no momento,
+como por exemplo, nos links do cabeçalho da página.
+
+Com o passo acima, um elemento CSS possível seria: "#revistas-list a".
+Logo, podemos extrair os links assim:
+
+```{r, eval=FALSE}
+site_eureka |> 
+  rvest::html_elements("#revistas-list a") |> 
+  rvest::html_attr("href")
+```
+
+
+```{r, echo=FALSE}
+site_eureka |> 
+  rvest::html_elements("#revistas-list a") |> 
+  rvest::html_attr("href") |> 
+  utils::head(10)
+```
+
+Mas, para selecionarmos apenas o formato pdf, usamos: `stringr::str_subset(".pdf")`.
+Vamos atribuir à variável `links_eureka` esses procedimentos:
+
+```{r}
+links_eureka <- site_eureka |> 
+  rvest::html_elements("#revistas-list a") |> 
+  rvest::html_attr("href") |> 
+  stringr::str_subset(".pdf")
+```
+
+Se visualizarmos os nomes desses links, notaremos que não há um padrão único.
+Para contornar isso, vamos criar uma lista com 42 nomes com o seguinte padrão:
+
+- `n_eureka`; onde $n$ é um número que varia de 1 a 42.
+
+Uma maneira de criar essa sequência de números é usarmos a função `seq()`, do
+R Base:
+
+```{r}
+seq(1, 42)
+```
+
+Mas, vamos estabelecer que nosso padrão contenha sempre dois dígitos.
+Então, para os algarísmos de 1 até 9, colocaremos o número 0 (zero) à esquerda 
+deles.
+Dessa forma, basta aglutinarmos o caractere "0" à sequência `seq(1, 9)`. 
+A função `str_c()`, do pacote **stringr**, é adequada para isso:
+
+```{r}
+stringr::str_c("0", seq(1, 9))
+```
+
+Todavia, vamos concatenar esse resultado com os números restantes (de 10 a 42),
+atribuindo à variável `index` (pois é uma indexação) esse procedimento:
+
+```{r}
+index <- c(stringr::str_c("0", seq(1, 9)), seq(10, 42))
+```
+
+Portanto, para criarmos a lista com 42 nomes padronizados, vamos aglutinar à
+indexação o padão "_eureka", atribuindo à variável `nomes_eureka` esses 
+procedimentos:
+
+```{r}
+nomes_eureka <- stringr::str_c(index, "_eureka")
+
+nomes_eureka
+```
+
+Como já vimos, para criar um subdiretório, por nome "arquivos_eureka", no diretório `download_arquivos`, usamos a função `dir_create`, do pacote **fs**.
+Atribuindo esse passo à variável `arquivos_eureka`, temos:
+
+```{r, eval=FALSE}
+arquivos_eureka <- fs::dir_create("downloads/arquivos_eureka")
+```
+
+Estamos quase aptos a realizar o dowload de tudo!
+Basta, criarmos a lista de argumentos para os parâmetros da função `pwalk()`:
+
+```{r, eval=FALSE}
+eureka_args <- list(links_eureka, arquivos_eureka/nomes_eureka, mode = "wb")
+```
+
+Por fim, podemos iterar esse procedimento para todos os arquivos com:
+
+```{r, eval=FALSE}
+purrr::pwalk(eureka_args, download.file)
+```
+
 
 Você pode conferir o *script* completo abaixo:
 
