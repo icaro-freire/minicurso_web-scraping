@@ -1,7 +1,7 @@
 ---
 title: "O que usaremos do Tidyverse?"
 description: |
-  Explanação sucinta apenas das funções que usaremos do tidyverse.
+  Explanação sucinta (apenas) das funções que usaremos do tidyverse & Cia.
 output: 
   distill::distill_article:
     toc: true
@@ -32,19 +32,20 @@ tidyverse::tidyverse_packages()
 Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:
 
 - **readr**; só usaremos a função `parse_double()` que, como o nome sugere, 
-  passa um conjunto de caracteres para a categoria numérica. Uma função do R Base
-  que poderia fazer o mesmo papel seria `as.numeric()`.
+  passa um conjunto de caracteres para a categoria numérica. 
+  Uma função do R Base que poderia fazer o mesmo papel seria `as.numeric()`.
 - **tibble**; para construirmos "tabelas" (`tibbles`) especiais e visualizarmos 
   o resultado.
 - **dplyr**; para manipulação de dados (agrupar, selecionar, filtrar, arrumar, 
   etc., certas características desejadas nas `tibbles`)
 - **stringr**; para manipulação de cadeias de caracteres, como frases, texto, 
-  símbolos, etc. É bem útil para "limpeza" dos dados coletados numa raspagem da
-  internet (as coisas, geralmente, não vem "arrumadinhas").
+  símbolos, etc. 
+  É bem útil para "limpeza" dos dados coletados numa raspagem da internet (as 
+  coisas, geralmente, não vem "arrumadinhas").
 - **purrr**; para interações. Substitui as ideias das estruturas de repetições 
   (`loops`) na programação, como `for` ou `while`, por exemplo. 
-- **rvest**; para raspagem de dados em documentos html. É o principal pacote de 
-  nosso minicurso.
+- **rvest**; para raspagem de dados em documentos html. 
+  É o principal pacote de nosso minicurso.
 
 No que se refere à utilização desses pacotes, podemos escolher algumas arbordagens...
 
@@ -56,7 +57,7 @@ digitarmos:
 library(tidyverse)
 ```
 
-Note que forma carregados 8 (oito) pacotes:
+Note que foram carregados 8 (oito) pacotes:
 
 ```{r, fig.align='center', echo=FALSE, out.width='90%'}
 knitr::include_graphics("img/packages_tidyverse.png")
@@ -70,11 +71,10 @@ library(tidyverse)
 library(rvest)
 ```
 
-Essa é uma abordagem válida e simplifica a escrita dos códigos, tornando-o menos
-"verboso".
+Essa é uma abordagem válida e simplifica a escrita dos códigos, tornando-os menos
+"verbosos".
 Uma desvantagem, porém, é que, quando se é iniciante, nem sempre conhecemos de 
-qual pacote pertence determinada função, o que pode atrapalhar os estudos de cada
-pacote.
+qual pacote pertence determinada função, o que pode atrapalhar os estudos.
 Além, claro, de carregar a memória do computador com pacotes que não usaremos.
 
 Dessa forma, podemos usar a seguinte abordagem (que usarei no minicurso):
@@ -172,7 +172,7 @@ contextualizando-as em seus respectivos pacotes.
 ### 4.2.1 tibble
 
 Uma `tibble` é um `data frame` (do R Base) melhorado.
-Grosso modo, é uma tabela pra lá de especial.
+Grosso modo, é uma tabela muito especial.
 Com ela, podemos organizar os dados de uma forma que facilite a manipulação dos
 mesmos pelos pacotes do tidyverse e para o processamento no computador.
 Para quem possuir interesse, o formato da `tibble` em questão é o
@@ -180,7 +180,7 @@ Para quem possuir interesse, o formato da `tibble` em questão é o
 uma *variável*; cada linha, uma *observação*; e, em cada célula há *apenas* uma
 observação.
 
-Para nossos fins, basta-nos saber como formar uma `tibble` e como visualizá-la.
+Para nossos fins, basta saber como formar uma `tibble` e como visualizá-la.
 
 A função `tibble()`, do pacote de mesmo nome, `tibble`, cria a tabela desejada.
 A estrutura dessa função segue o formato:
@@ -233,7 +233,7 @@ O nome dessa função é **parse_double()**.
 Vejamos um exemplo.
 
 Suponha que numa extração de dados da *web*, os valores de três livros fossem 
-classificados como "character", mas, obviamente, gostaríamos que ele fosse 
+classificados como "character", mas, obviamente, gostaríamos que eles fossem 
 "numeric".
 
 ```{r}
@@ -249,14 +249,14 @@ valores_num <- valores_web |>
 ```
 
 Transformamos e salvamos na variável `valores_num`.
-Ao veificarmos a classe, percebemos que os dados passaram a ser numéricos:
+Ao verificarmos a classe, percebemos que os dados passaram a ser numéricos:
 
 ```{r}
 class(valores_num)
 ```
 ### 4.2.3 dplyr
 
-O pacpte [dplyr](https://dplyr.tidyverse.org/) fornece uma estruturação de funções
+O pacote [dplyr](https://dplyr.tidyverse.org/) fornece uma estruturação de funções
 que seguem uma certa "gramática de manipulação de dados". 
 Isso fornece um conjunto consistente de "verbos" (os nomes das funções são verbos
 , em Inglês, que lembram a sua utilidade) que resolvem os desafios mais comuns 
@@ -267,12 +267,12 @@ na manipulação de dados.
 Como o objetivo desse minicurso é sobre Web Scraping, a manipulação dos dados
 estará contida no processo.
 Entretanto, manipularemos conjuntos de caracteres e não necessariamente "tibbles".
-Portanto, só usaremos algumas pucas funções desse pacote.
+Portanto, só usaremos algumas poucas funções desse pacote.
 
 Uma delas é a função **mutate()**.
 
-Em inglês, numa tradução livre, a palavra *mutate* referece a "mudança", "alteração",
-etc.
+Em inglês, numa tradução livre, a palavra *mutate* refere-se a "mudança", 
+"alteração", etc.
 Portanto, usaremos a função `mutate()` se desejamos fazer uma modificação na
 tibble (usamos `dplyr` apenas em tibbles).
 
@@ -289,7 +289,7 @@ tabela_livros_mod <- tibble::tibble(
 
 Se quisermos acrescentar uma variável que calcula a diferença entre o "preço novo" 
 (`preco_novo`) e o "preço antigo" (`preco_antigo`) precisamos usar o `mutate`.
-Ele acrescentará uma nova variável (que daremos o nome `diferenca`) à `tabela_livros_mod`.
+Ela acrescentará uma nova variável (que daremos o nome `diferenca`) à `tabela_livros_mod`.
 
 ```{r}
 tabela_livros_completa <- tabela_livros_mod |> 
@@ -299,14 +299,15 @@ tabela_livros_completa <- tabela_livros_mod |>
 
 tabela_livros_completa
 ```
+
 > Observe que, para fazer sentido a diferença entre os valores, estes devem ser
 numéricos!
 
 Agora, suponha que desejamos criar uma nova variável que estabeleça uma 
 "tomada de decisão".
-Se o "preço novo" for 30% mais barato do que o "preço antigo", quero que apareça 
+Se o "preço novo" for 30% mais barato do que o "preço antigo", deseja-se que apareça 
 a mensagem "compre".
-Caso contrário, quero que apareça a mensagem "aguarde".
+Caso contrário, deseja-se que apareça a mensagem "aguarde".
 
 Para isso, como podemos notar, precisamos usar uma estrutura "if ..., else", ou
 seja, "se ocorre '*condição A*', então '*faça B*'; caso contrário, '*faça C*'".
