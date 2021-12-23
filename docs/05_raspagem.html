@@ -2533,9 +2533,169 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </div>
 </details>
 <h3 id="raspando-tabelas">5.2.3 Raspando tabelas</h3>
+<p>A função do pacote <strong>rvest</strong> para raspar uma tabela é <code>html_table()</code>.</p>
+<p>Para exemplificarmos seu uso, consideremos a seguinte página da Wikipédia sobre a linguagem de programação R:</p>
+<p align="center">
+<a href='https://pt.wikipedia.org/wiki/R_(linguagem_de_programa%C3%A7%C3%A3o)'> https://pt.wikipedia.org/wiki/R_(linguagem_de_programa%C3%A7%C3%A3o) </a>
+</p>
+<p>Aparentemente, a única tabela existente na página é a da seção “Versão”.</p>
+<p>Diretamente, poderíamos fazer:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># url do site -----------------------------------------------------------------</span>
+<span class='va'>url_wiki</span> <span class='op'>&lt;-</span> <span class='st'>"https://pt.wikipedia.org/wiki/R_(linguagem_de_programa%C3%A7%C3%A3o)"</span>
+
+<span class='co'># leitura do site -------------------------------------------------------------</span>
+<span class='va'>site_wiki</span> <span class='op'>&lt;-</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='va'>url_wiki</span><span class='op'>)</span>
+
+<span class='co'># extração da tabela ----------------------------------------------------------</span>
+<span class='va'>tabelas</span> <span class='op'>&lt;-</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='va'>site_wiki</span><span class='op'>)</span>
+
+<span class='co'># exibindo o conteúdo ---------------------------------------------------------</span>
+<span class='va'>tabelas</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+# A tibble: 1 × 2
+  X1    X2                                                            
+  &lt;lgl&gt; &lt;chr&gt;                                                         
+1 NA    As referências deste artigo necessitam de formatação. Por fav…
+
+[[2]]
+# A tibble: 1 × 2
+  X1    X2                                                            
+  &lt;lgl&gt; &lt;chr&gt;                                                         
+1 NA    Este artigo carece de reciclagem de acordo com o  livro de es…
+
+[[3]]
+# A tibble: 1 × 2
+  X1    X2                                                            
+  &lt;lgl&gt; &lt;chr&gt;                                                         
+1 NA    Esta página cita fontes, mas estas não cobrem todo o conteúdo…
+
+[[4]]
+# A tibble: 11 × 2
+   R                   R                                              
+   &lt;chr&gt;               &lt;chr&gt;                                          
+ 1 &quot;&quot;                  &quot;&quot;                                             
+ 2 &quot;Paradigma&quot;         &quot;multi-paradigma: sequencialização, orientado …
+ 3 &quot;Surgido em&quot;        &quot;1993[1]&quot;                                      
+ 4 &quot;Última versão&quot;     &quot;4.1.0[2](18 de maio de 2021)&quot;                 
+ 5 &quot;Criado por&quot;        &quot;Ross Ihaka e Robert Gentleman&quot;                
+ 6 &quot;Estilo de tipagem&quot; &quot;Fraca&quot;                                        
+ 7 &quot;Dialetos:&quot;         &quot;Microsoft R&quot;                                  
+ 8 &quot;Influenciada por&quot;  &quot;S, Common Lisp, Scheme, Haskell&quot;              
+ 9 &quot;Influenciou&quot;       &quot;Julia&quot;                                        
+10 &quot;Licença:&quot;          &quot;GPL&quot;                                          
+11 &quot;Página oficial&quot;    &quot;www.r-project.org&quot;                            
+
+[[5]]
+# A tibble: 13 × 3
+   Versão Data         Descrição                                      
+   &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;                                          
+ 1 0.16   &quot;&quot;           &quot;Essa foi a última versão alpha desenvolvida p…
+ 2 0.49   &quot;1997-04-23&quot; &quot;Esse é o código fonte mais antigo disponível …
+ 3 0.60   &quot;1997-12-05&quot; &quot;R se torna parte do Projeto GNU. O código pas…
+ 4 0.65.1 &quot;1999-10-07&quot; &quot;Primeiras versões das funções update.packages…
+ 5 1.0    &quot;2000-02-29&quot; &quot;Considerada pelos desenvolvedores como estáve…
+ 6 1.4    &quot;2001-12-19&quot; &quot;Métodos S4 foram introduzidos e a primeira ve…
+ 7 2.0    &quot;2004-10-04&quot; &quot;Introduzido lazy loading, que permite carrega…
+ 8 2.1    &quot;2005-04-18&quot; &quot;Suporte para UTF-8 e esforços iniciais para l…
+ 9 2.11   &quot;2010-04-22&quot; &quot;Suporte para sistemas Windows de 64 bits.&quot;    
+10 2.13   &quot;2011-04-14&quot; &quot;Adicionada uma nova função ao compilador que …
+11 2.14   &quot;2011-10-31&quot; &quot;Adicionados namespaces mandatórios para os pa…
+12 2.15   &quot;2012-03-30&quot; &quot;Novas funções de balanceamento de carga. Velo…
+13 3.0    &quot;2013-04-03&quot; &quot;Suporte para indexadores numéricos de valor 2…
+
+[[6]]
+# A tibble: 1 × 2
+  X1                     X2                                           
+  &lt;chr&gt;                  &lt;chr&gt;                                        
+1 Controle de autoridade &quot;: Q206904\nFramalibre: r\nGND: 4705956-4\nL…
+
+[[7]]
+# A tibble: 3 × 2
+  `vdeSoftware para análise numéric… `vdeSoftware para análise numéri…
+  &lt;chr&gt;                              &lt;chr&gt;                            
+1 &quot;Software livre&quot;                   &quot;Advanced Simulation Library\nAD…
+2 &quot;Software não-livre&quot;               &quot;DADiSP\nGAUSS\nLabVIEW\nMaple\n…
+3 &quot;Lista de programas para análise … &quot;Lista de programas para análise…
+
+[[8]]
+# A tibble: 5 × 3
+  `vdeProjeto GNU` `vdeProjeto GNU`                   `vdeProjeto GNU`
+  &lt;chr&gt;            &lt;chr&gt;                              &lt;lgl&gt;           
+1 História         &quot;Manifesto GNU\nFree Software Fou… NA              
+2 Licenças         &quot;GNU General Public License\nGNU … NA              
+3 Software         &quot;GNU (variantes)\nHurd\nLinux-lib… NA              
+4 Porta-Vozes      &quot;Alexandre Oliva\nBenjamin Mako H… NA              
+5 Outros assuntos  &quot;Controvérsia quanto à nomenclatu… NA              
+
+[[9]]
+# A tibble: 3 × 2
+  `vdeLinguagens de programação`     `vdeLinguagens de programação`   
+  &lt;chr&gt;                              &lt;chr&gt;                            
+1 &quot;Esotéricas ·  Comparação ·  Hist… &quot;Esotéricas ·  Comparação ·  His…
+2 &quot;Ada\nAssembly (ASM)\nBASIC\nC\nC… &quot;Ada\nAssembly (ASM)\nBASIC\nC\n…
+3 &quot;Categoria ·  Lista&quot;               &quot;Categoria ·  Lista&quot;             </code></pre>
+</div>
+<p>Para nossa surpresa há 9 tabelas nessa página! Quem a escreveu usou do formato da tabela para organização das informações, mas em apenas uma colocou elementos característicos de um quadro.</p>
+<p>Veja que a classe do objeto “tabelas” é uma lista:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>tabelas</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;list&quot;</code></pre>
+</div>
+<p>Ainda analisando essa lista, percebemos que a tabela que desejamos encontra-se na 5º posição. Portanto, podemos selecioná-la da seguinte maneira:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tabela_wiki</span> <span class='op'>&lt;-</span> <span class='va'>tabelas</span><span class='op'>[[</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>]</span>
+
+<span class='va'>tabela_wiki</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 13 × 3
+   Versão Data         Descrição                                      
+   &lt;chr&gt;  &lt;chr&gt;        &lt;chr&gt;                                          
+ 1 0.16   &quot;&quot;           &quot;Essa foi a última versão alpha desenvolvida p…
+ 2 0.49   &quot;1997-04-23&quot; &quot;Esse é o código fonte mais antigo disponível …
+ 3 0.60   &quot;1997-12-05&quot; &quot;R se torna parte do Projeto GNU. O código pas…
+ 4 0.65.1 &quot;1999-10-07&quot; &quot;Primeiras versões das funções update.packages…
+ 5 1.0    &quot;2000-02-29&quot; &quot;Considerada pelos desenvolvedores como estáve…
+ 6 1.4    &quot;2001-12-19&quot; &quot;Métodos S4 foram introduzidos e a primeira ve…
+ 7 2.0    &quot;2004-10-04&quot; &quot;Introduzido lazy loading, que permite carrega…
+ 8 2.1    &quot;2005-04-18&quot; &quot;Suporte para UTF-8 e esforços iniciais para l…
+ 9 2.11   &quot;2010-04-22&quot; &quot;Suporte para sistemas Windows de 64 bits.&quot;    
+10 2.13   &quot;2011-04-14&quot; &quot;Adicionada uma nova função ao compilador que …
+11 2.14   &quot;2011-10-31&quot; &quot;Adicionados namespaces mandatórios para os pa…
+12 2.15   &quot;2012-03-30&quot; &quot;Novas funções de balanceamento de carga. Velo…
+13 3.0    &quot;2013-04-03&quot; &quot;Suporte para indexadores numéricos de valor 2…</code></pre>
+</div>
+<p>Poderíamos simplificar os passos da seguinte forma:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># carregando pacote -----------------------------------------------------------</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
+
+<span class='co'># url do site -----------------------------------------------------------------</span>
+<span class='va'>url_wki</span> <span class='op'>&lt;-</span> <span class='st'>"https://pt.wikipedia.org/wiki/R_(linguagem_de_programa%C3%A7%C3%A3o)"</span>
+
+<span class='co'># lendo e raspando os dados ---------------------------------------------------</span>
+<span class='va'>tabela_wiki</span> <span class='op'>&lt;-</span> <span class='va'>url_wki</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
+  <span class='va'>.</span><span class='op'>[[</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>]</span>
+
+<span class='co'># exibindo a tabela -----------------------------------------------------------</span>
+<span class='va'>tabela_wiki</span>
+</code></pre>
+</div>
+</div>
 <h2 id="construindo-uma-tabela-para-tomada-de-decisão">5.3 Construindo uma tabela para tomada de decisão</h2>
 <h2 id="raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
