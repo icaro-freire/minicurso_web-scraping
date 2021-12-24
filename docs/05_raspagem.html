@@ -2128,7 +2128,12 @@ Material Teórico
 <li><a href="#arquivos-binários">5.2.2 Arquivos binários</a></li>
 <li><a href="#raspando-tabelas">5.2.3 Raspando tabelas</a></li>
 </ul></li>
-<li><a href="#construindo-uma-tabela-para-tomada-de-decisão">5.3 Construindo uma tabela para tomada de decisão</a></li>
+<li><a href="#construindo-uma-tabela-para-tomada-de-decisão">5.3 Construindo uma tabela para tomada de decisão</a>
+<ul>
+<li><a href="#extraindo-os-nomes-dos-livros">5.3.1 Extraindo os nomes dos livros</a></li>
+<li><a href="#extraindo-os-preços">5.3.2 Extraindo os preços</a></li>
+<li><a href="#construindo-a-tabela">5.3.2 Construindo a tabela</a></li>
+</ul></li>
 <li><a href="#raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</a></li>
 </ul></li>
 </ul>
@@ -2694,8 +2699,249 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </div>
 </div>
 <h2 id="construindo-uma-tabela-para-tomada-de-decisão">5.3 Construindo uma tabela para tomada de decisão</h2>
+<p>No site da livraria da USP, na seção “ASSUNTOS”, ao escolhermos “Matemática”, somos direcionados para essa página:</p>
+<p align="center">
+<a href='https://www.edusp.com.br/loja/assuntos/21/matematica'> https://www.edusp.com.br/loja/assuntos/21/matematica </a>
+</p>
+<p>Há uma lista de 19 livros (acesso em 23/12/2021), mas suponha que nosso objetivo seja acompanhar a variação do preço de três deles:</p>
+<ul>
+<li>Números: Uma Introdução à Matemática;</li>
+<li>Um Poeta, um Matemático e um Físico;</li>
+<li>Programação Matemática para Otimização de Processos.</li>
+</ul>
+<p>Ainda mais: se o desconto dado pelo site for igual ou superior a 20% do valor do livro, gostaríamos que uma tabela fosse exibida com alguma informação direta, como por exemplo, “compre”; e, caso contrário, “aguarde”.</p>
+<p>Portanto, precisamos extrair:</p>
+<ul>
+<li>Os nomes dos livros;</li>
+<li>Os preços que estão na categoria “De …”;</li>
+<li>Os preços que estão na categoria “Por …”;</li>
+<li>Uma lista espacífica que desejamos comparar (a nossa lista com os três livros);</li>
+<li>Alguma condição para devolver os termos “compre” ou “aguarde.</li>
+</ul>
+<p>Vamos fazer isso passo a passo, mas antes de começarmos, é importante organizarmos as coisas:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># url do site -----------------------------------------------------------------</span>
+<span class='va'>url_usp</span> <span class='op'>&lt;-</span> <span class='st'>"https://www.edusp.com.br/loja/assuntos/21/matematica"</span>
+
+<span class='co'># lendo o site ----------------------------------------------------------------</span>
+<span class='va'>site_usp</span> <span class='op'>&lt;-</span> <span class='va'>url_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Error</span> in open.connection<span class="er">(</span><span class="ex">x,</span> <span class="st">&quot;rb&quot;</span><span class="kw">)</span> <span class="bu">:</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">SSL</span> certificate problem: unable to get local issuer certificate</span></code></pre></div>
+</div>
+<p>Notem que houve um problema de Certificado de SSL. Vimos que, para contornar isso, retiramos a verificação do certificado (<code>ssl_verifypeer = FALSE</code>) com a função <code>config()</code>, do pacote <strong>httr</strong>, dentro da função <code>GET()</code>, do mesmo pacote; sendo tudo isso ANTES do <code>read_html()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># url do site -----------------------------------------------------------------</span>
+<span class='va'>url_usp</span> <span class='op'>&lt;-</span> <span class='st'>"https://www.edusp.com.br/loja/assuntos/21/matematica"</span>
+
+<span class='co'># lendo o site ----------------------------------------------------------------</span>
+<span class='va'>site_usp</span> <span class='op'>&lt;-</span> <span class='va'>url_usp</span> |&gt; 
+  <span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/GET.html'>GET</a></span><span class='op'>(</span><span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/config.html'>config</a></span><span class='op'>(</span>ssl_verifypeer <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="extraindo-os-nomes-dos-livros">5.3.1 Extraindo os nomes dos livros</h3>
+<p>Utilizando o SelectorGadget, clicamos sobre um dos títulos do livro e fazemos os ajustes necessários (aparecerão elementos no rodapé da página do site que não são convenientes). Com isso, um possível CSS é: “#dvProdutos p”.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+Queremos extrair os nomes dos livros. Logo, interessa-nos o texto entre a tag
+<p>
+<p>; e, para isso, usamos a função <code>text2()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;\r Amostragem Probabilística: Um Curso...&quot;   
+ [2] &quot;\r Bioestatística em Outras Palavras&quot;        
+ [3] &quot;\r Cálculo em uma Variável Real&quot;             
+ [4] &quot;\r Cálculo Integral Avançado&quot;                
+ [5] &quot;\r Curso de Álgebra Linear, Um&quot;              
+ [6] &quot;\r Ética em Computação&quot;                      
+ [7] &quot;\r Introdução à Física Estatística&quot;          
+ [8] &quot;\r Introdução à Mecânica Clássica&quot;           
+ [9] &quot;\r Lógica Matemática&quot;                        
+[10] &quot;\r Noções de Probabilidade e Estatística&quot;    
+[11] &quot;\r Números: Uma Introdução à Matemática&quot;     
+[12] &quot;\r Ondas e Ondaletas: Da Análise de...&quot;      
+[13] &quot;\r Poeta, um Matemático e um Físico, Um:...&quot; 
+[14] &quot;\r Probabilidade e Variáveis Aleatórias&quot;     
+[15] &quot;\r Probabilidade: Um Curso Introdutório&quot;     
+[16] &quot;\r Programação Matemática para Otimização...&quot;
+[17] &quot;\r Técnicas Computacionais para Dinâmica...&quot; 
+[18] &quot;\r Topologia Geométrica para Inquietos&quot;      
+[19] &quot;\r Uma Variável Complexa: Teoria e...&quot;       </code></pre>
+</div>
+<p>E, para retirar os caracteres indesejados de espaçamento, usamos a função <code>str_trim()</code>, do pacote <strong>stringr</strong>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;Amostragem Probabilística: Um Curso...&quot;   
+ [2] &quot;Bioestatística em Outras Palavras&quot;        
+ [3] &quot;Cálculo em uma Variável Real&quot;             
+ [4] &quot;Cálculo Integral Avançado&quot;                
+ [5] &quot;Curso de Álgebra Linear, Um&quot;              
+ [6] &quot;Ética em Computação&quot;                      
+ [7] &quot;Introdução à Física Estatística&quot;          
+ [8] &quot;Introdução à Mecânica Clássica&quot;           
+ [9] &quot;Lógica Matemática&quot;                        
+[10] &quot;Noções de Probabilidade e Estatística&quot;    
+[11] &quot;Números: Uma Introdução à Matemática&quot;     
+[12] &quot;Ondas e Ondaletas: Da Análise de...&quot;      
+[13] &quot;Poeta, um Matemático e um Físico, Um:...&quot; 
+[14] &quot;Probabilidade e Variáveis Aleatórias&quot;     
+[15] &quot;Probabilidade: Um Curso Introdutório&quot;     
+[16] &quot;Programação Matemática para Otimização...&quot;
+[17] &quot;Técnicas Computacionais para Dinâmica...&quot; 
+[18] &quot;Topologia Geométrica para Inquietos&quot;      
+[19] &quot;Uma Variável Complexa: Teoria e...&quot;       </code></pre>
+</div>
+<p>Vamos salvar tudoo isso na variável <code>nomes_livros</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nomes_livros</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h3 id="extraindo-os-preços">5.3.2 Extraindo os preços</h3>
+<p>Para extração dos preços, lembremos que são duas categorias:</p>
+<ul>
+<li>“De …”; que substituiremos por <code>preco_antigo</code>.</li>
+<li>“Por …”; que substituiremos por <code>preco_desconto</code>.</li>
+</ul>
+<h4 id="preço-antigo">5.3.2.1 Preço antigo</h4>
+<p>Utilizando o SelectorGadget, ao clicarmos na região onde há um “traço” no preço, encontramos o seguinte elemento CSS: “strike”.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>{xml_nodeset (19)}
+ [1] &lt;strike&gt;R$ 40,00&lt;/strike&gt;
+ [2] &lt;strike&gt;R$ 66,00&lt;/strike&gt;
+ [3] &lt;strike&gt;R$ 74,00&lt;/strike&gt;
+ [4] &lt;strike&gt;R$ 52,00&lt;/strike&gt;
+ [5] &lt;strike&gt;R$ 45,00&lt;/strike&gt;
+ [6] &lt;strike&gt;R$ 40,00&lt;/strike&gt;
+ [7] &lt;strike&gt;R$ 80,00&lt;/strike&gt;
+ [8] &lt;strike&gt;R$ 78,00&lt;/strike&gt;
+ [9] &lt;strike&gt;R$ 34,00&lt;/strike&gt;
+[10] &lt;strike&gt;R$ 52,00&lt;/strike&gt;
+[11] &lt;strike&gt;R$ 42,00&lt;/strike&gt;
+[12] &lt;strike&gt;R$ 44,00&lt;/strike&gt;
+[13] &lt;strike&gt;R$ 30,00&lt;/strike&gt;
+[14] &lt;strike&gt;R$ 50,00&lt;/strike&gt;
+[15] &lt;strike&gt;R$ 52,00&lt;/strike&gt;
+[16] &lt;strike&gt;R$ 44,00&lt;/strike&gt;
+[17] &lt;strike&gt;R$ 74,00&lt;/strike&gt;
+[18] &lt;strike&gt;R$ 36,00&lt;/strike&gt;
+[19] &lt;strike&gt;R$ 38,00&lt;/strike&gt;</code></pre>
+</div>
+<p>Retirando o texto dessa <em>tag</em>, temos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;R$ 40,00&quot; &quot;R$ 66,00&quot; &quot;R$ 74,00&quot; &quot;R$ 52,00&quot; &quot;R$ 45,00&quot; &quot;R$ 40,00&quot;
+ [7] &quot;R$ 80,00&quot; &quot;R$ 78,00&quot; &quot;R$ 34,00&quot; &quot;R$ 52,00&quot; &quot;R$ 42,00&quot; &quot;R$ 44,00&quot;
+[13] &quot;R$ 30,00&quot; &quot;R$ 50,00&quot; &quot;R$ 52,00&quot; &quot;R$ 44,00&quot; &quot;R$ 74,00&quot; &quot;R$ 36,00&quot;
+[19] &quot;R$ 38,00&quot;</code></pre>
+</div>
+<p>Obviamente, queremos apenas os valores numéricos, visto que ainda vamos operar com os mesmos para criarmos condições para tomada de decisão. Assim, observando o padrão, interessa-nos os elementos depois do 3ª caractere, ou seja, a partir do 4º caractere. A função <code>str_sub()</code>, do pacote <strong>stringr</strong> faz isso perfeitamente:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;40,00&quot; &quot;66,00&quot; &quot;74,00&quot; &quot;52,00&quot; &quot;45,00&quot; &quot;40,00&quot; &quot;80,00&quot; &quot;78,00&quot;
+ [9] &quot;34,00&quot; &quot;52,00&quot; &quot;42,00&quot; &quot;44,00&quot; &quot;30,00&quot; &quot;50,00&quot; &quot;52,00&quot; &quot;44,00&quot;
+[17] &quot;74,00&quot; &quot;36,00&quot; &quot;38,00&quot;</code></pre>
+</div>
+<p>Agora, sabemos que o R identifica o ponto como separador decimal. Logo, devemos substituir a “vírgula” pelo “ponto”. Para isso, usamo a função <code>str_replace_all()</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] &quot;40.00&quot; &quot;66.00&quot; &quot;74.00&quot; &quot;52.00&quot; &quot;45.00&quot; &quot;40.00&quot; &quot;80.00&quot; &quot;78.00&quot;
+ [9] &quot;34.00&quot; &quot;52.00&quot; &quot;42.00&quot; &quot;44.00&quot; &quot;30.00&quot; &quot;50.00&quot; &quot;52.00&quot; &quot;44.00&quot;
+[17] &quot;74.00&quot; &quot;36.00&quot; &quot;38.00&quot;</code></pre>
+</div>
+<p>Mas, ainda temos um conjundo de “caracteres” (<em>character</em>) e não números (<em>numeric</em>). Para extrairmos apenas os números, podemos usar a função <code>parse_double()</code>, do pacote <strong>readr</strong>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code> [1] 40 66 74 52 45 40 80 78 34 52 42 44 30 50 52 44 74 36 38</code></pre>
+</div>
+<p>Vamos atribuir à variável <code>preco_antigo</code> esses códigos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>preco_antigo</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<h4 id="preço-antigo-1">5.3.2.2 Preço antigo</h4>
+<p>Procedendo de forma análoga, podemos extrair o <code>preco_desconto</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>preco_desconto</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"h2+ h2"</span><span class='op'>)</span> |&gt;     <span class='co'># elemento CSS</span>
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;                <span class='co'># extração do conteúdo (texto)</span>
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;                <span class='co'># eliminando espaços indesejáveis</span>
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span> |&gt;                <span class='co'># extraindo a partir do 8º caractere</span>
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt;     <span class='co'># substituindo 'virgula' por 'ponto'</span>
+  <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>                 <span class='co'># transformando 'character' para 'numeric'</span>
+</code></pre>
+</div>
+</div>
+<h3 id="construindo-a-tabela">5.3.2 Construindo a tabela</h3>
 <h2 id="raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

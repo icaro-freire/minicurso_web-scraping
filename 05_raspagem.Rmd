@@ -546,6 +546,204 @@ tabela_wiki <- url_wki |>
 tabela_wiki
 ```
 
-
 ## 5.3 Construindo uma tabela para tomada de decisão
+
+No site da livraria da USP, na seção "ASSUNTOS", ao escolhermos "Matemática", 
+somos direcionados para essa página:
+
+<p align='center'>
+  <a href='https://www.edusp.com.br/loja/assuntos/21/matematica'>
+    https://www.edusp.com.br/loja/assuntos/21/matematica
+  </a>
+</p>
+
+Há uma lista de 19 livros (acesso em 23/12/2021), mas suponha que nosso objetivo 
+seja acompanhar a variação do preço de três deles:
+
+- Números: Uma Introdução à Matemática;
+- Um Poeta, um Matemático e um Físico;
+- Programação Matemática para Otimização de Processos.
+
+Ainda mais: se o desconto dado pelo site for igual ou superior a 20% do valor do
+livro, gostaríamos que uma tabela fosse exibida com alguma informação direta, como
+por exemplo, "compre"; e, caso contrário, "aguarde".
+
+Portanto, precisamos extrair:
+
+- Os nomes dos livros;
+- Os preços que estão na categoria "De ...";
+- Os preços que estão na categoria "Por ...";
+- Uma lista espacífica que desejamos comparar (a nossa lista com os três livros);
+- Alguma condição para devolver os termos "compre" ou "aguarde.
+
+Vamos fazer isso passo a passo, mas antes de começarmos, é importante organizarmos
+as coisas:
+
+```{r, eval=FALSE}
+# url do site -----------------------------------------------------------------
+url_usp <- "https://www.edusp.com.br/loja/assuntos/21/matematica"
+
+# lendo o site ----------------------------------------------------------------
+site_usp <- url_usp |> 
+  rvest::read_html()
+```
+
+```{bash, eval=FALSE}
+Error in open.connection(x, "rb") : 
+  SSL certificate problem: unable to get local issuer certificate
+```
+
+
+Notem que houve um problema de Certificado de SSL.
+Vimos que, para contornar isso, retiramos a verificação do certificado 
+(`ssl_verifypeer = FALSE`) com a função `config()`, do pacote **httr**, dentro 
+da função `GET()`, do mesmo pacote; sendo tudo isso ANTES do `read_html()`:
+
+```{r}
+# url do site -----------------------------------------------------------------
+url_usp <- "https://www.edusp.com.br/loja/assuntos/21/matematica"
+
+# lendo o site ----------------------------------------------------------------
+site_usp <- url_usp |> 
+  httr::GET(httr::config(ssl_verifypeer = FALSE)) |> 
+  rvest::read_html()
+```
+
+### 5.3.1 Extraindo os nomes dos livros
+
+Utilizando o SelectorGadget, clicamos sobre um dos títulos do livro e fazemos os
+ajustes necessários (aparecerão elementos no rodapé da página do site que não são
+convenientes).
+Com isso, um possível CSS é: "#dvProdutos p".
+
+
+```{r, eval=FALSE}
+site_usp |> 
+  rvest::html_elements("#dvProdutos p")
+```
+
+Queremos extrair os nomes dos livros.
+Logo, interessa-nos o texto entre a tag <p>; e, para isso, usamos a função 
+`text2()`:
+
+
+```{r}
+site_usp |> 
+  rvest::html_elements("#dvProdutos p") |> 
+  rvest::html_text2()
+```
+
+E, para retirar os caracteres indesejados de espaçamento, usamos a função 
+`str_trim()`, do pacote **stringr**:
+
+```{r}
+site_usp |> 
+  rvest::html_elements("#dvProdutos p") |> 
+  rvest::html_text2() |> 
+  stringr::str_trim()
+```
+
+Vamos salvar tudoo isso na variável `nomes_livros`:
+
+```{r}
+nomes_livros <- site_usp |> 
+  rvest::html_elements("#dvProdutos p") |> 
+  rvest::html_text2() |> 
+  stringr::str_trim()
+```
+
+### 5.3.2 Extraindo os preços 
+
+Para extração dos preços, lembremos que são duas categorias: 
+
+- "De ..."; que substituiremos por `preco_antigo`.
+- "Por ..."; que substituiremos por `preco_desconto`.
+
+#### 5.3.2.1 Preço antigo
+
+Utilizando o SelectorGadget, ao clicarmos na região onde há um "traço" no preço,
+encontramos o seguinte elemento CSS: "strike".
+
+```{r}
+site_usp |> 
+  rvest::html_elements("strike")
+```
+
+Retirando o texto dessa *tag*, temos:
+
+```{r}
+site_usp |> 
+  rvest::html_elements("strike") |> 
+  rvest::html_text2()
+```
+
+Obviamente, queremos apenas os valores numéricos, visto que ainda vamos operar
+com os mesmos para criarmos condições para tomada de decisão.
+Assim, observando o padrão, interessa-nos os elementos depois do 3ª caractere, 
+ou seja, a partir do 4º caractere.
+A função `str_sub()`, do pacote **stringr** faz isso perfeitamente:
+
+```{r}
+site_usp |> 
+  rvest::html_elements("strike") |> 
+  rvest::html_text2() |> 
+  stringr::str_sub(4)
+```
+
+Agora, sabemos que o R identifica o ponto como separador decimal.
+Logo, devemos substituir a "vírgula" pelo "ponto".
+Para isso, usamo a função `str_replace_all()`:
+
+```{r}
+site_usp |> 
+  rvest::html_elements("strike") |> 
+  rvest::html_text2() |> 
+  stringr::str_sub(4) |> 
+  stringr::str_replace_all(",", ".")
+```
+
+Mas, ainda temos um conjundo de "caracteres" (*character*) e não números 
+(*numeric*).
+Para extrairmos apenas os números, podemos usar a função `parse_double()`, do 
+pacote **readr**:
+
+```{r}
+site_usp |> 
+  rvest::html_elements("strike") |> 
+  rvest::html_text2() |> 
+  stringr::str_sub(4) |> 
+  stringr::str_replace_all(",", ".") |> 
+  readr::parse_double()
+```
+
+Vamos atribuir à variável `preco_antigo` esses códigos:
+
+```{r}
+preco_antigo <- site_usp |> 
+  rvest::html_elements("strike") |> 
+  rvest::html_text2() |> 
+  stringr::str_sub(4) |> 
+  stringr::str_replace_all(",", ".") |> 
+  readr::parse_double()
+```
+
+#### 5.3.2.2 Preço antigo
+
+Procedendo de forma análoga, podemos extrair o `preco_desconto`:
+
+```{r}
+preco_desconto <- site_usp |> 
+  rvest::html_elements("h2+ h2") |>     # elemento CSS
+  rvest::html_text2() |>                # extração do conteúdo (texto)
+  stringr::str_trim() |>                # eliminando espaços indesejáveis
+  stringr::str_sub(8) |>                # extraindo a partir do 8º caractere
+  stringr::str_replace(",", ".") |>     # substituindo 'virgula' por 'ponto'
+  readr::parse_double()                 # transformando 'character' para 'numeric'
+```
+
+### 5.3.2 Construindo a tabela
+
+
+
+
 ## 5.4 Raspagem com várias páginas
