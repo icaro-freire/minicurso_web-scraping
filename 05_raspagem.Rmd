@@ -616,16 +616,14 @@ ajustes necessários (aparecerão elementos no rodapé da página do site que n�
 convenientes).
 Com isso, um possível CSS é: "#dvProdutos p".
 
-
-```{r, eval=FALSE}
+```{r}
 site_usp |> 
   rvest::html_elements("#dvProdutos p")
 ```
 
 Queremos extrair os nomes dos livros.
-Logo, interessa-nos o texto entre a tag <p>; e, para isso, usamos a função 
+Logo, interessa-nos o texto entre a tag `<p>`; e, para isso, usamos a função 
 `text2()`:
-
 
 ```{r}
 site_usp |> 

@@ -93,8 +93,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2021-12-23"/>
-  <meta property="article:created" itemprop="dateCreated" content="2021-12-23"/>
+  <meta property="article:published" itemprop="datePublished" content="2021-12-24"/>
+  <meta property="article:created" itemprop="dateCreated" content="2021-12-24"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Minicurso: Raspando os dados com R"/>
@@ -112,7 +112,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os dados com R"]},{"type":"character","attributes":{},"value":["Para facilitar nossa vida!\n"]},{"type":"character","attributes":{},"value":["2021-12-23"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os dados com R"]},{"type":"character","attributes":{},"value":["Para facilitar nossa vida!\n"]},{"type":"character","attributes":{},"value":["2021-12-24"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2062,7 +2062,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Raspando os dados com R","description":"Para facilitar nossa vida!","authors":[],"publishedDate":"2021-12-23T00:00:00.000-03:00"}
+{"title":"Raspando os dados com R","description":"Para facilitar nossa vida!","authors":[],"publishedDate":"2021-12-24T00:00:00.000-03:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2755,10 +2755,28 @@ Script para download de arquivos, em pdf, da Revista Eureka
   <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span>
 </code></pre>
 </div>
+<pre><code>{xml_nodeset (19)}
+ [1] &lt;p&gt;\r\n                                    Amostragem Probabil ...
+ [2] &lt;p&gt;\r\n                                    Bioestatística em O ...
+ [3] &lt;p&gt;\r\n                                    Cálculo em uma Vari ...
+ [4] &lt;p&gt;\r\n                                    Cálculo Integral Av ...
+ [5] &lt;p&gt;\r\n                                    Curso de Álgebra Li ...
+ [6] &lt;p&gt;\r\n                                    Ética em Computação ...
+ [7] &lt;p&gt;\r\n                                    Introdução à Física ...
+ [8] &lt;p&gt;\r\n                                    Introdução à Mecâni ...
+ [9] &lt;p&gt;\r\n                                    Lógica Matemática&lt;/p&gt;
+[10] &lt;p&gt;\r\n                                    Noções de Probabili ...
+[11] &lt;p&gt;\r\n                                    Números: Uma Introd ...
+[12] &lt;p&gt;\r\n                                    Ondas e Ondaletas:  ...
+[13] &lt;p&gt;\r\n                                    Poeta, um Matemátic ...
+[14] &lt;p&gt;\r\n                                    Probabilidade e Var ...
+[15] &lt;p&gt;\r\n                                    Probabilidade: Um C ...
+[16] &lt;p&gt;\r\n                                    Programação Matemát ...
+[17] &lt;p&gt;\r\n                                    Técnicas Computacio ...
+[18] &lt;p&gt;\r\n                                    Topologia Geométric ...
+[19] &lt;p&gt;\r\n                                    Uma Variável Comple ...</code></pre>
 </div>
-Queremos extrair os nomes dos livros. Logo, interessa-nos o texto entre a tag
-<p>
-<p>; e, para isso, usamos a função <code>text2()</code>:</p>
+<p>Queremos extrair os nomes dos livros. Logo, interessa-nos o texto entre a tag <code>&lt;p&gt;</code>; e, para isso, usamos a função <code>text2()</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
@@ -2941,7 +2959,7 @@ Queremos extrair os nomes dos livros. Logo, interessa-nos o texto entre a tag
 </div>
 <h3 id="construindo-a-tabela">5.3.2 Construindo a tabela</h3>
 <h2 id="raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
