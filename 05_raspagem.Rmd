@@ -206,7 +206,7 @@ links_uesc <- site_uesc |>
   stringr::str_c("https://lec.pro.br", .)
 ```
 
-Estamos quase prontos para fazerrmos o *download* dos arquivos.
+Estamos quase prontos para fazermos o *download* dos arquivos.
 Entretanto, vamos organizar as coisas ...
 
 Por exemplo, quando fizermos o *download*, qual será o nome dos arquivos?

@@ -87,30 +87,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Minicurso: Raspando os Dados da Web com o R</title>
+  <title>Minicurso: Sobre esse site</title>
 
-  <meta property="description" itemprop="description" content="(uma indrodução)"/>
+  <meta property="description" itemprop="description" content="Entendendo alguns &quot;porquês&quot; ..."/>
 
 
-  <meta name="article:author" content="Ícaro Vidal Freire"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Minicurso: Raspando os Dados da Web com o R"/>
+  <meta property="og:title" content="Minicurso: Sobre esse site"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="(uma indrodução)"/>
+  <meta property="og:description" content="Entendendo alguns &quot;porquês&quot; ..."/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Minicurso"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Minicurso: Raspando os Dados da Web com o R"/>
-  <meta property="twitter:description" content="(uma indrodução)"/>
+  <meta property="twitter:title" content="Minicurso: Sobre esse site"/>
+  <meta property="twitter:description" content="Entendendo alguns &quot;porquês&quot; ..."/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site","author"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os Dados da Web com o R"]},{"type":"character","attributes":{},"value":["(uma indrodução)\n"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ícaro Vidal Freire"]},{"type":"character","attributes":{},"value":["<a href='https://ufrb.edu.br/portal/'> Centro de Formação de Professores<\/a>, UFRB, Amargosa"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description"]}},"value":[{"type":"character","attributes":{},"value":["Sobre esse site"]},{"type":"character","attributes":{},"value":["Entendendo alguns \"porquês\" ..."]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2039,8 +2038,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
-  <link href="site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-  <script src="site_libs/panelset-0.2.6/panelset.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2060,7 +2057,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Raspando os Dados da Web com o R","description":"(uma indrodução)","authors":[{"author":"Ícaro Vidal Freire","authorURL":"#","affiliation":"<a href='https://ufrb.edu.br/portal/'> Centro de Formação de Professores<\/a>, UFRB, Amargosa","affiliationURL":"#","orcidID":""}]}
+{"title":"Sobre esse site","description":"Entendendo alguns \"porquês\" ...","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2105,90 +2102,51 @@ Material Teórico
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Raspando os Dados da Web com o R</h1>
+<h1>Sobre esse site</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>(uma indrodução)</p></p>
+<p><p>Entendendo alguns “porquês” …</p></p>
 </div>
 
-<div class="d-byline">
-  Ícaro Vidal Freire  (<a href='https://ufrb.edu.br/portal/'> Centro de Formação de Professores</a>, UFRB, Amargosa)
-  
-
-</div>
 
 <div class="d-article">
-<h1 id="objetivo-do-minicurso">Objetivo do Minicurso</h1>
-<p>Antes de falarmos formalmente sobre o objetivo do Minicurso, considereremos as seguintes situações:</p>
-<div class="panelset">
-<section id="º-situação" class="panel">
-<h3>1º Situação</h3>
-<p>Encontramos um <em>site</em> que disponibiliza, gratuitamente, vários materiais que julgamos importantes armazenar também em nosso computador — para o caso de usá-los quando não estiver com <em>internet</em> disponível, por exemplo.</p>
-<p>Vamos supor que são 30 arquivos no formato <code>pdf</code>.</p>
-<p>O que faríamos?</p>
-<p>Clicaríamos em cada um deles e faríamos <em>download</em> desses arquivos manualmente? Bom, essa é uma opção válida, mas seria muito mais produtivo e elegante, se pudéssemos fazer o <em>download</em> de forma automatizada, não? Todos os 30 arquivos, de “uma só vez”, salvos num diretório (pasta) específico de nosso computador! Seria uma maravilha, não?</p>
-</section>
-<section id="º-situação-1" class="panel">
-<h3>2º Situação</h3>
-<p>Suponha, agora, que desejamos comprar alguns livros de um <em>site</em> que sempre oferece promoções interessantes. Mas, previamente estabelecemos que a compra seria realizada se esses livros estivessem com 30% de desconto.</p>
-<p>Obviamente poderíamos entrar no <em>site</em> todos os dias; procurar um a um; e, calcularmos se o desconto aconteceu. Mas, e se criássemos um <em>script</em> (uma sequência, encadeada, de comandos para que um programa execute uma ação) que possui como resultado uma tabela com os preços diários exibidos, já com o desconto efetivado, para que pudéssemos tomar uma decisão rapidamente?</p>
-</section>
-</div>
-<h3 id="formalizando-o-objetivo">Formalizando o objetivo</h3>
-<p>Essas duas situações são comumente encontradas no trabalho do professor ou estudante.</p>
-<p>O objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as duas situações, acima expostas, possam ser resolvidas de maneira racional, rápida e prazerosa.</p>
-<p>Para isso, introduziremos uma <strong>linguagem</strong> (e <strong>ambiente</strong>) de programação, denominada <strong>R</strong>. Na realidade, nosso foco será voltado a certos pacotes desenvolvidos que unificam uma estrutura de linguagem em <strong>R</strong>. Veremos que tal característica facilita muito o aprendizado das funções e potencialidades do <strong>R</strong>.</p>
-<blockquote>
-<p><strong>Não</strong> é objetivo desse minicurso uma exaustiva análise ou exibição de funções, estruturas, ou objetos em <strong>R</strong>.</p>
-</blockquote>
-<p>Apenas tangenciaremos alguns pacotes para usarmos as funções neles contidas, necessárias para solucionarmos as duas situações expostas no início desse texto. Logo, será uma <strong>Introdução ao R</strong>, mostrando que, dentre outras coisas, podemos fazer <strong>web scrape</strong> (“raspagem” de dados na <em>internet</em>) de maneira bem intuitiva e racional, ao mesmo tempo!</p>
-<p>Para isso, dividimos esse minicurso em três dias, para que a sedimentação das informações seja adequada e, assim, o minicurso seja usufruído da melhor maneira possível.</p>
-<p>Espero que gostem!</p>
-<h1 id="estruturação-do-minicurso">Estruturação do Minicurso</h1>
-<div class="panelset">
-<section id="º-dia" class="panel">
-<h3>1º Dia</h3>
+<h1 id="objetivo-desse-site">Objetivo desse site</h1>
+<p>Esse site tem por objetivo organizar a teoria, <em>slides</em> e vídeos do minicurso ofertado de forma <strong>remota</strong> no semestre acadêmico de 2021.1/2021.2 da <a href="https://ufrb.edu.br/portal/">UFRB</a>, no <a href="https://www.ufrb.edu.br/cfp/">Centro de Formação de Professores</a>, em Amargosa-BA.</p>
+<h1 id="objetivos-a-longo-prazo">Objetivos a longo prazo</h1>
+<p>Uma das intenções de oferecer esse minicurso é gerar material, bem como analisar uma estruturação de um futuro <strong>Programa de Extensão</strong> que envolverá, dentre outras coisa, ofertas de cursos para o professor de matemática (ou a quem interessar) que ajudem na “formação tecnológica”, essencial para lidar com dados e produtividade de sua área de atuação.</p>
+<p>Os cursos serão (a lista não está finalizada):</p>
 <ul>
-<li>Apresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;</li>
-<li>O que é Webscraping?</li>
-<li>Tangenciando a estrutura de um arquivo <code>html</code>;</li>
-<li>Usando o <em>SelectorGadget</em>;</li>
-<li>INTERVALO (~ 15 min)</li>
-<li>Vendo como funciona na prática!
-<ul>
-<li>Download simultâneo de vários arquivos de texto plano</li>
-</ul></li>
+<li><a href="https://www.latex-project.org/"><span class="math inline">\(\LaTeX\)</span></a>; uma linguagem de marcação para produção de documentos tipograficamente adequados à área de matemática e afins.</li>
+<li><a href="https://git-scm.com/">Git</a> e <a href="https://github.com/">GitHub</a>; para versionamento de arquivos.</li>
+<li><a href="https://www.r-project.org/"><strong>R</strong></a>, na perspectiva do <a href="https://www.tidyverse.org/"><em>tidyverse</em></a>; liguagem e ambiente de programação com ferramentas estatísticas diversas para analise de dados; produção textual; construção de sites; etc.</li>
+<li><a href="https://www.sagemath.org/">SageMath</a>; uma alternativa livre para o <em>software</em> Maple.</li>
+<li>…</li>
 </ul>
-</section>
-<section id="º-dia-1" class="panel">
-<h3>2º Dia</h3>
+<p>Obviamente, a preferencia será por <em>softwares livres</em>.</p>
+<h1 id="como-foi-feito-esse-site-e-o-material-do-minicurso">Como foi feito esse site e o material do minicurso?</h1>
+<p>Todo material, bem como esse próprio <em>site</em>, foram construídos com a linguagem <strong>R</strong>. Na realidade, usamos certos pacotes que utilizam o <strong>R</strong> como base.</p>
+<p>Especificamente:</p>
 <ul>
-<li>Introdução ao R
+<li>Usamos o <a href="https://rstudio.github.io/distill/"><code>distill</code></a> para construir o <em>site</em>
 <ul>
-<li>O que é o <code>R</code>?</li>
-<li>Objetos e Funções Básicas no R</li>
+<li>o pacote <a href="https://pkg.garrickadenbuie.com/xaringanExtra/#/"><code>xaringanExtra</code></a> foi usado para criar os “paineis”, ativando a função <code>use_panelset()</code>;</li>
 </ul></li>
-<li>INTERVALO (~ 15 min)</li>
-<li>Algo sobre o Tidyverse
-<ul>
-<li>tibble, dplyr;</li>
-<li>stringr;</li>
-<li>rvest</li>
-</ul></li>
-<li>Duas funções do pacote <code>fs</code> (File System)</li>
+<li>Usamos o <a href="https://slides.yihui.org/xaringan/#1"><code>Xaringan</code></a> para os <em>slides</em>;</li>
+<li>Usamos o <a href="https://rstudio.github.io/learnr/index.html"><code>learnr</code></a> para os tutoriais.</li>
 </ul>
-</section>
-<section id="º-dia-2" class="panel">
-<h3>3º Dia</h3>
-<ul>
-<li>Download simultâneo de vários arquivos binários (pdf);</li>
-<li>Download e limpeza de vários arquivos binários (pdf);</li>
-<li>Montando uma lista de preços para tomada de decisão;</li>
-<li>Raspagem de dados em mais de uma página.</li>
-</ul>
-</section>
-</div>
+<h1 id="onde-encontro-os-códigos">Onde encontro os códigos?</h1>
+<p>Todos os códigos estão diponíveis no GitHub <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Para acessar, basta clicar no ícone de um “gatinho preto” na <em>Home</em> desse <em>site</em>, ou visite o <em>link</em>:</p>
+<p align="center">
+<a href="https://github.com/icaro-freire/minicurso_web-scraping" class="uri">https://github.com/icaro-freire/minicurso_web-scraping</a>
+</p>
+<section class="footnotes" role="doc-endnotes">
+<hr />
+<ol>
+<li id="fn1" role="doc-endnote"><p>“plataforma de hospedagem de código-fonte e arquivos com controle de versão usando o <strong>Git</strong>” (Wikpédia)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></li>
+</ol>
+</section>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2196,6 +2154,15 @@ Material Teórico
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

@@ -1,7 +1,7 @@
 ---
-title: "Raspando os Dados da Web"
+title: "Raspando os Dados da Web com o R"
 description: |
-  Uma Indrodução ao R
+  (uma indrodução)
 site: distill::distill_website
 author:
   - name: Ícaro Vidal Freire
