@@ -28,5 +28,5 @@ navbar:
     - text: "Sobre"
       href: about.html
     - icon: fab fa-github
-      href: https://github.com/icaro-freire/site_webscraping
+      href: https://github.com/icaro-freire/minicurso_web-scraping
 output: distill::distill_article
