@@ -742,6 +742,6 @@ preco_desconto <- site_usp |>
 ### 5.3.2 Construindo a tabela
 
 
-
+teste
 
 ## 5.4 Raspagem com várias páginas
