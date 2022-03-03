@@ -125,3 +125,11 @@ Espero que gostem!
 
 :::
 :::
+
+## Horário Geral
+
+| Horário         | Atividade                             |
+| :-------------- | :------------------------------------ |
+| 19h até 20:45h  | `r emo::ji("book")` _Parte Teórica I_ |
+| 20:45 até 21h   | `r emo::ji("breakfast")` Intervalo    |
+| 21h até 22h     | `r emo::ji("book")` _Parte Teórica_ ou `r emo::ji("computer")` _Prática_ |
