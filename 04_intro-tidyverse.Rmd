@@ -29,7 +29,7 @@ Podemos listá-los com o seguinte comando:
 tidyverse::tidyverse_packages()
 ```
 
-Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:
+Entretanto, usaremos, apenas, sete desses pacotes nesse minicurso:
 
 - **readr**; usaremos a função `parse_double()` que, como o nome sugere, 
   passa um conjunto de caracteres para a categoria numérica. 
@@ -44,6 +44,8 @@ Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:
   símbolos, etc. 
   É bem útil para "limpeza" dos dados coletados numa raspagem da internet (as 
   coisas, geralmente, não vem "arrumadinhas").
+- **stringi**; apenas usaremos a função `stri_trans_general()`, com o argumento
+"Latin-ASCII", para retirar a acentuação das palavras.
 - **purrr**; para interações. Substitui as ideias das estruturas de repetições 
   (`loops`) na programação, como `for` ou `while`, por exemplo. 
 - **rvest**; para raspagem de dados em documentos html. 
@@ -753,9 +755,31 @@ livros_nomes |>
   base::iconv(to = "ASCII//TRANSLIT") %>%
   stringr::str_c("livros-matemática_", .)
 ```
+
 Temos, então, o suficiente do pacote `stringr` para nosso minicurso!
 
-### 4.2.6 purrr
+### 4.2.6 stringi
+
+Do pacote `stringi` só usaremos a função `stri_trans_general()`, com o argumento
+"Latin-ASCII".
+
+Nem sempre a função `incov()` retorna convenientemente os dados, por isso usaremos
+a função acima.
+
+Veja o exemplo:
+
+```{r}
+# fazendo  um nome com muita acentução e exibindo -----------------------------
+nome_doido <- "Àáäbcdéèëçã"
+nome_doido
+
+# usando a função stri_trans_general ------------------------------------------
+stringi::stri_trans_general(nome_doido, "Latin-ASCII")
+
+```
+
+
+### 4.2.7 purrr
 
 Por fim, mas não menos importante, precisamos de estruturas de *loops*.
 Com efeito, quando efetuamos raspagem de dados em muitas páginas que seguem um
@@ -835,6 +859,39 @@ Portanto, a iteração ocorre assim:
 ```{r}
 purrr::map_df(1:10, tabela_dobro)
 ```
+
+Massa, não?
+
+### 2.2.8 fs
+
+Por fim, por questções de organização, usaremos um pacote que não faz parte do 
+`tidyverse`, mas que posui a mesma filosofia de sintaxe nas suas funções.
+Com o pacote `fs` (de _File System_ ) podemos criar um diretório/pasta por meio 
+de códigos em R, usando a dinção `dir_create()`; bem como extrair nomes de 
+arquivos, com a função `path_file()`!
+
+Por exemplo, o comando:
+
+```{r, eval=FALSE}
+pasta_arquivos <- fs::dir_create("downloads/pasta_arquivos")
+```
+
+Atribui à variável `pasta_arquivos` à criação de um subdiretório de mesmo nome 
+(`pasta_arquivos`), dentro de um diretório por nome `downloads`.
+Ele criará os dois diretórios, caso não existam, ou criará o subdiretório `pasta_arquivos` se `download` já exista.
+)
+
+O código abaixo mostra como usar a outra função considerada:
+
+```{r}
+# link do site, com nome do arquivo ao final (exrtensão .Rmd)
+nome_arquivo <- "https://github.com/icaro-freire/minicurso_web-scraping/blob/feature/raspagem/04_intro-tidyverse.Rmd"
+nome_arquivo
+
+# usando a função path_dir()
+fs::path_file(nome_arquivo)
+```
+
 
 Todas essas considerações, capacita-nos à raspagem dos dados!!!
 
