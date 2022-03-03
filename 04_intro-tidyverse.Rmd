@@ -31,9 +31,11 @@ tidyverse::tidyverse_packages()
 
 Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:
 
-- **readr**; só usaremos a função `parse_double()` que, como o nome sugere, 
+- **readr**; usaremos a função `parse_double()` que, como o nome sugere, 
   passa um conjunto de caracteres para a categoria numérica. 
   Uma função do R Base que poderia fazer o mesmo papel seria `as.numeric()`.
+  também usaremos a função `write_csv()`, para formarmos uma saída com arquivo 
+  de extensão `csv`.
 - **tibble**; para construirmos "tabelas" (`tibbles`) especiais e visualizarmos 
   o resultado.
 - **dplyr**; para manipulação de dados (agrupar, selecionar, filtrar, arrumar, 
@@ -91,7 +93,7 @@ pacote::nome_funcao()
 A ideia do "pipe" (existem diversas traduções, mas a que me faz comprender a ideia 
 é a de “tubo”, como em uma “encanação”: você conecta as coisas) é, basicamente, 
 escrever o encadeamento do código como pensamos; bem como escrevê-lo em etapas 
-bem delimitadas, trazendo clareza em cada linha de código.
+sutilmente delimitadas, trazendo clareza em cada linha de código.
 
 O tidyverse, por meio do pacote `magrittr`, disponibiliza o pipe `%>%`, que pode
 ser acessado por meio do comando `Ctrl + Shift + M`.
@@ -254,6 +256,29 @@ Ao verificarmos a classe, percebemos que os dados passaram a ser numéricos:
 ```{r}
 class(valores_num)
 ```
+
+Dentro desse mesmo pacote há a função `write_csv()`.
+Ela possui a seguinte estrutura:
+
+```{r, eval=FALSE}
+write_csv(variavel-formada, "caminho/nome-com-extensao.csv")
+```
+
+Onde, `variavel-formada` é algum objeto (_data-frame_, por exemplo) que você 
+atribuiu à alguma variável e deseja salvar em `.csv`; e, `"caminho/nome-com-extensao"` 
+(notem as aspas!) é o caminho relativo que deseja-se "escrever" esse arquivo no 
+disco.
+
+Por exemplo, suponha que nosso objetivo seja salvar a `tibble` **tabela_livros** 
+no diretório `downloads` (dentro de sua área de trabalho no R).
+Basta, então, fazermos:
+
+```{r, eval=FALSE}
+write_csv(tabela_livros, "downloads/tabela-livros.csv")
+```
+
+Note que dei o mesmo nome "tabela_livros" ao arquivo formado.
+
 ### 4.2.3 dplyr
 
 O pacote [dplyr](https://dplyr.tidyverse.org/) fornece uma estruturação de funções
@@ -352,7 +377,7 @@ Para isso, vamos usar como exemplo o seguinte texto em html:
     <h2>Seção 01: Lista de links</h2>
       <p>Lista de links </p>
       <ul>
-        <li><a href='https://www.mathunion.org/'> União Internaciional de Matemática (IMU)</a></li>
+        <li><a href='https://www.mathunion.org/'> União Internacional de Matemática (IMU)</a></li>
         <li><a href='https://sbm.org.br/'> Sociedade Brasileira de Matemática (SBM)</a></li>
         <li><a href='https://www.sbmac.org.br/'> Sociedade Brasileira de Matemática Aplicada e Computacional (SBMAC)</a></li>
       </ul>
