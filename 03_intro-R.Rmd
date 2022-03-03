@@ -251,6 +251,10 @@ O código ficaria assim:
 iconv(musica, to = "ASCII//TRANSLIT")
 ```
 
+**Obs.:** O `tidyverse`, por meio do pacote `stringi` fornece uma função semelhante:
+`stri_trans_general()`, que podemos passar o argumento `"Latin-ASCII"`; ou seja,
+poderíamos, para o exemplo acima, usar `stringi::stri_trans_general(musica, "Latin-ASCII")`.
+
 ## 3.3 Operadores Lógicos
 
 Os seguintes operadores lógicos serão de muita importância na escrita de nossos 
