@@ -2130,6 +2130,7 @@ Material Teórico
 <li><a href="#rvest">4.2.4 rvest</a></li>
 <li><a href="#stringr">4.2.5 stringr</a></li>
 <li><a href="#purrr">4.2.6 purrr</a></li>
+<li><a href="#purrr-antigo">4.2.6 purrr (antigo)</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2155,7 +2156,7 @@ Material Teórico
 </div>
 <p>Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:</p>
 <ul>
-<li><strong>readr</strong>; só usaremos a função <code>parse_double()</code> que, como o nome sugere, passa um conjunto de caracteres para a categoria numérica. Uma função do R Base que poderia fazer o mesmo papel seria <code>as.numeric()</code>.</li>
+<li><strong>readr</strong>; usaremos a função <code>parse_double()</code> que, como o nome sugere, passa um conjunto de caracteres para a categoria numérica. Uma função do R Base que poderia fazer o mesmo papel seria <code>as.numeric()</code>. também usaremos a função <code>write_csv()</code>, para formarmos uma saída com arquivo de extensão <code>csv</code>.</li>
 <li><strong>tibble</strong>; para construirmos “tabelas” (<code>tibbles</code>) especiais e visualizarmos o resultado.</li>
 <li><strong>dplyr</strong>; para manipulação de dados (agrupar, selecionar, filtrar, arrumar, etc., certas características desejadas nas <code>tibbles</code>)</li>
 <li><strong>stringr</strong>; para manipulação de cadeias de caracteres, como frases, texto, símbolos, etc. É bem útil para “limpeza” dos dados coletados numa raspagem da internet (as coisas, geralmente, não vem “arrumadinhas”).</li>
@@ -2201,7 +2202,7 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 </div>
 </div>
 <h3 id="uso-dos-pipes">4.1.1 Uso dos pipes</h3>
-<p>A ideia do “pipe” (existem diversas traduções, mas a que me faz comprender a ideia é a de “tubo”, como em uma “encanação”: você conecta as coisas) é, basicamente, escrever o encadeamento do código como pensamos; bem como escrevê-lo em etapas bem delimitadas, trazendo clareza em cada linha de código.</p>
+<p>A ideia do “pipe” (existem diversas traduções, mas a que me faz comprender a ideia é a de “tubo”, como em uma “encanação”: você conecta as coisas) é, basicamente, escrever o encadeamento do código como pensamos; bem como escrevê-lo em etapas sutilmente delimitadas, trazendo clareza em cada linha de código.</p>
 <p>O tidyverse, por meio do pacote <code>magrittr</code>, disponibiliza o pipe <code>%&gt;%</code>, que pode ser acessado por meio do comando <code>Ctrl + Shift + M</code>.</p>
 <p>Para entendermos um pouco mais sobre o <code>%&gt;%</code>, lembremos das funções compostas. Ao compormos três funções, por exemplo, escrevemos:</p>
 <p><span class="math display">\[
@@ -2324,6 +2325,22 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 </div>
 <pre><code>[1] &quot;numeric&quot;</code></pre>
 </div>
+<p>Dentro desse mesmo pacote há a função <code>write_csv()</code>. Ela possui a seguinte estrutura:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>variavel</span><span class='op'>-</span><span class='va'>formada</span>, <span class='st'>"caminho/nome-com-extensao.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Onde, <code>variavel-formada</code> é algum objeto (<em>data-frame</em>, por exemplo) que você atribuiu à alguma variável e deseja salvar em <code>.csv</code>; e, <code>"caminho/nome-com-extensao"</code> (notem as aspas!) é o caminho relativo que deseja-se “escrever” esse arquivo no disco.</p>
+<p>Por exemplo, suponha que nosso objetivo seja salvar a <code>tibble</code> <strong>tabela_livros</strong> no diretório <code>downloads</code> (dentro de sua área de trabalho no R). Basta, então, fazermos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>tabela_livros</span>, <span class='st'>"downloads/tabela-livros.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Note que dei o mesmo nome “tabela_livros” ao arquivo formado.</p>
 <h3 id="dplyr">4.2.3 dplyr</h3>
 <p>O pacote <a href="https://dplyr.tidyverse.org/">dplyr</a> fornece uma estruturação de funções que seguem uma certa “gramática de manipulação de dados”. Isso fornece um conjunto consistente de “verbos” (os nomes das funções são verbos , em Inglês, que lembram a sua utilidade) que resolvem os desafios mais comuns na manipulação de dados.</p>
 <p>É um pacote fabuloso e que precisaríamos de um curso só para falar dele.</p>
@@ -2403,7 +2420,7 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>h2<span class="sc">&gt;</span>Seção <span class="dv">01</span><span class="sc">:</span> Lista de links<span class="sc">&lt;</span><span class="er">/</span>h2<span class="sc">&gt;</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>      <span class="er">&lt;</span>p<span class="sc">&gt;</span>Lista de links <span class="sc">&lt;</span><span class="er">/</span>p<span class="sc">&gt;</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="er">&lt;</span>ul<span class="sc">&gt;</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://www.mathunion.org/&#39;</span><span class="sc">&gt;</span> União Internaciional de Matemática (IMU)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://www.mathunion.org/&#39;</span><span class="sc">&gt;</span> União Internacional de Matemática (IMU)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://sbm.org.br/&#39;</span><span class="sc">&gt;</span> Sociedade Brasileira de Matemática (SBM)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://www.sbmac.org.br/&#39;</span><span class="sc">&gt;</span> Sociedade Brasileira de Matemática Aplicada e <span class="fu">Computacional</span> (SBMAC)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      <span class="er">&lt;/</span>ul<span class="sc">&gt;</span></span>
@@ -2767,6 +2784,24 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 </div>
 <p>Temos, então, o suficiente do pacote <code>stringr</code> para nosso minicurso!</p>
 <h3 id="purrr">4.2.6 purrr</h3>
+<p>Por fim, mas não menos importante, precisamos de estruturas de <em>loops</em>. Com efeito, quando efetuamos raspagem de dados em muitas páginas que seguem um mesmo padrão, apenas com mofificações pontuais, uma estrutura de repetição, torna-se imperativa.</p>
+<blockquote>
+<p>No R Base existem os “for” e “while” da vida, mas o pacote <code>purrr</code> torna isso tudo mais simples!</p>
+</blockquote>
+<p>A estruturação das funções do pacote <code>purrr</code> é:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'>funcao_purrr</span><span class='op'>(</span><span class='va'>args</span>, <span class='va'>funcao</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Onde:</p>
+<ul>
+<li><strong><code>funcao_purrr</code></strong>: é alguma função disponível no pacote. Existem muitas, mas usaremos a <code>map_df()</code> que transforma a saída em um <em>data frame</em> (na realidade numa <code>tibble</code>);</li>
+<li><strong><code>args</code></strong>: são os argumentos necessários para iteração. Dependendo da função, pode haver mais de um argumento. Mas, para o nosso caso, será apenas um argumento.</li>
+<li><strong><code>funcao</code></strong>: as funções do <code>purrr</code> iteram de acordo com a estrutura de uma “função” pré-determinada. Geralmente, criamos essa função com o padrão de repetição que observamos ser necessário.</li>
+</ul>
+<h3 id="purrr-antigo">4.2.6 purrr (antigo)</h3>
 <p>Por fim, mas não menos importante, precisamos de estruturas de <em>loops</em>. De fato, quando efetuamos uma raspagem de dados que consiste, por exemplo, do <em>download</em> de vários arquivos, a ideia é aplicar uma estrutura de repetição do <em>download</em> de um deles, nos outros arquivos.</p>
 <p>No R Base existem os “for” e “while” da vida, mas o pacote <code>purrr</code> torna isso tudo mais simples!</p>
 <p>Para entendermos a usabilidade de certas funções do pacote <code>purrr</code>, vamos considerar duas categorias de arquivos: arquivo de texto (como <em>scripts</em> “.R”); e, arquivos binários (como, por exemplo, “.pdf”).</p>

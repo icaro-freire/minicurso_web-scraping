@@ -758,164 +758,83 @@ Temos, então, o suficiente do pacote `stringr` para nosso minicurso!
 ### 4.2.6 purrr
 
 Por fim, mas não menos importante, precisamos de estruturas de *loops*.
-De fato, quando efetuamos uma raspagem de dados que consiste, por exemplo, do
-*download* de vários arquivos, a ideia é aplicar uma estrutura de repetição do
-*download* de um deles, nos outros arquivos.
+Com efeito, quando efetuamos raspagem de dados em muitas páginas que seguem um
+mesmo padrão, apenas com mofificações pontuais, uma estrutura de repetição, 
+torna-se imperativa.
 
-No R Base existem os "for" e "while" da vida, mas o pacote `purrr` torna isso 
+> No R Base existem os "for" e "while" da vida, mas o pacote `purrr` torna isso 
 tudo mais simples!
 
-Para entendermos a usabilidade de certas funções do pacote `purrr`, vamos 
-considerar duas categorias de arquivos: arquivo de texto (como *scripts* ".R");
-e, arquivos binários (como, por exemplo, ".pdf").
+A estruturação das funções do pacote `purrr` tem o seguinte formato:
 
-```{r}
-links_R <- c(
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_pi-ggplot.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_pi.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_primos.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/grafico_apresentacao.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/pontos-aleatorios_ggplot2.R"
+```{r, eval=FALSE}
+purrr::funcao_purrr(args, funcao)
+```
+
+Onde:
+
+- **`funcao_purrr`**: é alguma função disponível no pacote. Existem muitas, mas
+usaremos a `map_df()` que transforma a saída em um _data frame_ (na realidade
+numa `tibble`);
+- **`args`**: são os argumentos necessários para iteração. Dependendo da função,
+pode haver mais de um argumento. Mas, para o nosso caso, será apenas um argumento.
+- **`funcao`**: as funções do `purrr` iteram de acordo com a estrutura de uma 
+"função" pré-determinada. Geralmente, criamos essa função com  o padrão de 
+repetição que observamos ser necessário.
+
+Pra explicarmos essas funcionaliddes, vamos criar um exemplo bem artificial, mas
+adequado aos nossos fins.
+
+Dado um número natural, suponha que deseja-se criar uma tabela que exiba:
+na primeira coluna, o próprio número; e, na segunda coluna, o dobro desse número.
+
+Por exemplo, se o número em questão for "3", queremos algo assim:
+
+```{r, echo=FALSE}
+tibble::tibble(
+  numero = 3,
+  dobro  = 6
 )
-
-links_pdf <- c(
-  "https://sbm.org.br/wp-content/uploads/2021/10/Introducao-a-Geometria-Diferencial_Ronaldo-Freire-Lima.pdf",
-  "https://sbm.org.br/wp-content/uploads/2021/10/Sistemas-Dinamicos-Lineares-Joao-Socorro-Pinheiro-Ferreira.pdf",
-  "https://sbm.org.br/wp-content/uploads/2021/10/Teoria-de-Green-e-Escoamento-de-Poiseuille-Gilberlandio-Dias.pdf",
-  "https://sbm.org.br/wp-content/uploads/2021/10/Topicos-na-intersecao-ente-a-Teoria-dos-Grafos-e-Algebra-Abel-Ortiz_Thiago-Moreira.pdf"
-)
-
 ```
 
-Antes de começarmos os downloads, vamos organizar nosso espaço de trabalho.
-
-Uma coisa simples é criar um diretório para salvar os arquivos.
-Podemos fazer isso de muitas formas, mas vamos usar uma função do pacote `fs`,
-intitulada, **dir_create()**.
-Isso será importante para criarmos uma variável com o mesmo nome do diretório 
-onde salvaremos os arquivos; para que, possamos manipular adequadamente os 
-argumentos da função `download.file()` dentro do `purrr`.
-
-O nome do nosso diretório (pasta) será "download_arquivos":
-
-```{r, eval=FALSE}
-download_arquivos <- fs::dir_create("download_arquivos")
-```
-
-Agora, vamos relembrar como funciona a função `download.file()` fazendo o 
-*download*, por exemplo, do primeiro arquivo ".R" de nossa lista, ou seja, o 
-arquivo do link `links_R[1]`.
-
-Para isso, precisamos de duas coisas: a url do link, que já sabemos como obter; 
-e o destino junto com o nome desse arquivo, que, aliás, vamos deixar com o nome 
-original.
-Ora, a url é obtida fazendo `links_R[1]` e, como o nome desse arquivo é (tem que 
-olhar o nome final do link) "funcao_pi-ggplot.R", podemos estabelecer o destino 
-do download como: "download_arquivos/funcao_pi-ggplot.R", ou seja, dentro do
-diretório "download_arquivos", vamos salvar um arquivo de extensão ".R", por 
-nome "funcao_pi-ggplot".
-O código ficaria assim:
-
-```{r, eval=FALSE}
-download.file(links_R[1], "download_arquivos/funcao_pi-ggplot.R")
-```
-
-Nesse ponto, já começamos perceber o quanto seria bom extraírmmos os nomes dos 
-arquivos de forma rápida, sem precisar ver o nome "um por um"; pois, caso nossa
-lista de link seja consideravelmente maior, ficaria inviável.
-
-Portanto, ainda falando sobre organização, vamos extrair os nomes dos arquivos 
-acima com o auxílio, mais uma vez, do pacote `fs`, já que a função **path_file()** 
-faz esse serviço brilhantemente.
-
-Podemos extrair o nome original dos arquivos ".R" com o comando:
+Como montar uma função com essas ideias?
+Simples: usaremos a estrutura do R Base `function(variável){estruturação}` com 
+a função `tibble`, do pacote de mesmo nome.
+Uma possibilidade seria:
 
 ```{r}
-nomes_links_R <- fs::path_file(links_R)
-
-nomes_links_R
+tabela_dobro <- function(x){
+  tibble::tibble(
+    numero = x,
+    dobro  = 2 * (x)
+  )
+}
 ```
-E, para os arquivos ".pdf" assim:
+
+Veja que atribuímos à variável "`tabela_dobro`" a estrutura de função; logo, 
+podemos usar tal variável, como se fosse uma função: `tabela_dobro()`.
+
+Vamos testar para o caso do número "3", tal como fizemos anteriormente:
 
 ```{r}
-nomes_links_pdf <- fs::path_file(links_pdf)
-
-nomes_links_pdf
+tabela_dobro(3)
 ```
 
-Para nossos fins, vamos considerar até três argumentos da função `download.file()`,
-dependendo do seu Sistema Operacional.
-Quem usa GNU/Linux, só precisa de dois argumentos; mas, quem usa Windows, pode
-precisar de três argumentos.
+A saída é a mesma, não?
 
-- **GNU/Linux**: `dowload.file(url, destfile)`
-- **Windows**: `dowload.file(url, destfile, mode = "wb")`
+Mas, onde entre o `purrr`?
 
-O GNU/Linux consegue identificar os tipos de arquivos (texto ou binário) de forma
-automática, mas o Windows não.
-Para esse últuimo sistema operacional, os arquivos binários precisam ser
-especificados com o argumento `mode = "wb"`.
+Suponha, agora, que desejamos aplicar nossa função criada para TODOS os naturais
+de 1 até 10, agrupando-os em uma só tabela!
+Para esse processo iterativo, usaremos a função `map_df()` do pacote `purrr`.
+Antes, porém, devemos lembrar que essa sequência de números, pode ser obtida de
+muitas maneiras, mas ficaremos com `1:10` (poderíamos usar a função `seq()`, do R
+Base, da seguinte maneira: `seq(1, 10)`), por simplicidade.
+Portanto, a iteração ocorre assim:
 
-Portanto, na parte do download dos arquivos ".pdf", vamos diferenciar as coisas.
-Por enquanto, para arquivos de texto, vamos seguir de forma indistinta entre os
-sistemas operacionais.
-
-O código abaixo substitui o primeiro download realizado:
-
-```{r, eval=FALSE}
-download.file(links_R[1], download_arquivos/nomes_links_R[1])
+```{r}
+purrr::map_df(1:10, tabela_dobro)
 ```
 
-Ok ... Mas, como seria para todos os downloads?
-É aqui que entra o pacote `purrr`: a função **walk2()** nos ajudará nisso!
-Ela possui a seguinte estruturação:
+Todas essas considerações, capacita-nos à raspagem dos dados!!!
 
-```{r, eval=FALSE}
-purrr::walk2(arg1, arg2, função)
-```
-
-Ou seja, ela passa os dois argumentos para a função!
-Em nosso exemplo, a função é `download.file` e os argumentos são: 
-
-  - `arg1 = links_R`
-  - `arg2 = download_arquivos/nomes_links_R`.
-  
-Portando, temos o seguinte código para obtermos o download de todos os arquivos
-".R" listados:
-
-```{r, eval=FALSE}
-purrr::walk2(links_R, download_arquivos/nomes_links_R, download.file)
-```
-
-Agora, para download dos arquivos ".pdf", caso esteja no GNU/linux, fazemos:
-
-```{r, eval=FALSE}
-purrr::walk2(links_pdf, download_arquivos/nomes_links_pdf, download.file)
-```
-
-Mas, caso esteja no Windows, não poderemos usar mais a função `walk2`, pois ela
-APENAS passas dois argumentos; todavia, agora, aparecerá um terceito: `mode = "wb"`.
-
-Para três ou mais parâmetros, a função que estamos procurando é a **pwalk()**.
-Ela possui a seguinte estrutura:
-
-```{r, eval=FALSE}
-purrr::pwalk(lista, função)
-```
-
-No argumento "lista" criaremos uma lista com todos os argumentos necessários para
-a função.
-
-Para nosso exemplo, uma lista adequada seria:
-
-```{r, eval=FALSE}
-lista_args <- list(links_pdf, download_arquivos/nomes_links_pdf, mode = "wb")
-```
-
-Portanto, o download de todos os arquivos ".pdf", no Windows, fica:
-
-```{r, eval=FALSE}
-purrr::pwalk(lista_args, download.file)
-```
-
-Todas as considerações acima, capacita-nos à raspagem dos dados!!!
