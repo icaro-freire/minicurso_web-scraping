@@ -234,7 +234,7 @@ Nela vamos escrever o caminho onde queremos salvar os arquivos, juntamente com
 a lista dos nomes.
 
 Como, nesse minicurso, faremos download de vários arquivos, vamos criar um
-diretório mais geral, denominado **download_arquivos/**, onde serão salvos os 
+diretório mais geral, denominado **downloads/**, onde serão salvos os 
 arquivos dos sites específicos estudados.
 
 Por exemplo, para os arquivos desse site da UESC, criaremos um subdiretório por 
@@ -244,14 +244,13 @@ o nome da variável é o mesmo nome da pasta onde salvaremos os arquivos desse s
 O código fica assim:
 
 ```{r, eval=FALSE}
-arquivos_uesc <- fs::dir_create("download_arquivos/arquivos_uesc")
+arquivos_uesc <- fs::dir_create("downloads/arquivos_uesc")
 ```
 
-Por fim, vamos iterar o download para todos os 18 arquivos, usando o pacote
-`purrr`, por meio da função **walk2()**:
+Por fim, vamos iterar o download para todos os 18 arquivos, fazendo:
 
 ```{r, eval=FALSE}
-purrr::walk2(links_uesc, arquivos_uesc/nomes_links_uesc, download.file)
+download.file(links_uesc, arquivos_uesc/nomes_links_uesc)
 ```
 
 Maravilha, não?
@@ -265,34 +264,37 @@ Você pode conferir o *script* completo abaixo:
   
 ```{r, eval=FALSE}
 #==============================================================================
-# Raspando material sobre R
+# Download de arquivos com extensão .R
 # Ícaro Vidal Freire
-# data de acesso: 2021-12-19
+# 2022-03-04
 #==============================================================================
 
-# pacote usado ------------------------------------------------------------
+# carregando pacotes ------------------------------------------------------
 library(magrittr)
 
-# url do site -------------------------------------------------------------
+# preparando url ----------------------------------------------------------
 url_uesc <- "https://lec.pro.br/avale-es/r"
 
-# site para scraping ------------------------------------------------------
+# preparando o site -------------------------------------------------------
 site_uesc <- rvest::read_html(url_uesc)
 
-# raspando os materiais ---------------------------------------------------
-links_uesc <- site_uesc |> 
-  rvest::html_elements("li:nth-child(2) h5+ ul a") |> 
-  rvest::html_attr("href") %>% 
+# raspando os links -------------------------------------------------------
+links_uesc <- site_uesc |>
+  rvest::html_elements("li:nth-child(2) h5+ ul a") |>
+  rvest::html_attr("href") %>%
   stringr::str_c("https://lec.pro.br", .)
 
-# preparando para download ------------------------------------------------
-arquivos_uesc <- fs::dir_create("download_arquivos/arquivos_uesc")
-nomes_links_uesc <- fs::path_file(links_uesc)
+# raspando os nomes dos arquivos ------------------------------------------
+nomes_uesc <- fs::path_file(links_uesc)
+
+# preparando pasta para download ------------------------------------------
+arquivos_uesc <- fs::dir_create("downloads/arquivos_uesc")
 
 # fazendo o download ------------------------------------------------------
-purrr::walk2(links_uesc, arquivos_uesc/nomes_links_uesc, download.file)
+download.file(links_uesc, arquivos_uesc/nomes_uesc)
 
 #==============================================================================
+
 ```
   
 </details>
@@ -404,31 +406,25 @@ indexação o padão "_eureka", atribuindo à variável `nomes_eureka` esses
 procedimentos:
 
 ```{r}
-nomes_eureka <- stringr::str_c(index, "_eureka")
+nomes_eureka <- stringr::str_c(index, "_eureka.pdf")
 
 nomes_eureka
 ```
 
-Como já vimos, para criar um subdiretório, por nome "arquivos_eureka", no diretório `download_arquivos`, usamos a função `dir_create`, do pacote **fs**.
+Como já vimos, para criar um subdiretório, por nome "arquivos_eureka", no diretório `downloads`, usamos a função `dir_create`, do pacote **fs**.
 Atribuindo esse passo à variável `arquivos_eureka`, temos:
 
 ```{r, eval=FALSE}
 arquivos_eureka <- fs::dir_create("downloads/arquivos_eureka")
 ```
 
-Estamos quase aptos a realizar o dowload de tudo!
-Basta, criarmos a lista de argumentos para os parâmetros da função `pwalk()`:
-
-```{r, eval=FALSE}
-eureka_args <- list(links_eureka, arquivos_eureka/nomes_eureka, mode = "wb")
-```
-
 Por fim, podemos iterar esse procedimento para todos os arquivos com:
 
 ```{r, eval=FALSE}
-purrr::pwalk(eureka_args, download.file)
+download.file(links_eureka, arquivos_eureka/nomes_eureka)
 ```
 
+> Se você for usuário Windows, deve acrescentar o argumento `mode = wb`: `download.file(links_eureka, arquivos_eureka/nomes_eureka), mode = wb`
 
 Você pode conferir o *script* completo abaixo:
 
@@ -441,7 +437,7 @@ Você pode conferir o *script* completo abaixo:
 #==============================================================================
 # Download das revistas Eureka
 # Ícaro Vidal Freire
-# data de acesso: 2021-11-26
+# 2022-03-04
 #==============================================================================
 
 # url do site -------------------------------------------------------------
@@ -459,16 +455,13 @@ links_eureka <- site_eureka |>
 
 ## modificando os nomes
 index <- c(stringr::str_c("0", seq(1, 9)), seq(10, 42))
-nomes_eureka <- stringr::str_c(index, "_eureka")
+nomes_eureka <- stringr::str_c(index, "_eureka.pdf")
 
 ## criando os diretórios e caminhos
 arquivos_eureka <- fs::dir_create("downloads/arquivos_eureka")
 
-## preparando os argumentos para download
-eureka_args <- list(links_eureka, arquivos_eureka/nomes_eureka, mode = "wb")
-
 # fazendo os downloads ----------------------------------------------------
-purrr::pwalk(eureka_args, download.file)
+download.file(links_eureka, arquivos_eureka/nomes_eureka)
 
 #==============================================================================
 ```
@@ -546,6 +539,47 @@ tabela_wiki <- url_wki |>
 tabela_wiki
 ```
 
+Ainda podemos usar o elemento CCS para extrair a mesma tabela!
+Quantas possibilidades, não?
+Se você usar adequadamente o SelectorGadget, encontrará ".wikitable".
+Você pode conferir como fica, no script abaixo.
+
+<details>
+  <summary>
+    Script para download de arquivos, em pdf, da Revista Eureka
+  </summary>
+  
+```{r,eval=FALSE}
+#==============================================================================
+# Raspando uma tabela da Wikipédia
+# Ícaro Vidal Freire
+# 2022-03-04
+#==============================================================================
+
+# carregando pacote -------------------------------------------------------
+library(magrittr)
+
+# preparando url ----------------------------------------------------------
+url_wiki <- "https://pt.wikipedia.org/wiki/R_(linguagem_de_programa%C3%A7%C3%A3o)"
+
+# preparando site ---------------------------------------------------------
+site_wiki <- rvest::read_html(url_wiki)
+
+# raspando a tabela -------------------------------------------------------
+tabela_wiki <- site_wiki |>
+  rvest::html_elements(".wikitable") |>
+  rvest::html_table()
+
+# exibindo a tabela -------------------------------------------------------
+
+tabela_wiki
+
+#==============================================================================
+
+```
+  
+</details>
+
 ## 5.3 Construindo uma tabela para tomada de decisão
 
 No site da livraria da USP, na seção "ASSUNTOS", ao escolhermos "Matemática", 
@@ -557,7 +591,7 @@ somos direcionados para essa página:
   </a>
 </p>
 
-Há uma lista de 19 livros (acesso em 23/12/2021), mas suponha que nosso objetivo 
+Há uma lista de 19 livros (acesso em 04/03/2022), mas suponha que nosso objetivo 
 seja acompanhar a variação do preço de três deles:
 
 - Números: Uma Introdução à Matemática;
@@ -576,7 +610,7 @@ Portanto, precisamos extrair:
 - Uma lista espacífica que desejamos comparar (a nossa lista com os três livros);
 - Alguma condição para devolver os termos "compre" ou "aguarde.
 
-Vamos fazer isso passo a passo, mas antes de começarmos, é importante organizarmos
+Vamos fazer isso passo a passo; mas, antes de começarmos, é importante organizarmos
 as coisas:
 
 ```{r, eval=FALSE}
@@ -641,23 +675,39 @@ site_usp |>
   stringr::str_trim()
 ```
 
-Vamos salvar tudoo isso na variável `nomes_livros`:
+Vamos salvar tudoo isso na variável `titulos_usp`:
 
 ```{r}
-nomes_livros <- site_usp |> 
+titulos_usp <- site_usp |> 
   rvest::html_elements("#dvProdutos p") |> 
   rvest::html_text2() |> 
   stringr::str_trim()
 ```
 
-### 5.3.2 Extraindo os preços 
+### 5.3.2 Criando uma lista de desejos
+
+Nesse momento, depois que extraímos os títulos dos livros, interessa-nos selecionar
+aqueles desejados à compra.
+Basta criarmos um vetor e nomeá-lo "`lista_desejos`":
+
+```{r}
+lista_desejos <- c(
+  "Números: Uma Introdução à Matemática",
+  "Poeta, um Matemático e um Físico, Um:...",
+  "Programação Matemática para Otimização..."
+)
+```
+
+> Os nomes devem ser EXATAMENTE como aparecem na raspagem dos títulos.
+
+### 5.3.3 Extraindo os preços 
 
 Para extração dos preços, lembremos que são duas categorias: 
 
-- "De ..."; que substituiremos por `preco_antigo`.
-- "Por ..."; que substituiremos por `preco_desconto`.
+- "De ..."; que substituiremos por `preco_antigo_usp`.
+- "Por ..."; que substituiremos por `preco_desconto_usp`.
 
-#### 5.3.2.1 Preço antigo
+#### 5.3.3.1 Preço antigo
 
 Utilizando o SelectorGadget, ao clicarmos na região onde há um "traço" no preço,
 encontramos o seguinte elemento CSS: "strike".
@@ -714,10 +764,10 @@ site_usp |>
   readr::parse_double()
 ```
 
-Vamos atribuir à variável `preco_antigo` esses códigos:
+Vamos atribuir à variável `preco_antigo_usp` esses códigos:
 
 ```{r}
-preco_antigo <- site_usp |> 
+preco_antigo_usp <- site_usp |> 
   rvest::html_elements("strike") |> 
   rvest::html_text2() |> 
   stringr::str_sub(4) |> 
@@ -725,12 +775,12 @@ preco_antigo <- site_usp |>
   readr::parse_double()
 ```
 
-#### 5.3.2.2 Preço antigo
+#### 5.3.3.2 Preço com Desconto
 
-Procedendo de forma análoga, podemos extrair o `preco_desconto`:
+Procedendo de forma análoga, podemos extrair o `preco_desconto_usp`:
 
 ```{r}
-preco_desconto <- site_usp |> 
+preco_desconto_usp <- site_usp |> 
   rvest::html_elements("h2+ h2") |>     # elemento CSS
   rvest::html_text2() |>                # extração do conteúdo (texto)
   stringr::str_trim() |>                # eliminando espaços indesejáveis
@@ -739,9 +789,142 @@ preco_desconto <- site_usp |>
   readr::parse_double()                 # transformando 'character' para 'numeric'
 ```
 
-### 5.3.2 Construindo a tabela
+### 5.3.3 Construindo a tabela
 
+#### 5.3.3.1 Um script como estamos acostumados
 
-teste
+Para construirmos uma tabela, usaremos a função `tibble()` do pacote de mesmo nome.
+Nessa tabela, existirão quatro colunas (variáveis): _titulo_, _preco_antigo_, _preco_desconto_, _decisao_.
+
+Na variável `decisão`, precisamos colocar uma **condicional**. 
+Usaremos, então, a função **`if_else()`** do pacote `dplyr`.
+Nossa condição é: se `preco_desconto` for _menor ou igual_ a 20% de desconto no `preco_antigo`, então desejamos que apareceça a mensagem "compre!!!"; caso contrário, que apareça a mensagem "aguarde".
+Um desconto de, pelo menos, 20% é multiplicarmos o `preco_antigo` por `(1 - 0.2)`; assim,
+usando os operadores lógicos, podemos escrever a condição dessa forma:
+
+<p align='center'>
+  `preco_desconto <= (1 - 0.2) * preco_antigo`
+</p>
+
+Portando, os argumentos da função `if_else` ficará assim:
+
+```{r, eval=FALSE}
+dplyr::if_else(preco_desconto <= (1 - 0.2) * preco_antigo), "compre!!!", "aguarde")
+```
+
+Agora, podemos construir a tabela:
+
+```{r}
+tibble::tibble(
+  titulo       = titulos_usp,
+  preco_antigo = preco_antigo_usp,
+  preco_novo   = preco_desconto_usp,
+  decisao      = dplyr::if_else(preco_novo <= (1 - 0.2) * preco_antigo, "compre!!!", "agarde")
+)
+```
+
+Obviamente, queremos filtrar, apenas, os livros de nossa lista de desejos.
+Usaremos um operador do R Base que nos dá a ideia de "inclusão".
+De fato, queremos apenas _filtrar_ da variável `titulo`, queles que estão na `lista_desejos`.
+O operador em questão é `%in%`.
+
+Voltando à tabela, que denominaremos `tabela_usp`, temos o código:
+
+```{r}
+# criando a tabela com o filtro -----------------------------------------------
+tabela_usp <- 
+  tibble::tibble(
+    titulo       = titulos_usp,
+    preco_antigo = preco_antigo_usp,
+    preco_novo   = preco_desconto_usp,
+    decisao      = dplyr::if_else(preco_novo <= (1 - 0.2) * preco_antigo, "compre!!!", "agarde")
+  ) |> 
+  dplyr::filter(titulo %in% lista_desejos)
+
+# exibindo a tabela -----------------------------------------------------------
+tabela_usp
+```
+
+Você pode conferir o código completo, abaixo:
+
+<details>
+  <summary>
+    Script para construção de tabela de decisão para compra de livros
+  </summary>
+  
+```{r, eval=FALSE}
+#==============================================================================
+# Tabela para tomada de decisão na compra de livros da USP
+# Ícaro Vidal Freire
+# 2022-03-04
+#==============================================================================
+
+# preparando a url --------------------------------------------------------
+url_usp <- "https://www.edusp.com.br/loja/assuntos/21/matematica"
+
+# preparando o site -------------------------------------------------------
+site_usp <- url_usp |>
+  httr::GET(httr::config(ssl_verifypeer = FALSE)) |>
+  rvest::read_html()
+
+# raspando todos os títulos -----------------------------------------------
+titulos_usp <- site_usp |>
+  rvest::html_elements("#dvProdutos p") |>
+  rvest::html_text2() |>
+  stringr::str_trim()
+
+# construindo uma lista de desejos ----------------------------------------
+lista_desejos <- c(
+  "Números: Uma Introdução à Matemática",
+  "Poeta, um Matemático e um Físico, Um:...",
+  "Programação Matemática para Otimização..."
+)
+
+# raspando o preço antigo -------------------------------------------------
+preco_antigo_usp <- site_usp |>
+  rvest::html_elements("strike") |>
+  rvest::html_text2() |>
+  stringr::str_sub(4) |>
+  stringr::str_replace_all(",", ".") |>
+  readr::parse_double()
+
+# raspando o novo preço ---------------------------------------------------
+preco_novo_usp <- site_usp |>
+  rvest::html_elements("h2+ h2") |>
+  rvest::html_text2() |>
+  stringr::str_trim() |>
+  stringr::str_sub(8) |>
+  stringr::str_replace_all(",", ".") |>
+  readr::parse_double()
+
+# criando tabela de decisão -----------------------------------------------
+tabela_usp <-
+  tibble::tibble(
+    titulo       = titulos_usp,
+    preco_antigo = preco_antigo_usp,
+    preco_novo   = preco_novo_usp,
+    decisao      = dplyr::if_else(preco_novo <= (1 - 0.2) * preco_antigo, "compre!!!", "agarde")
+  ) |>
+  dplyr::filter(titulo %in% lista_desejos)
+
+#==============================================================================
+```
+  
+<details>
+
+#### 5.3.3.2 Um script mais geral
+
+Vamos melhorar um pouco o script da subseção anterior: como modificar o script
+para que o mesmo possua uma variável mais flexível na porcentagem de desconto?
+
+Esclarecendo mais: no script passado, estabelecemos, pelo menos, 20% como 
+desconto desejado. 
+Mas,se quiséssemos, agora, pelo menos, 10%?
+E se amanhã, quiséssemos pelo menos 12%?
+
+Ficar olahdno
+
+#### 5.3.3.3 Um script com interação no terminal (um programa)
+
 
 ## 5.4 Raspagem com várias páginas

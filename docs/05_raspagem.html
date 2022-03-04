@@ -93,8 +93,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2022-03-03"/>
-  <meta property="article:created" itemprop="dateCreated" content="2022-03-03"/>
+  <meta property="article:published" itemprop="datePublished" content="2022-03-04"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-03-04"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Minicurso: Raspando os dados com R"/>
@@ -112,7 +112,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os dados com R"]},{"type":"character","attributes":{},"value":["Para facilitar nossa vida!\n"]},{"type":"character","attributes":{},"value":["2022-03-03"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os dados com R"]},{"type":"character","attributes":{},"value":["Para facilitar nossa vida!\n"]},{"type":"character","attributes":{},"value":["2022-03-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2062,7 +2062,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Raspando os dados com R","description":"Para facilitar nossa vida!","authors":[],"publishedDate":"2022-03-03T00:00:00.000-03:00"}
+{"title":"Raspando os dados com R","description":"Para facilitar nossa vida!","authors":[],"publishedDate":"2022-03-04T00:00:00.000-03:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2131,7 +2131,8 @@ Material Teórico
 <li><a href="#construindo-uma-tabela-para-tomada-de-decisão">5.3 Construindo uma tabela para tomada de decisão</a>
 <ul>
 <li><a href="#extraindo-os-nomes-dos-livros">5.3.1 Extraindo os nomes dos livros</a></li>
-<li><a href="#extraindo-os-preços">5.3.2 Extraindo os preços</a></li>
+<li><a href="#criando-uma-lista-de-desejos">5.3.2 Criando uma lista de desejos</a></li>
+<li><a href="#extraindo-os-preços">5.3.3 Extraindo os preços</a></li>
 <li><a href="#construindo-a-tabela">5.3.2 Construindo a tabela</a></li>
 </ul></li>
 <li><a href="#raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</a></li>
@@ -2313,18 +2314,18 @@ Material Teórico
 </div>
 </div>
 <p>Vimos que a função <code>download.file()</code> precisa de dois argumentos para fazer o <em>download</em> de um arquivo de texto plano: o <em>link</em> e o caminho para salvar o arquivo. Já temos o <em>link</em> e, para não fazermos manualmente a criação de diretórios para salvar os arquivos, vamos usar uma outra função do pacote <code>fs</code>: <strong>dir_create()</strong>. Nela vamos escrever o caminho onde queremos salvar os arquivos, juntamente com a lista dos nomes.</p>
-<p>Como, nesse minicurso, faremos download de vários arquivos, vamos criar um diretório mais geral, denominado <strong>download_arquivos/</strong>, onde serão salvos os arquivos dos sites específicos estudados.</p>
+<p>Como, nesse minicurso, faremos download de vários arquivos, vamos criar um diretório mais geral, denominado <strong>downloads/</strong>, onde serão salvos os arquivos dos sites específicos estudados.</p>
 <p>Por exemplo, para os arquivos desse site da UESC, criaremos um subdiretório por nome “arquivos_uesc/”. Vamos atribuir à variável <strong>arquivos_uesc</strong> todo esse procedimento (note que o nome da variável é o mesmo nome da pasta onde salvaremos os arquivos desse site). O código fica assim:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>arquivos_uesc</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"download_arquivos/arquivos_uesc"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>arquivos_uesc</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"downloads/arquivos_uesc"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p>Por fim, vamos iterar o download para todos os 18 arquivos, usando o pacote <code>purrr</code>, por meio da função <strong>walk2()</strong>:</p>
+<p>Por fim, vamos iterar o download para todos os 18 arquivos, fazendo:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>walk2</a></span><span class='op'>(</span><span class='va'>links_uesc</span>, <span class='va'>arquivos_uesc</span><span class='op'>/</span><span class='va'>nomes_links_uesc</span>, <span class='va'>download.file</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>links_uesc</span>, <span class='va'>arquivos_uesc</span><span class='op'>/</span><span class='va'>nomes_links_uesc</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
@@ -2337,32 +2338,34 @@ Script para download dos arquivos, em R, disponíveis no site da UESC
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#==============================================================================</span>
-<span class='co'># Raspando material sobre R</span>
+<span class='co'># Download de arquivos com extensão .R</span>
 <span class='co'># Ícaro Vidal Freire</span>
-<span class='co'># data de acesso: 2021-12-19</span>
+<span class='co'># 2022-03-04</span>
 <span class='co'>#==============================================================================</span>
 
-<span class='co'># pacote usado ------------------------------------------------------------</span>
+<span class='co'># carregando pacotes ------------------------------------------------------</span>
 <span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
 
-<span class='co'># url do site -------------------------------------------------------------</span>
+<span class='co'># preparando url ----------------------------------------------------------</span>
 <span class='va'>url_uesc</span> <span class='op'>&lt;-</span> <span class='st'>"https://lec.pro.br/avale-es/r"</span>
 
-<span class='co'># site para scraping ------------------------------------------------------</span>
+<span class='co'># preparando o site -------------------------------------------------------</span>
 <span class='va'>site_uesc</span> <span class='op'>&lt;-</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='va'>url_uesc</span><span class='op'>)</span>
 
-<span class='co'># raspando os materiais ---------------------------------------------------</span>
-<span class='va'>links_uesc</span> <span class='op'>&lt;-</span> <span class='va'>site_uesc</span> |&gt; 
-  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"li:nth-child(2) h5+ ul a"</span><span class='op'>)</span> |&gt; 
-  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_attr.html'>html_attr</a></span><span class='op'>(</span><span class='st'>"href"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span> 
+<span class='co'># raspando os links -------------------------------------------------------</span>
+<span class='va'>links_uesc</span> <span class='op'>&lt;-</span> <span class='va'>site_uesc</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"li:nth-child(2) h5+ ul a"</span><span class='op'>)</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_attr.html'>html_attr</a></span><span class='op'>(</span><span class='st'>"href"</span><span class='op'>)</span> <span class='op'><a href='https://magrittr.tidyverse.org/reference/pipe.html'>%&gt;%</a></span>
   <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='st'>"https://lec.pro.br"</span>, <span class='va'>.</span><span class='op'>)</span>
 
-<span class='co'># preparando para download ------------------------------------------------</span>
-<span class='va'>arquivos_uesc</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"download_arquivos/arquivos_uesc"</span><span class='op'>)</span>
-<span class='va'>nomes_links_uesc</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='va'>links_uesc</span><span class='op'>)</span>
+<span class='co'># raspando os nomes dos arquivos ------------------------------------------</span>
+<span class='va'>nomes_uesc</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='va'>links_uesc</span><span class='op'>)</span>
+
+<span class='co'># preparando pasta para download ------------------------------------------</span>
+<span class='va'>arquivos_uesc</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"downloads/arquivos_uesc"</span><span class='op'>)</span>
 
 <span class='co'># fazendo o download ------------------------------------------------------</span>
-<span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>walk2</a></span><span class='op'>(</span><span class='va'>links_uesc</span>, <span class='va'>arquivos_uesc</span><span class='op'>/</span><span class='va'>nomes_links_uesc</span>, <span class='va'>download.file</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>links_uesc</span>, <span class='va'>arquivos_uesc</span><span class='op'>/</span><span class='va'>nomes_uesc</span><span class='op'>)</span>
 
 <span class='co'>#==============================================================================</span>
 </code></pre>
@@ -2457,42 +2460,40 @@ Script para download dos arquivos, em R, disponíveis no site da UESC
 <p>Portanto, para criarmos a lista com 42 nomes padronizados, vamos aglutinar à indexação o padão “_eureka”, atribuindo à variável <code>nomes_eureka</code> esses procedimentos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nomes_eureka</span> <span class='op'>&lt;-</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='va'>index</span>, <span class='st'>"_eureka"</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nomes_eureka</span> <span class='op'>&lt;-</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='va'>index</span>, <span class='st'>"_eureka.pdf"</span><span class='op'>)</span>
 
 <span class='va'>nomes_eureka</span>
 </code></pre>
 </div>
-<pre><code> [1] &quot;01_eureka&quot; &quot;02_eureka&quot; &quot;03_eureka&quot; &quot;04_eureka&quot; &quot;05_eureka&quot;
- [6] &quot;06_eureka&quot; &quot;07_eureka&quot; &quot;08_eureka&quot; &quot;09_eureka&quot; &quot;10_eureka&quot;
-[11] &quot;11_eureka&quot; &quot;12_eureka&quot; &quot;13_eureka&quot; &quot;14_eureka&quot; &quot;15_eureka&quot;
-[16] &quot;16_eureka&quot; &quot;17_eureka&quot; &quot;18_eureka&quot; &quot;19_eureka&quot; &quot;20_eureka&quot;
-[21] &quot;21_eureka&quot; &quot;22_eureka&quot; &quot;23_eureka&quot; &quot;24_eureka&quot; &quot;25_eureka&quot;
-[26] &quot;26_eureka&quot; &quot;27_eureka&quot; &quot;28_eureka&quot; &quot;29_eureka&quot; &quot;30_eureka&quot;
-[31] &quot;31_eureka&quot; &quot;32_eureka&quot; &quot;33_eureka&quot; &quot;34_eureka&quot; &quot;35_eureka&quot;
-[36] &quot;36_eureka&quot; &quot;37_eureka&quot; &quot;38_eureka&quot; &quot;39_eureka&quot; &quot;40_eureka&quot;
-[41] &quot;41_eureka&quot; &quot;42_eureka&quot;</code></pre>
+<pre><code> [1] &quot;01_eureka.pdf&quot; &quot;02_eureka.pdf&quot; &quot;03_eureka.pdf&quot; &quot;04_eureka.pdf&quot;
+ [5] &quot;05_eureka.pdf&quot; &quot;06_eureka.pdf&quot; &quot;07_eureka.pdf&quot; &quot;08_eureka.pdf&quot;
+ [9] &quot;09_eureka.pdf&quot; &quot;10_eureka.pdf&quot; &quot;11_eureka.pdf&quot; &quot;12_eureka.pdf&quot;
+[13] &quot;13_eureka.pdf&quot; &quot;14_eureka.pdf&quot; &quot;15_eureka.pdf&quot; &quot;16_eureka.pdf&quot;
+[17] &quot;17_eureka.pdf&quot; &quot;18_eureka.pdf&quot; &quot;19_eureka.pdf&quot; &quot;20_eureka.pdf&quot;
+[21] &quot;21_eureka.pdf&quot; &quot;22_eureka.pdf&quot; &quot;23_eureka.pdf&quot; &quot;24_eureka.pdf&quot;
+[25] &quot;25_eureka.pdf&quot; &quot;26_eureka.pdf&quot; &quot;27_eureka.pdf&quot; &quot;28_eureka.pdf&quot;
+[29] &quot;29_eureka.pdf&quot; &quot;30_eureka.pdf&quot; &quot;31_eureka.pdf&quot; &quot;32_eureka.pdf&quot;
+[33] &quot;33_eureka.pdf&quot; &quot;34_eureka.pdf&quot; &quot;35_eureka.pdf&quot; &quot;36_eureka.pdf&quot;
+[37] &quot;37_eureka.pdf&quot; &quot;38_eureka.pdf&quot; &quot;39_eureka.pdf&quot; &quot;40_eureka.pdf&quot;
+[41] &quot;41_eureka.pdf&quot; &quot;42_eureka.pdf&quot;</code></pre>
 </div>
-<p>Como já vimos, para criar um subdiretório, por nome “arquivos_eureka”, no diretório <code>download_arquivos</code>, usamos a função <code>dir_create</code>, do pacote <strong>fs</strong>. Atribuindo esse passo à variável <code>arquivos_eureka</code>, temos:</p>
+<p>Como já vimos, para criar um subdiretório, por nome “arquivos_eureka”, no diretório <code>downloads</code>, usamos a função <code>dir_create</code>, do pacote <strong>fs</strong>. Atribuindo esse passo à variável <code>arquivos_eureka</code>, temos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>arquivos_eureka</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"downloads/arquivos_eureka"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p>Estamos quase aptos a realizar o dowload de tudo! Basta, criarmos a lista de argumentos para os parâmetros da função <code>pwalk()</code>:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>eureka_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>links_eureka</span>, <span class='va'>arquivos_eureka</span><span class='op'>/</span><span class='va'>nomes_eureka</span>, mode <span class='op'>=</span> <span class='st'>"wb"</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
 <p>Por fim, podemos iterar esse procedimento para todos os arquivos com:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>pwalk</a></span><span class='op'>(</span><span class='va'>eureka_args</span>, <span class='va'>download.file</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>links_eureka</span>, <span class='va'>arquivos_eureka</span><span class='op'>/</span><span class='va'>nomes_eureka</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
+<blockquote>
+<p>Se você for usuário Windows, deve acrescentar o argumento <code>mode = wb</code>: <code>download.file(links_eureka, arquivos_eureka/nomes_eureka), mode = wb</code></p>
+</blockquote>
 <p>Você pode conferir o <em>script</em> completo abaixo:</p>
 <details>
 <summary>
@@ -2503,7 +2504,7 @@ Script para download de arquivos, em pdf, da Revista Eureka
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#==============================================================================</span>
 <span class='co'># Download das revistas Eureka</span>
 <span class='co'># Ícaro Vidal Freire</span>
-<span class='co'># data de acesso: 2021-11-26</span>
+<span class='co'># 2022-03-04</span>
 <span class='co'>#==============================================================================</span>
 
 <span class='co'># url do site -------------------------------------------------------------</span>
@@ -2521,16 +2522,13 @@ Script para download de arquivos, em pdf, da Revista Eureka
 
 <span class='co'>## modificando os nomes</span>
 <span class='va'>index</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='st'>"0"</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>9</span><span class='op'>)</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>42</span><span class='op'>)</span><span class='op'>)</span>
-<span class='va'>nomes_eureka</span> <span class='op'>&lt;-</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='va'>index</span>, <span class='st'>"_eureka"</span><span class='op'>)</span>
+<span class='va'>nomes_eureka</span> <span class='op'>&lt;-</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span><span class='va'>index</span>, <span class='st'>"_eureka.pdf"</span><span class='op'>)</span>
 
 <span class='co'>## criando os diretórios e caminhos</span>
 <span class='va'>arquivos_eureka</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"downloads/arquivos_eureka"</span><span class='op'>)</span>
 
-<span class='co'>## preparando os argumentos para download</span>
-<span class='va'>eureka_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>links_eureka</span>, <span class='va'>arquivos_eureka</span><span class='op'>/</span><span class='va'>nomes_eureka</span>, mode <span class='op'>=</span> <span class='st'>"wb"</span><span class='op'>)</span>
-
 <span class='co'># fazendo os downloads ----------------------------------------------------</span>
-<span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>pwalk</a></span><span class='op'>(</span><span class='va'>eureka_args</span>, <span class='va'>download.file</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>links_eureka</span>, <span class='va'>arquivos_eureka</span><span class='op'>/</span><span class='va'>nomes_eureka</span><span class='op'>)</span>
 
 <span class='co'>#==============================================================================</span>
 </code></pre>
@@ -2698,12 +2696,48 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </code></pre>
 </div>
 </div>
+<p>Ainda podemos usar o elemento CCS para extrair a mesma tabela! Quantas possibilidades, não? Se você usar adequadamente o SelectorGadget, encontrará “.wikitable”. Você pode conferir como fica, no script abaixo.</p>
+<details>
+<summary>
+Script para download de arquivos, em pdf, da Revista Eureka
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#==============================================================================</span>
+<span class='co'># Raspando uma tabela da Wikipédia</span>
+<span class='co'># Ícaro Vidal Freire</span>
+<span class='co'># 2022-03-04</span>
+<span class='co'>#==============================================================================</span>
+
+<span class='co'># carregando pacote -------------------------------------------------------</span>
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://magrittr.tidyverse.org'>magrittr</a></span><span class='op'>)</span>
+
+<span class='co'># preparando url ----------------------------------------------------------</span>
+<span class='va'>url_wiki</span> <span class='op'>&lt;-</span> <span class='st'>"https://pt.wikipedia.org/wiki/R_(linguagem_de_programa%C3%A7%C3%A3o)"</span>
+
+<span class='co'># preparando site ---------------------------------------------------------</span>
+<span class='va'>site_wiki</span> <span class='op'>&lt;-</span> <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='va'>url_wiki</span><span class='op'>)</span>
+
+<span class='co'># raspando a tabela -------------------------------------------------------</span>
+<span class='va'>tabela_wiki</span> <span class='op'>&lt;-</span> <span class='va'>site_wiki</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".wikitable"</span><span class='op'>)</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_table.html'>html_table</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># exibindo a tabela -------------------------------------------------------</span>
+
+<span class='va'>tabela_wiki</span>
+
+<span class='co'>#==============================================================================</span>
+</code></pre>
+</div>
+</div>
+</details>
 <h2 id="construindo-uma-tabela-para-tomada-de-decisão">5.3 Construindo uma tabela para tomada de decisão</h2>
 <p>No site da livraria da USP, na seção “ASSUNTOS”, ao escolhermos “Matemática”, somos direcionados para essa página:</p>
 <p align="center">
 <a href='https://www.edusp.com.br/loja/assuntos/21/matematica'> https://www.edusp.com.br/loja/assuntos/21/matematica </a>
 </p>
-<p>Há uma lista de 19 livros (acesso em 23/12/2021), mas suponha que nosso objetivo seja acompanhar a variação do preço de três deles:</p>
+<p>Há uma lista de 19 livros (acesso em 04/03/2022), mas suponha que nosso objetivo seja acompanhar a variação do preço de três deles:</p>
 <ul>
 <li>Números: Uma Introdução à Matemática;</li>
 <li>Um Poeta, um Matemático e um Físico;</li>
@@ -2718,7 +2752,7 @@ Script para download de arquivos, em pdf, da Revista Eureka
 <li>Uma lista espacífica que desejamos comparar (a nossa lista com os três livros);</li>
 <li>Alguma condição para devolver os termos “compre” ou “aguarde.</li>
 </ul>
-<p>Vamos fazer isso passo a passo, mas antes de começarmos, é importante organizarmos as coisas:</p>
+<p>Vamos fazer isso passo a passo; mas, antes de começarmos, é importante organizarmos as coisas:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='co'># url do site -----------------------------------------------------------------</span>
@@ -2833,21 +2867,36 @@ Script para download de arquivos, em pdf, da Revista Eureka
 [18] &quot;Topologia Geométrica para Inquietos&quot;      
 [19] &quot;Uma Variável Complexa: Teoria e...&quot;       </code></pre>
 </div>
-<p>Vamos salvar tudoo isso na variável <code>nomes_livros</code>:</p>
+<p>Vamos salvar tudoo isso na variável <code>titulos_usp</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nomes_livros</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>titulos_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
   <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span> |&gt; 
   <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
   <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<h3 id="extraindo-os-preços">5.3.2 Extraindo os preços</h3>
+<h3 id="criando-uma-lista-de-desejos">5.3.2 Criando uma lista de desejos</h3>
+<p>Nesse momento, depois que extraímos os títulos dos livros, interessa-nos selecionar aqueles desejados à compra. Basta criarmos um vetor e nomeá-lo “<code>lista_desejos</code>”:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista_desejos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+  <span class='st'>"Números: Uma Introdução à Matemática"</span>,
+  <span class='st'>"Poeta, um Matemático e um Físico, Um:..."</span>,
+  <span class='st'>"Programação Matemática para Otimização..."</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<blockquote>
+<p>Os nomes devem ser EXATAMENTE como aparecem na raspagem dos títulos.</p>
+</blockquote>
+<h3 id="extraindo-os-preços">5.3.3 Extraindo os preços</h3>
 <p>Para extração dos preços, lembremos que são duas categorias:</p>
 <ul>
-<li>“De …”; que substituiremos por <code>preco_antigo</code>.</li>
-<li>“Por …”; que substituiremos por <code>preco_desconto</code>.</li>
+<li>“De …”; que substituiremos por <code>preco_antigo_usp</code>.</li>
+<li>“Por …”; que substituiremos por <code>preco_desconto_usp</code>.</li>
 </ul>
 <h4 id="preço-antigo">5.3.2.1 Preço antigo</h4>
 <p>Utilizando o SelectorGadget, ao clicarmos na região onde há um “traço” no preço, encontramos o seguinte elemento CSS: “strike”.</p>
@@ -2931,10 +2980,10 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </div>
 <pre><code> [1] 40 66 74 52 45 40 80 78 34 52 42 44 30 50 52 44 74 36 38</code></pre>
 </div>
-<p>Vamos atribuir à variável <code>preco_antigo</code> esses códigos:</p>
+<p>Vamos atribuir à variável <code>preco_antigo_usp</code> esses códigos:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>preco_antigo</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>preco_antigo_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
   <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt; 
   <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
   <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> |&gt; 
@@ -2943,11 +2992,11 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </code></pre>
 </div>
 </div>
-<h4 id="preço-antigo-1">5.3.2.2 Preço antigo</h4>
-<p>Procedendo de forma análoga, podemos extrair o <code>preco_desconto</code>:</p>
+<h4 id="preço-com-desconto">5.3.2.2 Preço com Desconto</h4>
+<p>Procedendo de forma análoga, podemos extrair o <code>preco_desconto_usp</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>preco_desconto</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>preco_desconto_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
   <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"h2+ h2"</span><span class='op'>)</span> |&gt;     <span class='co'># elemento CSS</span>
   <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;                <span class='co'># extração do conteúdo (texto)</span>
   <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;                <span class='co'># eliminando espaços indesejáveis</span>
@@ -2958,9 +3007,76 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </div>
 </div>
 <h3 id="construindo-a-tabela">5.3.2 Construindo a tabela</h3>
-<p>teste</p>
+<p>Para construirmos uma tabela, usaremos a função <code>tibble()</code> do pacote de mesmo nome. Nessa tabela, existirão quatro colunas (variáveis): <em>titulo</em>, <em>preco_antigo</em>, <em>preco_desconto</em>, <em>decisao</em>.</p>
+<p>Na variável <code>decisão</code>, precisamos colocar uma <strong>condicional</strong>. Usaremos, então, a função <strong><code>if_else()</code></strong> do pacote <code>dplyr</code>. Nossa condição é: se <code>preco_desconto</code> for <em>menor ou igual</em> a 20% de desconto no <code>preco_antigo</code>, então desejamos que apareceça a mensagem “compre!!!”; caso contrário, que apareça a mensagem “aguarde”. Um desconto de, pelo menos, 20% é multiplicarmos o <code>preco_antigo</code> por <code>(1 - 0.2)</code>; assim, usando os operadores lógicos, podemos escrever a condição dessa forma:</p>
+<p align="center">
+<code>preco_desconto &lt;= (1 - 0.2) * preco_antigo</code>
+</p>
+<p>Portando, os argumentos da função <code>if_else</code> ficará assim:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>dplyr<span class="sc">::</span><span class="fu">if_else</span>(preco_desconto <span class="sc">&lt;=</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fl">0.2</span>) <span class="sc">*</span> preco_antigo), <span class="st">&quot;compre!!!&quot;</span>, <span class="st">&quot;aguarde&quot;</span><span class="er">)</span></span></code></pre></div>
+</div>
+<p>Agora, podemos construir a tabela:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+  titulo       <span class='op'>=</span> <span class='va'>titulos_usp</span>,
+  preco_antigo <span class='op'>=</span> <span class='va'>preco_antigo_usp</span>,
+  preco_novo   <span class='op'>=</span> <span class='va'>preco_desconto_usp</span>,
+  decisao      <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>preco_novo</span> <span class='op'>&lt;=</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>preco_antigo</span>, <span class='st'>"compre!!!"</span>, <span class='st'>"agarde"</span><span class='op'>)</span>
+<span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 19 × 4
+   titulo                              preco_antigo preco_novo decisao
+   &lt;chr&gt;                                      &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
+ 1 Amostragem Probabilística: Um Curs…           40       32   compre…
+ 2 Bioestatística em Outras Palavras             66       52.8 compre…
+ 3 Cálculo em uma Variável Real                  74       59.2 compre…
+ 4 Cálculo Integral Avançado                     52       41.6 compre…
+ 5 Curso de Álgebra Linear, Um                   45       36   compre…
+ 6 Ética em Computação                           40       32   compre…
+ 7 Introdução à Física Estatística               80       64   compre…
+ 8 Introdução à Mecânica Clássica                78       62.4 compre…
+ 9 Lógica Matemática                             34       27.2 compre…
+10 Noções de Probabilidade e Estatíst…           52       41.6 compre…
+11 Números: Uma Introdução à Matemáti…           42       33.6 compre…
+12 Ondas e Ondaletas: Da Análise de...           44       35.2 compre…
+13 Poeta, um Matemático e um Físico, …           30       24   compre…
+14 Probabilidade e Variáveis Aleatóri…           50       40   compre…
+15 Probabilidade: Um Curso Introdutór…           52       41.6 compre…
+16 Programação Matemática para Otimiz…           44       35.2 compre…
+17 Técnicas Computacionais para Dinâm…           74       59.2 compre…
+18 Topologia Geométrica para Inquietos           36       28.8 compre…
+19 Uma Variável Complexa: Teoria e...            38       30.4 compre…</code></pre>
+</div>
+<p>Obviamente, queremos filtrar, apenas, os livros de nossa lista de desejos. Usaremos um operador do R Base que nos dá a ideia de “inclusão”. De fato, queremos apenas <em>filtrar</em> da variável <code>titulo</code>, queles que estão na <code>lista_desejos</code>. O operador em questão é <code>%in%</code>.</p>
+<p>Voltando à tabela, que denominaremos <code>tabela_usp</code>, temos o código:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># criando a tabela com o filtro -----------------------------------------------</span>
+<span class='va'>tabela_usp</span> <span class='op'>&lt;-</span> 
+  <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+    titulo       <span class='op'>=</span> <span class='va'>titulos_usp</span>,
+    preco_antigo <span class='op'>=</span> <span class='va'>preco_antigo_usp</span>,
+    preco_novo   <span class='op'>=</span> <span class='va'>preco_desconto_usp</span>,
+    decisao      <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>preco_novo</span> <span class='op'>&lt;=</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>preco_antigo</span>, <span class='st'>"compre!!!"</span>, <span class='st'>"agarde"</span><span class='op'>)</span>
+  <span class='op'>)</span> |&gt; 
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>titulo</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>lista_desejos</span><span class='op'>)</span>
+
+<span class='co'># exibindo a tabela -----------------------------------------------------------</span>
+<span class='va'>tabela_usp</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 3 × 4
+  titulo                               preco_antigo preco_novo decisao
+  &lt;chr&gt;                                       &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;  
+1 Números: Uma Introdução à Matemática           42       33.6 compre…
+2 Poeta, um Matemático e um Físico, U…           30       24   compre…
+3 Programação Matemática para Otimiza…           44       35.2 compre…</code></pre>
+</div>
 <h2 id="raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
