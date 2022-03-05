@@ -627,7 +627,6 @@ Error in open.connection(x, "rb") :
   SSL certificate problem: unable to get local issuer certificate
 ```
 
-
 Notem que houve um problema de Certificado de SSL.
 Vimos que, para contornar isso, retiramos a verificação do certificado 
 (`ssl_verifypeer = FALSE`) com a função `config()`, do pacote **httr**, dentro 
@@ -648,6 +647,11 @@ site_usp <- url_usp |>
 Utilizando o SelectorGadget, clicamos sobre um dos títulos do livro e fazemos os
 ajustes necessários (aparecerão elementos no rodapé da página do site que não são
 convenientes).
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/usp_titulos.png")
+```
+
 Com isso, um possível CSS é: "#dvProdutos p".
 
 ```{r}
@@ -717,6 +721,10 @@ site_usp |>
   rvest::html_elements("strike")
 ```
 
+```{r, echo=FALSE}
+knitr::include_graphics("img/usp_preco-antigo.png")
+```
+
 Retirando o texto dessa *tag*, temos:
 
 ```{r}
@@ -776,6 +784,10 @@ preco_antigo_usp <- site_usp |>
 ```
 
 #### 5.3.3.2 Preço com Desconto
+
+```{r, echo=FALSE}
+knitr::include_graphics("img/usp_preco-desconto.png")
+```
 
 Procedendo de forma análoga, podemos extrair o `preco_desconto_usp`:
 
@@ -922,9 +934,293 @@ desconto desejado.
 Mas,se quiséssemos, agora, pelo menos, 10%?
 E se amanhã, quiséssemos pelo menos 12%?
 
-Ficar olahdno
+Ficar olhando todo o código e mudando a porcentagem pode não ser uma boa opção.
+Se, ao menos, pudéssemos separar o corpo do código com o ato que desejamos, já
+seria uma boa opção.
+Uma forma de fazer isso é criar uma função, que denominaremos `desconto_usp()`, 
+que incorpora o código acima, ou seja, que raspe os dados e retorne uma tabela 
+de decisão, mas que mantenha a porcentagem como uma variável.
+Assim, se quisséssemos conferir para 20%, bastaria modificar o argumento da função
+assim: `desconto_usp(0.2)`.
+
+Então, vamos usar a estrutura `function(variavel){códigos}` para isso.
+No lugar de "variável", vamos denotar por "percent", para lembrarmos que trata-se
+da porcentagem.
+Depois, no lugar onde está `(1 - 0.2)`, mudamos para `(1 - percent)`; ou seja, 
+estamos retirando um valor numérico específico e colocando uma variável no lugar 
+dele.
+Por fim, ao final de todo o código, depois de termos definido a função, escrevemos
+`desconto(0.2)`.
+
+Veja o script completo abaixo:
+
+<details>
+  <summary>
+    Script para criação de uma função para tabela de decisão
+  </summary>
+  
+```{r, eval=FALSE}
+#==============================================================================
+# Tabela para tomada de decisão na compra de livros da USP (MODO FUNÇÃO)
+# Ícaro Vidal Freire
+# 2022-03-04
+#==============================================================================
+
+# criando a função ============================================================
+
+desconto_usp <- function(percent){
+  # preparando a url --------------------------------------------------------
+  url_usp <- "https://www.edusp.com.br/loja/assuntos/21/matematica"
+  
+  # preparando o site -------------------------------------------------------
+  site_usp <- url_usp |>
+    httr::GET(httr::config(ssl_verifypeer = FALSE)) |>
+    rvest::read_html()
+  
+  # raspando todos os títulos -----------------------------------------------
+  titulos_usp <- site_usp |>
+    rvest::html_elements("#dvProdutos p") |>
+    rvest::html_text2() |>
+    stringr::str_trim()
+  
+  # construindo uma lista de desejos ----------------------------------------
+  lista_desejos <- c(
+    "Números: Uma Introdução à Matemática",
+    "Poeta, um Matemático e um Físico, Um:...",
+    "Programação Matemática para Otimização..."
+  )
+  
+  # raspando o preço antigo -------------------------------------------------
+  preco_antigo_usp <- site_usp |>
+    rvest::html_elements("strike") |>
+    rvest::html_text2() |>
+    stringr::str_sub(4) |>
+    stringr::str_replace_all(",", ".") |>
+    readr::parse_double()
+  
+  # raspando o novo preço ---------------------------------------------------
+  preco_novo_usp <- site_usp |>
+    rvest::html_elements("h2+ h2") |>
+    rvest::html_text2() |>
+    stringr::str_trim() |>
+    stringr::str_sub(8) |>
+    stringr::str_replace_all(",", ".") |>
+    readr::parse_double()
+  
+  # criando tabela de decisão -----------------------------------------------
+  tabela_usp <-
+    tibble::tibble(
+      titulo       = titulos_usp,
+      preco_antigo = preco_antigo_usp,
+      preco_novo   = preco_novo_usp,
+      decisao      = dplyr::if_else(preco_novo <= (1 - percent) * preco_antigo, "compre!!!", "agarde")
+    ) |>
+    dplyr::filter(titulo %in% lista_desejos)
+  # exibindo a tabela ---------------------------------------------------------
+  tabela_usp
+}
+
+# usando a função =============================================================
+desconto_usp(0.2)
+#==============================================================================
+```
+
+</details>
+
+Pronto, agora, caso você queira modificar a porcentagem, basta ir até o argumento
+final da função e mudar o número.
+
+Então, você pode salvar o arquivo (vamos usar o nome `usp.R`) na sua área de 
+trabalho principal e, usando o terminal, digitar:
+
+```{r, eval=FALSE}
+Rscript usp.R
+```
+
+Pronto! 
+Você receberá, depois de alguns segundos, a tabela de decisão.
 
 #### 5.3.3.3 Um script com interação no terminal (um programa)
 
+A solução anterior é muito útil, mas ainda ficamos com a sensação de que poderia
+melhorar ...
+Por exemplo, seria possível criarmos um programa que perguntásse-nos a porcentagem
+do desconto e, depois de digitado o valor, ele retornasse a tabela de decisão?
+Sim! Isso é possível!
+Basta acrescentarmos, depois da função construída, os comandos (notem o ";", ao 
+final dos comandos):
+
+```{r, eval=FALSE}
+cat("Digite uma porcentagem para o desconto: "); # exibe uma mensagem na tela e aguarda um valor
+percent <- readLines("stdin", n = 1);            # armazena valor que digitarmos
+desconto_usp(percent)                            # calcula o valor na função e retorna a tabela
+```
+
+É interessante definirmos a variável `percent` como sendo numérica.
+Para isso, usamos a conhecida função `parse_double()`, do pacote `readr`.
+
+O cógido completo pode ser visto abaixo:
+
+<details>
+  <summary>
+    Script para Tabela de Decisão (Modo Interativo)
+  </summary>
+  
+```{r, eval=FALSE}
+#==============================================================================
+# Criando tabela de decisão para compra de livros (Modo Interativo)
+# Ícaro Vidal Freire
+# 2022-03-04
+#==============================================================================
+
+# criando a função ------------------------------------------------------------
+desconto_usp <- function(percent){
+  # passando a variável para numérica
+    percent <- readr::parse_double(percent)
+  # preparando a url
+    url_usp <- "https://www.edusp.com.br/loja/assuntos/21/matematica"
+  # preparando o site 
+    site_usp <- url_usp |>
+      httr::GET(httr::config(ssl_verifypeer = FALSE)) |> 
+      rvest::read_html()
+  # raspando titulos
+    titulos_usp <- site_usp |> 
+      rvest::html_elements("#dvProdutos p") |> 
+      rvest::html_text2() |> 
+      stringr::str_trim()
+  # raspando preço antigo
+    preco_antigo_usp <- site_usp |> 
+      rvest::html_elements("strike") |> 
+      rvest::html_text2() |> 
+      stringr::str_sub(4) |> 
+      stringr::str_replace_all(",", ".") |> 
+      readr::parse_double()
+  # raspando preço com desconto
+    preco_novo_usp <- site_usp |> 
+      rvest::html_elements("h2+ h2") |> 
+      rvest::html_text2() |>
+      stringr::str_trim() |> 
+      stringr::str_sub(8) |> 
+      stringr::str_replace_all(",", ".") |> 
+      readr::parse_double()
+  # criando tabela de decisão geral
+    tabela_geral <- tibble::tibble(
+      titulo = titulos_usp,
+      preco_antigo = preco_antigo_usp,
+      preco_novo = preco_novo_usp,
+      desconto = dplyr::if_else(preco_novo <= (1 - percent) * preco_antigo, "compre!!!", "aguarde")
+    ) 
+  # criando lista de desejos
+    lista_desejos <- c(
+      "Introdução à Mecânica Clássica", 
+      "Poeta, um Matemático e um Físico, Um:...", 
+      "Programação Matemática para Otimização..."
+    )
+  # filtrando as opções desejadas
+    tabela_usp <- tabela_geral |> 
+      dplyr::filter(titulo %in% lista_desejos)
+  # exibindo tabela de decisão
+    print(tabela_usp)
+}
+
+# modo interativo no terminal -------------------------------------------------
+cat("Digite uma porcentagem: ");
+percent <- readLines("stdin", n = 1);
+desconto_usp(percent)
+```
+
+</details>
 
 ## 5.4 Raspagem com várias páginas
+
+Vamos usar o site [Mises Brasil](https://mises.org.br/), que percente ao 
+**Instituto Ludwig von Mises - Brasil** ("IMB").
+
+> "O IBM é uma associação voltada à produção e à disseminação de estudos 
+econômicos e de ciências sociais que promovam os princípios de livre mercado e 
+de uma sociedade livre."
+
+Ao entrarmos na parte de "Artigos", subseção "arquivo"; encontraremos uma
+lista de todos os artigos disponibilizados pelo site.
+São 25 páginas que pretendemos raspar os `títulos`, os `autores` e as `datas`.
+
+A url considerada (clicando na página 1) é:
+
+```{r}
+url_mises <- "https://www.mises.org.br/Articles_Thumbs.aspx?page=0&type=0&text="
+```
+
+Quando extraimos dados de várias páginas, as requisições no servidor almentam
+consideravelmente.
+Respeitar a regra estabelecida por cada site é fundamental.
+
+O pacote [`polite`](https://dmi3kno.github.io/polite/) fornece-nos duas funções
+estremamente úteis nesse processo "polido" (_polite_) de fazer requisições ao
+servidor.
+
+A primeira função é a [`bow(url, user_agent = ...)`](https://dmi3kno.github.io/polite/reference/bow.html).
+Ela, basicamente, apresenta suas requisições às regras do site pretendido e as
+respeita.
+Inclusive você pode adicionar seu nome ou projeto no argumento `user_agent`, mas
+não é obrigatório.
+
+```{r}
+polite::bow(url_mises, user_agent = "Curso de Extensão: Raspando os Dados da Web com o R")
+```
+
+Notem que o site é "raspável" e possui um _delay_ de 5 segundos.
+Ou seja, a cada requisição, ele espera 5 segundos.
+Isso mostra que não será tão imetiato esse processo de raspagem, visto que terá 
+um tempo de espera a ser considerado.
+
+Depois de fazer as requisições ao site, devemos extrair o `html` da página.
+Vinhamos fazendo isso com `rvest::read_html()`, mas o pacote `polite` fornece
+a [`scrape()`](https://dmi3kno.github.io/polite/reference/scrape.html) que faz
+a mesma coisa e ainda possui diversos parâmetros.
+
+Vamos atribuir à variável `site_mises` o processo de pedir requisição, com `bow()`; e,
+ler o `html`, com `scrape()`.
+Podemos usar o `pipe` para concatenar tudo:
+
+```{r}
+site_mises <- url_mises |> 
+  polite::bow() |> 
+  polite::scrape()
+```
+
+São 25 páginas, mas é importante fazermos a raspagem de uma das páginas (no caso,
+a primrira) para visualizarmos algum padrão e, assim, formarmos a ideia de 
+generalização às outras.
+
+### 5.4.1 Raspagem na primeira página
+
+Usando corretamente o SelectorGadget, podemos extrair os elementos CSS associados, 
+respectivamente à _data_, _autor_ e _título_, bem como usar as ferramentas de 
+limpeza para separá-los.
+O código abaixo resume essas ideias:
+
+```{r}
+# raspando a data -------------------------------------------------------------
+data_mises_pg1 <- site_mises |> 
+  rvest::html_elements(".mis-text-sans span:nth-child(1)") |> 
+  rvest::html_text2() |> 
+  lubridate::dmy()
+
+# raspando o autor ------------------------------------------------------------
+autor_mises_pg1 <- site_mises |> 
+  rvest::html_elements(".mis-text") |> 
+  rvest::html_text2()
+
+# raspando o título -----------------------------------------------------------
+titulo_mises_pg1 <- site_mises |> 
+  rvest::html_elements(".thumbsArticle") |> 
+  rvest::html_text2()
+  
+```
+
+Na raspagem das datas, usamos a função `dmy()`, do pacote `lubridate` (que é um 
+dos pacotes do `tidyverse`).
+O seu uso foi necessário, pois, quando extraímos as datas, na realidade extraímos 
+um conjunto de caracteres.
+A função `dmy()` diz ao R que esse conjunto de caracteres, são datas!
+

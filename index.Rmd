@@ -72,7 +72,8 @@ unificam uma estrutura de linguagem em **R**.
 Veremos que tal característica facilita muito o aprendizado das funções e 
 potencialidades do **R**.
 
-> **Não** é objetivo desse minicurso uma exaustiva análise ou exibição de funções, estruturas, ou objetos em **R**.
+> **Não** é objetivo desse minicurso uma exaustiva análise ou exibição de 
+funções, estruturas, ou objetos em **R**.
 
 Apenas tangenciaremos alguns pacotes para usarmos as funções neles contidas, 
 necessárias para solucionarmos as duas situações expostas no início desse texto.
@@ -94,7 +95,7 @@ Espero que gostem!
   
   - Apresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;
   - O que é Webscraping?
-  - Tangenciando a estrutura de um arquivo `html`;
+  - Tangenciando a estrutura de um arquivo `html` ;
   - Usando o *SelectorGadget*;
   - INTERVALO (~ 15 min)
   - Vendo como funciona na prática!
