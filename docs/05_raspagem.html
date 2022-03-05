@@ -93,8 +93,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--  https://schema.org/Article -->
-  <meta property="article:published" itemprop="datePublished" content="2022-03-04"/>
-  <meta property="article:created" itemprop="dateCreated" content="2022-03-04"/>
+  <meta property="article:published" itemprop="datePublished" content="2022-03-05"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-03-05"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
   <meta property="og:title" content="Minicurso: Raspando os dados com R"/>
@@ -112,7 +112,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os dados com R"]},{"type":"character","attributes":{},"value":["Para facilitar nossa vida!\n"]},{"type":"character","attributes":{},"value":["2022-03-04"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os dados com R"]},{"type":"character","attributes":{},"value":["Para facilitar nossa vida!\n"]},{"type":"character","attributes":{},"value":["2022-03-05"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2062,7 +2062,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Raspando os dados com R","description":"Para facilitar nossa vida!","authors":[],"publishedDate":"2022-03-04T00:00:00.000-03:00"}
+{"title":"Raspando os dados com R","description":"Para facilitar nossa vida!","authors":[],"publishedDate":"2022-03-05T00:00:00.000-03:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2133,9 +2133,12 @@ Material Teórico
 <li><a href="#extraindo-os-nomes-dos-livros">5.3.1 Extraindo os nomes dos livros</a></li>
 <li><a href="#criando-uma-lista-de-desejos">5.3.2 Criando uma lista de desejos</a></li>
 <li><a href="#extraindo-os-preços">5.3.3 Extraindo os preços</a></li>
-<li><a href="#construindo-a-tabela">5.3.2 Construindo a tabela</a></li>
+<li><a href="#construindo-a-tabela">5.3.3 Construindo a tabela</a></li>
 </ul></li>
-<li><a href="#raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</a></li>
+<li><a href="#raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</a>
+<ul>
+<li><a href="#raspagem-na-primeira-página">5.4.1 Raspagem na primeira página</a></li>
+</ul></li>
 </ul></li>
 </ul>
 </nav>
@@ -2782,7 +2785,11 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </div>
 </div>
 <h3 id="extraindo-os-nomes-dos-livros">5.3.1 Extraindo os nomes dos livros</h3>
-<p>Utilizando o SelectorGadget, clicamos sobre um dos títulos do livro e fazemos os ajustes necessários (aparecerão elementos no rodapé da página do site que não são convenientes). Com isso, um possível CSS é: “#dvProdutos p”.</p>
+<p>Utilizando o SelectorGadget, clicamos sobre um dos títulos do livro e fazemos os ajustes necessários (aparecerão elementos no rodapé da página do site que não são convenientes).</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="img/usp_titulos.png" width="1516" /></p>
+</div>
+<p>Com isso, um possível CSS é: “#dvProdutos p”.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_usp</span> |&gt; 
@@ -2898,7 +2905,7 @@ Script para download de arquivos, em pdf, da Revista Eureka
 <li>“De …”; que substituiremos por <code>preco_antigo_usp</code>.</li>
 <li>“Por …”; que substituiremos por <code>preco_desconto_usp</code>.</li>
 </ul>
-<h4 id="preço-antigo">5.3.2.1 Preço antigo</h4>
+<h4 id="preço-antigo">5.3.3.1 Preço antigo</h4>
 <p>Utilizando o SelectorGadget, ao clicarmos na região onde há um “traço” no preço, encontramos o seguinte elemento CSS: “strike”.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -2926,6 +2933,9 @@ Script para download de arquivos, em pdf, da Revista Eureka
 [17] &lt;strike&gt;R$ 74,00&lt;/strike&gt;
 [18] &lt;strike&gt;R$ 36,00&lt;/strike&gt;
 [19] &lt;strike&gt;R$ 38,00&lt;/strike&gt;</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="img/usp_preco-antigo.png" width="1528" /></p>
 </div>
 <p>Retirando o texto dessa <em>tag</em>, temos:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2992,7 +3002,10 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </code></pre>
 </div>
 </div>
-<h4 id="preço-com-desconto">5.3.2.2 Preço com Desconto</h4>
+<h4 id="preço-com-desconto">5.3.3.2 Preço com Desconto</h4>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="img/usp_preco-desconto.png" width="1470" /></p>
+</div>
 <p>Procedendo de forma análoga, podemos extrair o <code>preco_desconto_usp</code>:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -3006,7 +3019,8 @@ Script para download de arquivos, em pdf, da Revista Eureka
 </code></pre>
 </div>
 </div>
-<h3 id="construindo-a-tabela">5.3.2 Construindo a tabela</h3>
+<h3 id="construindo-a-tabela">5.3.3 Construindo a tabela</h3>
+<h4 id="um-script-como-estamos-acostumados">5.3.3.1 Um script como estamos acostumados</h4>
 <p>Para construirmos uma tabela, usaremos a função <code>tibble()</code> do pacote de mesmo nome. Nessa tabela, existirão quatro colunas (variáveis): <em>titulo</em>, <em>preco_antigo</em>, <em>preco_desconto</em>, <em>decisao</em>.</p>
 <p>Na variável <code>decisão</code>, precisamos colocar uma <strong>condicional</strong>. Usaremos, então, a função <strong><code>if_else()</code></strong> do pacote <code>dplyr</code>. Nossa condição é: se <code>preco_desconto</code> for <em>menor ou igual</em> a 20% de desconto no <code>preco_antigo</code>, então desejamos que apareceça a mensagem “compre!!!”; caso contrário, que apareça a mensagem “aguarde”. Um desconto de, pelo menos, 20% é multiplicarmos o <code>preco_antigo</code> por <code>(1 - 0.2)</code>; assim, usando os operadores lógicos, podemos escrever a condição dessa forma:</p>
 <p align="center">
@@ -3075,8 +3089,328 @@ Script para download de arquivos, em pdf, da Revista Eureka
 2 Poeta, um Matemático e um Físico, U…           30       24   compre…
 3 Programação Matemática para Otimiza…           44       35.2 compre…</code></pre>
 </div>
+<p>Você pode conferir o código completo, abaixo:</p>
+<details>
+<summary>
+Script para construção de tabela de decisão para compra de livros
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#==============================================================================</span>
+<span class='co'># Tabela para tomada de decisão na compra de livros da USP</span>
+<span class='co'># Ícaro Vidal Freire</span>
+<span class='co'># 2022-03-04</span>
+<span class='co'>#==============================================================================</span>
+
+<span class='co'># preparando a url --------------------------------------------------------</span>
+<span class='va'>url_usp</span> <span class='op'>&lt;-</span> <span class='st'>"https://www.edusp.com.br/loja/assuntos/21/matematica"</span>
+
+<span class='co'># preparando o site -------------------------------------------------------</span>
+<span class='va'>site_usp</span> <span class='op'>&lt;-</span> <span class='va'>url_usp</span> |&gt;
+  <span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/GET.html'>GET</a></span><span class='op'>(</span><span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/config.html'>config</a></span><span class='op'>(</span>ssl_verifypeer <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># raspando todos os títulos -----------------------------------------------</span>
+<span class='va'>titulos_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># construindo uma lista de desejos ----------------------------------------</span>
+<span class='va'>lista_desejos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+  <span class='st'>"Números: Uma Introdução à Matemática"</span>,
+  <span class='st'>"Poeta, um Matemático e um Físico, Um:..."</span>,
+  <span class='st'>"Programação Matemática para Otimização..."</span>
+<span class='op'>)</span>
+
+<span class='co'># raspando o preço antigo -------------------------------------------------</span>
+<span class='va'>preco_antigo_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> |&gt;
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt;
+  <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># raspando o novo preço ---------------------------------------------------</span>
+<span class='va'>preco_novo_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"h2+ h2"</span><span class='op'>)</span> |&gt;
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span> |&gt;
+  <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt;
+  <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># criando tabela de decisão -----------------------------------------------</span>
+<span class='va'>tabela_usp</span> <span class='op'>&lt;-</span>
+  <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+    titulo       <span class='op'>=</span> <span class='va'>titulos_usp</span>,
+    preco_antigo <span class='op'>=</span> <span class='va'>preco_antigo_usp</span>,
+    preco_novo   <span class='op'>=</span> <span class='va'>preco_novo_usp</span>,
+    decisao      <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>preco_novo</span> <span class='op'>&lt;=</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='fl'>0.2</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>preco_antigo</span>, <span class='st'>"compre!!!"</span>, <span class='st'>"agarde"</span><span class='op'>)</span>
+  <span class='op'>)</span> |&gt;
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>titulo</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>lista_desejos</span><span class='op'>)</span>
+
+<span class='co'>#==============================================================================</span>
+</code></pre>
+</div>
+</div>
+<details>
+<h4 id="um-script-mais-geral">5.3.3.2 Um script mais geral</h4>
+<p>Vamos melhorar um pouco o script da subseção anterior: como modificar o script para que o mesmo possua uma variável mais flexível na porcentagem de desconto?</p>
+<p>Esclarecendo mais: no script passado, estabelecemos, pelo menos, 20% como desconto desejado. Mas,se quiséssemos, agora, pelo menos, 10%? E se amanhã, quiséssemos pelo menos 12%?</p>
+<p>Ficar olhando todo o código e mudando a porcentagem pode não ser uma boa opção. Se, ao menos, pudéssemos separar o corpo do código com o ato que desejamos, já seria uma boa opção. Uma forma de fazer isso é criar uma função, que denominaremos <code>desconto_usp()</code>, que incorpora o código acima, ou seja, que raspe os dados e retorne uma tabela de decisão, mas que mantenha a porcentagem como uma variável. Assim, se quisséssemos conferir para 20%, bastaria modificar o argumento da função assim: <code>desconto_usp(0.2)</code>.</p>
+<p>Então, vamos usar a estrutura <code>function(variavel){códigos}</code> para isso. No lugar de “variável”, vamos denotar por “percent”, para lembrarmos que trata-se da porcentagem. Depois, no lugar onde está <code>(1 - 0.2)</code>, mudamos para <code>(1 - percent)</code>; ou seja, estamos retirando um valor numérico específico e colocando uma variável no lugar dele. Por fim, ao final de todo o código, depois de termos definido a função, escrevemos <code>desconto(0.2)</code>.</p>
+<p>Veja o script completo abaixo:</p>
+<details>
+<summary>
+Script para criação de uma função para tabela de decisão
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#==============================================================================</span>
+<span class='co'># Tabela para tomada de decisão na compra de livros da USP (MODO FUNÇÃO)</span>
+<span class='co'># Ícaro Vidal Freire</span>
+<span class='co'># 2022-03-04</span>
+<span class='co'>#==============================================================================</span>
+
+<span class='co'># criando a função ============================================================</span>
+
+<span class='va'>desconto_usp</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>percent</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='co'># preparando a url --------------------------------------------------------</span>
+  <span class='va'>url_usp</span> <span class='op'>&lt;-</span> <span class='st'>"https://www.edusp.com.br/loja/assuntos/21/matematica"</span>
+  
+  <span class='co'># preparando o site -------------------------------------------------------</span>
+  <span class='va'>site_usp</span> <span class='op'>&lt;-</span> <span class='va'>url_usp</span> |&gt;
+    <span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/GET.html'>GET</a></span><span class='op'>(</span><span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/config.html'>config</a></span><span class='op'>(</span>ssl_verifypeer <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> |&gt;
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='op'>)</span>
+  
+  <span class='co'># raspando todos os títulos -----------------------------------------------</span>
+  <span class='va'>titulos_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt;
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span> |&gt;
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+    <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span>
+  
+  <span class='co'># construindo uma lista de desejos ----------------------------------------</span>
+  <span class='va'>lista_desejos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+    <span class='st'>"Números: Uma Introdução à Matemática"</span>,
+    <span class='st'>"Poeta, um Matemático e um Físico, Um:..."</span>,
+    <span class='st'>"Programação Matemática para Otimização..."</span>
+  <span class='op'>)</span>
+  
+  <span class='co'># raspando o preço antigo -------------------------------------------------</span>
+  <span class='va'>preco_antigo_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt;
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt;
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+    <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> |&gt;
+    <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt;
+    <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+  
+  <span class='co'># raspando o novo preço ---------------------------------------------------</span>
+  <span class='va'>preco_novo_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt;
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"h2+ h2"</span><span class='op'>)</span> |&gt;
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+    <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+    <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span> |&gt;
+    <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt;
+    <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+  
+  <span class='co'># criando tabela de decisão -----------------------------------------------</span>
+  <span class='va'>tabela_usp</span> <span class='op'>&lt;-</span>
+    <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+      titulo       <span class='op'>=</span> <span class='va'>titulos_usp</span>,
+      preco_antigo <span class='op'>=</span> <span class='va'>preco_antigo_usp</span>,
+      preco_novo   <span class='op'>=</span> <span class='va'>preco_novo_usp</span>,
+      decisao      <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>preco_novo</span> <span class='op'>&lt;=</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>percent</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>preco_antigo</span>, <span class='st'>"compre!!!"</span>, <span class='st'>"agarde"</span><span class='op'>)</span>
+    <span class='op'>)</span> |&gt;
+    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>titulo</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>lista_desejos</span><span class='op'>)</span>
+  <span class='co'># exibindo a tabela ---------------------------------------------------------</span>
+  <span class='va'>tabela_usp</span>
+<span class='op'>}</span>
+
+<span class='co'># usando a função =============================================================</span>
+<span class='fu'>desconto_usp</span><span class='op'>(</span><span class='fl'>0.2</span><span class='op'>)</span>
+<span class='co'>#==============================================================================</span>
+</code></pre>
+</div>
+</div>
+</details>
+<p>Pronto, agora, caso você queira modificar a porcentagem, basta ir até o argumento final da função e mudar o número.</p>
+<p>Então, você pode salvar o arquivo (vamos usar o nome <code>usp.R</code>) na sua área de trabalho principal e, usando o terminal, digitar:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Rscript usp.R</span></code></pre></div>
+</div>
+<p>Pronto! Você receberá, depois de alguns segundos, a tabela de decisão.</p>
+<h4 id="um-script-com-interação-no-terminal-um-programa">5.3.3.3 Um script com interação no terminal (um programa)</h4>
+<p>A solução anterior é muito útil, mas ainda ficamos com a sensação de que poderia melhorar … Por exemplo, seria possível criarmos um programa que perguntásse-nos a porcentagem do desconto e, depois de digitado o valor, ele retornasse a tabela de decisão? Sim! Isso é possível! Basta acrescentarmos, depois da função construída, os comandos (notem o “;”, ao final dos comandos):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Digite uma porcentagem para o desconto: "</span><span class='op'>)</span>; <span class='co'># exibe uma mensagem na tela e aguarda um valor</span>
+<span class='va'>percent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='st'>"stdin"</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>;            <span class='co'># armazena valor que digitarmos</span>
+<span class='fu'>desconto_usp</span><span class='op'>(</span><span class='va'>percent</span><span class='op'>)</span>                            <span class='co'># calcula o valor na função e retorna a tabela</span>
+</code></pre>
+</div>
+</div>
+<p>É interessante definirmos a variável <code>percent</code> como sendo numérica. Para isso, usamos a conhecida função <code>parse_double()</code>, do pacote <code>readr</code>.</p>
+<p>O cógido completo pode ser visto abaixo:</p>
+<details>
+<summary>
+Script para Tabela de Decisão (Modo Interativo)
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#==============================================================================</span>
+<span class='co'># Criando tabela de decisão para compra de livros (Modo Interativo)</span>
+<span class='co'># Ícaro Vidal Freire</span>
+<span class='co'># 2022-03-04</span>
+<span class='co'>#==============================================================================</span>
+
+<span class='co'># criando a função ------------------------------------------------------------</span>
+<span class='va'>desconto_usp</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>percent</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='co'># passando a variável para numérica</span>
+    <span class='va'>percent</span> <span class='op'>&lt;-</span> <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='va'>percent</span><span class='op'>)</span>
+  <span class='co'># preparando a url</span>
+    <span class='va'>url_usp</span> <span class='op'>&lt;-</span> <span class='st'>"https://www.edusp.com.br/loja/assuntos/21/matematica"</span>
+  <span class='co'># preparando o site </span>
+    <span class='va'>site_usp</span> <span class='op'>&lt;-</span> <span class='va'>url_usp</span> |&gt;
+      <span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/GET.html'>GET</a></span><span class='op'>(</span><span class='fu'>httr</span><span class='fu'>::</span><span class='fu'><a href='https://httr.r-lib.org/reference/config.html'>config</a></span><span class='op'>(</span>ssl_verifypeer <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='http://xml2.r-lib.org/reference/read_xml.html'>read_html</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspando titulos</span>
+    <span class='va'>titulos_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+      <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"#dvProdutos p"</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspando preço antigo</span>
+    <span class='va'>preco_antigo_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+      <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"strike"</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspando preço com desconto</span>
+    <span class='va'>preco_novo_usp</span> <span class='op'>&lt;-</span> <span class='va'>site_usp</span> |&gt; 
+      <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>"h2+ h2"</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt;
+      <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_trim.html'>str_trim</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_sub.html'>str_sub</a></span><span class='op'>(</span><span class='fl'>8</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_replace.html'>str_replace_all</a></span><span class='op'>(</span><span class='st'>","</span>, <span class='st'>"."</span><span class='op'>)</span> |&gt; 
+      <span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/parse_atomic.html'>parse_double</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># criando tabela de decisão geral</span>
+    <span class='va'>tabela_geral</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+      titulo <span class='op'>=</span> <span class='va'>titulos_usp</span>,
+      preco_antigo <span class='op'>=</span> <span class='va'>preco_antigo_usp</span>,
+      preco_novo <span class='op'>=</span> <span class='va'>preco_novo_usp</span>,
+      desconto <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>preco_novo</span> <span class='op'>&lt;=</span> <span class='op'>(</span><span class='fl'>1</span> <span class='op'>-</span> <span class='va'>percent</span><span class='op'>)</span> <span class='op'>*</span> <span class='va'>preco_antigo</span>, <span class='st'>"compre!!!"</span>, <span class='st'>"aguarde"</span><span class='op'>)</span>
+    <span class='op'>)</span> 
+  <span class='co'># criando lista de desejos</span>
+    <span class='va'>lista_desejos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
+      <span class='st'>"Introdução à Mecânica Clássica"</span>, 
+      <span class='st'>"Poeta, um Matemático e um Físico, Um:..."</span>, 
+      <span class='st'>"Programação Matemática para Otimização..."</span>
+    <span class='op'>)</span>
+  <span class='co'># filtrando as opções desejadas</span>
+    <span class='va'>tabela_usp</span> <span class='op'>&lt;-</span> <span class='va'>tabela_geral</span> |&gt; 
+      <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span><span class='op'>(</span><span class='va'>titulo</span> <span class='op'><a href='https://rdrr.io/r/base/match.html'>%in%</a></span> <span class='va'>lista_desejos</span><span class='op'>)</span>
+  <span class='co'># exibindo tabela de decisão</span>
+    <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>tabela_usp</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+<span class='co'># modo interativo no terminal -------------------------------------------------</span>
+<span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Digite uma porcentagem: "</span><span class='op'>)</span>;
+<span class='va'>percent</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span><span class='op'>(</span><span class='st'>"stdin"</span>, n <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>;
+<span class='fu'>desconto_usp</span><span class='op'>(</span><span class='va'>percent</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+</details>
 <h2 id="raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Vamos usar o site <a href="https://mises.org.br/">Mises Brasil</a>, que percente ao <strong>Instituto Ludwig von Mises - Brasil</strong> (“IMB”).</p>
+<blockquote>
+<p>“O IBM é uma associação voltada à produção e à disseminação de estudos econômicos e de ciências sociais que promovam os princípios de livre mercado e de uma sociedade livre.”</p>
+</blockquote>
+<p>Ao entrarmos na parte de “Artigos”, subseção “arquivo”; encontraremos uma lista de todos os artigos disponibilizados pelo site. São 25 páginas que pretendemos raspar os <code>títulos</code>, os <code>autores</code> e as <code>datas</code>.</p>
+<p>A url considerada (clicando na página 1) é:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>url_mises</span> <span class='op'>&lt;-</span> <span class='st'>"https://www.mises.org.br/Articles_Thumbs.aspx?page=0&amp;type=0&amp;text="</span>
+</code></pre>
+</div>
+</div>
+<p>Quando extraimos dados de várias páginas, as requisições no servidor almentam consideravelmente. Respeitar a regra estabelecida por cada site é fundamental.</p>
+<p>O pacote <a href="https://dmi3kno.github.io/polite/"><code>polite</code></a> fornece-nos duas funções estremamente úteis nesse processo “polido” (<em>polite</em>) de fazer requisições ao servidor.</p>
+<p>A primeira função é a <a href="https://dmi3kno.github.io/polite/reference/bow.html"><code>bow(url, user_agent = ...)</code></a>. Ela, basicamente, apresenta suas requisições às regras do site pretendido e as respeita. Inclusive você pode adicionar seu nome ou projeto no argumento <code>user_agent</code>, mas não é obrigatório.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/bow.html'>bow</a></span><span class='op'>(</span><span class='va'>url_mises</span>, user_agent <span class='op'>=</span> <span class='st'>"Curso de Extensão: Raspando os Dados da Web com o R"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>&lt;polite session&gt; https://www.mises.org.br/Articles_Thumbs.aspx?page=0&amp;type=0&amp;text=
+    User-agent: Curso de Extensão: Raspando os Dados da Web com o R
+    robots.txt: 1 rules are defined for 1 bots
+   Crawl delay: 5 sec
+  The path is scrapable for this user-agent</code></pre>
+</div>
+<p>Notem que o site é “raspável” e possui um <em>delay</em> de 5 segundos. Ou seja, a cada requisição, ele espera 5 segundos. Isso mostra que não será tão imetiato esse processo de raspagem, visto que terá um tempo de espera a ser considerado.</p>
+<p>Depois de fazer as requisições ao site, devemos extrair o <code>html</code> da página. Vinhamos fazendo isso com <code>rvest::read_html()</code>, mas o pacote <code>polite</code> fornece a <a href="https://dmi3kno.github.io/polite/reference/scrape.html"><code>scrape()</code></a> que faz a mesma coisa e ainda possui diversos parâmetros.</p>
+<p>Vamos atribuir à variável <code>site_mises</code> o processo de pedir requisição, com <code>bow()</code>; e, ler o <code>html</code>, com <code>scrape()</code>. Podemos usar o <code>pipe</code> para concatenar tudo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>site_mises</span> <span class='op'>&lt;-</span> <span class='va'>url_mises</span> |&gt; 
+  <span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/bow.html'>bow</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/scrape.html'>scrape</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>São 25 páginas, mas é importante fazermos a raspagem de uma das páginas (no caso, a primrira) para visualizarmos algum padrão e, assim, formarmos a ideia de generalização às outras.</p>
+<h3 id="raspagem-na-primeira-página">5.4.1 Raspagem na primeira página</h3>
+<p>Usando corretamente o SelectorGadget, podemos extrair os elementos CSS associados, respectivamente à <em>data</em>, <em>autor</em> e <em>título</em>, bem como usar as ferramentas de limpeza para separá-los. O código abaixo resume essas ideias:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># raspando a data -------------------------------------------------------------</span>
+<span class='va'>data_mises_pg1</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".mis-text-sans span:nth-child(1)"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='https://lubridate.tidyverse.org/reference/ymd.html'>dmy</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># raspando o autor ------------------------------------------------------------</span>
+<span class='va'>autor_mises_pg1</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".mis-text"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'># raspando o título -----------------------------------------------------------</span>
+<span class='va'>titulo_mises_pg1</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".thumbsArticle"</span><span class='op'>)</span> |&gt; 
+  <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Na raspagem das datas, usamos a função <code>dmy()</code>, do pacote <code>lubridate</code> (que é um dos pacotes do <code>tidyverse</code>). O seu uso foi necessário, pois, quando extraímos as datas, na realidade extraímos um conjunto de caracteres. A função <code>dmy()</code> diz ao <code>R</code> que esse conjunto de caracteres, são datas!</p>
+<p>Feito isso, como exibir esses dados de forma conveniente? Bom, uma tabela já seria suficiente para nossos fins:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># criando uma tabela com todos os dados da página 1 ---------------------------</span>
+<span class='va'>tabela_mises_pg1</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+  data   <span class='op'>=</span> <span class='va'>data_mises_pg1</span>,
+  autor  <span class='op'>=</span> <span class='va'>autor_mises_pg1</span>,
+  titulo <span class='op'>=</span> <span class='va'>titulo_mises_pg1</span>
+<span class='op'>)</span>
+
+<span class='co'># exibindo as sete primeiras linhas dessa tabela ------------------------------</span>
+<span class='va'>tabela_mises_pg1</span> |&gt; 
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>                <span class='co'># seleciona as 7 primeiras linhas da tibble</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 7 × 3
+  data       autor                          titulo                    
+  &lt;date&gt;     &lt;chr&gt;                          &lt;chr&gt;                     
+1 2022-03-02 Helio Beltrão e Anthony Geller As devastadoras e atômica…
+2 2022-03-01 Jeffrey Tucker                 Demonstre apreço pelos co…
+3 2022-02-28 Jeffrey Herbener               Liberdade e guerra - uma …
+4 2022-02-25 Hans-Hermann Hoppe             As consequências ignorada…
+5 2022-02-24 Felipe Lange                   Eis as medidas já adotada…
+6 2022-02-23 James Bovard                   Alguns fatos cômicos (e p…
+7 2022-02-22 John Tamny                     Para se criar empregos bo…</code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
