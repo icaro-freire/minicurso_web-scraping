@@ -2133,10 +2133,15 @@ Material Teórico
 <p>Suponha, agora, que desejamos comprar alguns livros de um <em>site</em> que sempre oferece promoções interessantes. Mas, previamente estabelecemos que a compra seria realizada se esses livros estivessem com 30% de desconto.</p>
 <p>Obviamente poderíamos entrar no <em>site</em> todos os dias; procurar um a um; e, calcularmos se o desconto aconteceu. Mas, e se criássemos um <em>script</em> (uma sequência, encadeada, de comandos para que um programa execute uma ação) que possui como resultado uma tabela com os preços diários exibidos, já com o desconto efetivado, para que pudéssemos tomar uma decisão rapidamente?</p>
 </section>
+<section id="º-situação-2" class="panel">
+<h3>3º Situação</h3>
+<p>Nessa situação, considere o caso em que você necessite extrair informações em mais de uma página, por exemplo.</p>
+<p>Existem sites que armazenam conteúdo em várias páginas. Por exemplo, suponha que em sua pesquisa, você deseja coletar informações sobre certos artigos hospedados em um site ao longo dos anos. Vamos supor que as informações de seu interesse sejam: <em>data</em>, <em>autor</em> e <em>título</em>, para que você monte uma base de dados e a analise. Como extrair esses informações ao longo de 10, 20, 40 ou 100 páginas?</p>
+</section>
 </div>
 <h3 id="formalizando-o-objetivo">Formalizando o objetivo</h3>
-<p>Essas duas situações são comumente encontradas no trabalho do professor ou estudante.</p>
-<p>O objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as duas situações, acima expostas, possam ser resolvidas de maneira racional, rápida e prazerosa.</p>
+<p>Essas três situações são comumente encontradas no trabalho do professor ou estudante.</p>
+<p>O objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as três situações, acima expostas, possam ser resolvidas de maneira racional, rápida e prazerosa.</p>
 <p>Para isso, introduziremos uma <strong>linguagem</strong> (e <strong>ambiente</strong>) de programação, denominada <strong>R</strong>. Na realidade, nosso foco será voltado a certos pacotes desenvolvidos que unificam uma estrutura de linguagem em <strong>R</strong>. Veremos que tal característica facilita muito o aprendizado das funções e potencialidades do <strong>R</strong>.</p>
 <blockquote>
 <p><strong>Não</strong> é objetivo desse minicurso uma exaustiva análise ou exibição de funções, estruturas, ou objetos em <strong>R</strong>.</p>
@@ -2144,51 +2149,7 @@ Material Teórico
 <p>Apenas tangenciaremos alguns pacotes para usarmos as funções neles contidas, necessárias para solucionarmos as duas situações expostas no início desse texto. Logo, será uma <strong>Introdução ao R</strong>, mostrando que, dentre outras coisas, podemos fazer <strong>web scrape</strong> (“raspagem” de dados na <em>internet</em>) de maneira bem intuitiva e racional, ao mesmo tempo!</p>
 <p>Para isso, dividimos esse minicurso em três dias, para que a sedimentação das informações seja adequada e, assim, o minicurso seja usufruído da melhor maneira possível.</p>
 <p>Espero que gostem!</p>
-<h1 id="estruturação-do-minicurso">Estruturação do Minicurso</h1>
-<div class="panelset">
-<section id="º-dia" class="panel">
-<h3>1º Dia</h3>
-<ul>
-<li>Apresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;</li>
-<li>O que é Webscraping?</li>
-<li>Tangenciando a estrutura de um arquivo <code>html</code> ;</li>
-<li>Usando o <em>SelectorGadget</em>;</li>
-<li>INTERVALO (~ 15 min)</li>
-<li>Vendo como funciona na prática!
-<ul>
-<li>Download simultâneo de vários arquivos de texto plano</li>
-</ul></li>
-</ul>
-</section>
-<section id="º-dia-1" class="panel">
-<h3>2º Dia</h3>
-<ul>
-<li>Introdução ao R
-<ul>
-<li>O que é o <code>R</code>?</li>
-<li>Objetos e Funções Básicas no R</li>
-</ul></li>
-<li>INTERVALO (~ 15 min)</li>
-<li>Algo sobre o Tidyverse
-<ul>
-<li>tibble, dplyr;</li>
-<li>stringr;</li>
-<li>rvest</li>
-</ul></li>
-<li>Duas funções do pacote <code>fs</code> (File System)</li>
-</ul>
-</section>
-<section id="º-dia-2" class="panel">
-<h3>3º Dia</h3>
-<ul>
-<li>Download simultâneo de vários arquivos binários (pdf);</li>
-<li>Download e limpeza de vários arquivos binários (pdf);</li>
-<li>Montando uma lista de preços para tomada de decisão;</li>
-<li>Raspagem de dados em mais de uma página.</li>
-</ul>
-</section>
-</div>
-<h2 id="horário-geral">Horário Geral</h2>
+<h2 id="horário-geral-desse-minicurso">Horário Geral desse minicurso</h2>
 <table>
 <thead>
 <tr class="header">
@@ -2203,7 +2164,7 @@ Material Teórico
 </tr>
 <tr class="even">
 <td style="text-align: left;">20:45 até 21h</td>
-<td style="text-align: left;">🥣 Intervalo</td>
+<td style="text-align: left;">🍵 Intervalo</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">21h até 22h</td>
@@ -2211,6 +2172,55 @@ Material Teórico
 </tr>
 </tbody>
 </table>
+<h1 id="estruturação-do-minicurso">Estruturação do Minicurso</h1>
+<div class="panelset">
+<section id="º-dia" class="panel">
+<h3>1º Dia</h3>
+<ul>
+<li>Apresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;</li>
+<li>O que é Webscraping?</li>
+<li>Tangenciando a estrutura de um arquivo <code>html</code> ;</li>
+<li>Usando o <em>SelectorGadget</em>;</li>
+<li>INTERVALO (~ 15 min)</li>
+<li>Vendo como funciona na prática!
+<ul>
+<li>Rodando um programa para criação de tabela de decisão em compras;</li>
+<li>Download simultâneo de vários arquivos de texto plano.</li>
+</ul></li>
+</ul>
+</section>
+<section id="º-dia-1" class="panel">
+<h3>2º Dia</h3>
+<ul>
+<li>Introdução ao R
+<ul>
+<li>O que é o <code>R</code>?</li>
+<li>Objetos e Funções Básicas no R</li>
+</ul></li>
+<li>INTERVALO (~ 15 min)</li>
+<li>Algo sobre o Tidyverse
+<ul>
+<li>tibble;</li>
+<li>readr;</li>
+<li>dplyr;</li>
+<li>stringr;</li>
+<li>stringr;</li>
+<li>lubridate;</li>
+<li>rvest</li>
+</ul></li>
+<li>Pacotes amigos: <code>fs</code> (File System) e <code>polite</code> (educado)</li>
+</ul>
+</section>
+<section id="º-dia-2" class="panel">
+<h3>3º Dia</h3>
+<ul>
+<li>Download simultâneo de vários arquivos binários (pdf);</li>
+<li>Download e limpeza de vários arquivos binários (pdf);</li>
+<li>Montando uma lista de preços para tomada de decisão;</li>
+<li>Raspagem de dados em mais de uma página.</li>
+</ul>
+</section>
+</div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
