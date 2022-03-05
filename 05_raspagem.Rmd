@@ -1222,5 +1222,22 @@ Na raspagem das datas, usamos a função `dmy()`, do pacote `lubridate` (que é 
 dos pacotes do `tidyverse`).
 O seu uso foi necessário, pois, quando extraímos as datas, na realidade extraímos 
 um conjunto de caracteres.
-A função `dmy()` diz ao R que esse conjunto de caracteres, são datas!
+A função `dmy()` diz ao `R` que esse conjunto de caracteres, são datas!
+
+Feito isso, como exibir esses dados de forma conveniente?
+Bom, uma tabela já seria suficiente para nossos fins:
+
+```{r}
+# criando uma tabela com todos os dados da página 1 ---------------------------
+tabela_mises_pg1 <- tibble::tibble(
+  data   = data_mises_pg1,
+  autor  = autor_mises_pg1,
+  titulo = titulo_mises_pg1
+)
+
+# exibindo as sete primeiras linhas dessa tabela ------------------------------
+tabela_mises_pg1 |> 
+  dplyr::slice(1:7)                # seleciona as 7 primeiras linhas da tibble
+```
+
 
