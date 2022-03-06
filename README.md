@@ -1,4 +1,4 @@
-# Raspando os Dados da Web (uma introdução ao R)
+# Slides do minicurso 'Raspando os Dados da Web com o R (uma introdução)
 
 # :construction: Em Construção :construction:
 
