@@ -846,14 +846,14 @@ tabela_dobro(3)
 
 A saída é a mesma, não?
 
-Mas, onde entre o `purrr`?
+Mas, onde entra o `purrr`?
 
 Suponha, agora, que desejamos aplicar nossa função criada para TODOS os naturais
 de 1 até 10, agrupando-os em uma só tabela!
 Para esse processo iterativo, usaremos a função `map_df()` do pacote `purrr`.
 Antes, porém, devemos lembrar que essa sequência de números, pode ser obtida de
 muitas maneiras, mas ficaremos com `1:10` (poderíamos usar a função `seq()`, do R
-Base, da seguinte maneira: `seq(1, 10)`), por simplicidade.
+Base, da seguinte forma: `seq(1, 10)`), por simplicidade.
 Portanto, a iteração ocorre assim:
 
 ```{r}
@@ -878,7 +878,7 @@ pasta_arquivos <- fs::dir_create("downloads/pasta_arquivos")
 
 Atribui à variável `pasta_arquivos` à criação de um subdiretório de mesmo nome 
 (`pasta_arquivos`), dentro de um diretório por nome `downloads`.
-Ele criará os dois diretórios, caso não existam, ou criará o subdiretório `pasta_arquivos` se `download` já exista.
+Ele criará os dois diretórios, caso não existam, ou criará o subdiretório `pasta_arquivos` se `downloads` já exista.
 )
 
 O código abaixo mostra como usar a outra função considerada:

@@ -922,7 +922,7 @@ tabela_usp <-
 #==============================================================================
 ```
   
-<details>
+</details>
 
 #### 5.3.3.2 Um script mais geral
 
@@ -1037,15 +1037,15 @@ trabalho principal e, usando o terminal, digitar:
 Rscript usp.R
 ```
 
-Pronto! 
 Você receberá, depois de alguns segundos, a tabela de decisão.
 
 #### 5.3.3.3 Um script com interação no terminal (um programa)
 
 A solução anterior é muito útil, mas ainda ficamos com a sensação de que poderia
-melhorar ...
-Por exemplo, seria possível criarmos um programa que perguntásse-nos a porcentagem
-do desconto e, depois de digitado o valor, ele retornasse a tabela de decisão?
+ser melhor...
+Por exemplo, seria possível criarmos um programa que exibisse uma perguta sobre 
+a porcentagem do desconto; e, depois de digitado o valor, ele retornasse a tabela 
+de decisão?
 Sim! Isso é possível!
 Basta acrescentarmos, depois da função construída, os comandos (notem o ";", ao 
 final dos comandos):
@@ -1140,6 +1140,10 @@ Vamos usar o site [Mises Brasil](https://mises.org.br/), que percente ao
 econômicos e de ciências sociais que promovam os princípios de livre mercado e 
 de uma sociedade livre."
 
+```{r}
+knitr::include_graphics("img/site_mises.png")
+```
+
 Ao entrarmos na parte de "Artigos", subseção "arquivo"; encontraremos uma
 lista de todos os artigos disponibilizados pelo site.
 São 25 páginas que pretendemos raspar os `títulos`, os `autores` e as `datas`.
@@ -1158,7 +1162,12 @@ O pacote [`polite`](https://dmi3kno.github.io/polite/) fornece-nos duas funçõe
 estremamente úteis nesse processo "polido" (_polite_) de fazer requisições ao
 servidor.
 
-A primeira função é a [`bow(url, user_agent = ...)`](https://dmi3kno.github.io/polite/reference/bow.html).
+A primeira função é a:
+
+<p align='center'>
+[`bow(url, user_agent = ...)`](https://dmi3kno.github.io/polite/reference/bow.html).
+</p>
+
 Ela, basicamente, apresenta suas requisições às regras do site pretendido e as
 respeita.
 Inclusive você pode adicionar seu nome ou projeto no argumento `user_agent`, mas

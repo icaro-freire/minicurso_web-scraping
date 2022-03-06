@@ -2856,8 +2856,8 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 1      3     6</code></pre>
 </div>
 <p>A saída é a mesma, não?</p>
-<p>Mas, onde entre o <code>purrr</code>?</p>
-<p>Suponha, agora, que desejamos aplicar nossa função criada para TODOS os naturais de 1 até 10, agrupando-os em uma só tabela! Para esse processo iterativo, usaremos a função <code>map_df()</code> do pacote <code>purrr</code>. Antes, porém, devemos lembrar que essa sequência de números, pode ser obtida de muitas maneiras, mas ficaremos com <code>1:10</code> (poderíamos usar a função <code>seq()</code>, do R Base, da seguinte maneira: <code>seq(1, 10)</code>), por simplicidade. Portanto, a iteração ocorre assim:</p>
+<p>Mas, onde entra o <code>purrr</code>?</p>
+<p>Suponha, agora, que desejamos aplicar nossa função criada para TODOS os naturais de 1 até 10, agrupando-os em uma só tabela! Para esse processo iterativo, usaremos a função <code>map_df()</code> do pacote <code>purrr</code>. Antes, porém, devemos lembrar que essa sequência de números, pode ser obtida de muitas maneiras, mas ficaremos com <code>1:10</code> (poderíamos usar a função <code>seq()</code>, do R Base, da seguinte forma: <code>seq(1, 10)</code>), por simplicidade. Portanto, a iteração ocorre assim:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_df</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='va'>tabela_dobro</span><span class='op'>)</span>
@@ -2887,7 +2887,7 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 </code></pre>
 </div>
 </div>
-<p>Atribui à variável <code>pasta_arquivos</code> à criação de um subdiretório de mesmo nome (<code>pasta_arquivos</code>), dentro de um diretório por nome <code>downloads</code>. Ele criará os dois diretórios, caso não existam, ou criará o subdiretório <code>pasta_arquivos</code> se <code>download</code> já exista. )</p>
+<p>Atribui à variável <code>pasta_arquivos</code> à criação de um subdiretório de mesmo nome (<code>pasta_arquivos</code>), dentro de um diretório por nome <code>downloads</code>. Ele criará os dois diretórios, caso não existam, ou criará o subdiretório <code>pasta_arquivos</code> se <code>downloads</code> já exista. )</p>
 <p>O código abaixo mostra como usar a outra função considerada:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">

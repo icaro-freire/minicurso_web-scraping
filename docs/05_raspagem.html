@@ -3154,7 +3154,7 @@ Script para construção de tabela de decisão para compra de livros
 </code></pre>
 </div>
 </div>
-<details>
+</details>
 <h4 id="um-script-mais-geral">5.3.3.2 Um script mais geral</h4>
 <p>Vamos melhorar um pouco o script da subseção anterior: como modificar o script para que o mesmo possua uma variável mais flexível na porcentagem de desconto?</p>
 <p>Esclarecendo mais: no script passado, estabelecemos, pelo menos, 20% como desconto desejado. Mas,se quiséssemos, agora, pelo menos, 10%? E se amanhã, quiséssemos pelo menos 12%?</p>
@@ -3239,9 +3239,9 @@ Script para criação de uma função para tabela de decisão
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>Rscript usp.R</span></code></pre></div>
 </div>
-<p>Pronto! Você receberá, depois de alguns segundos, a tabela de decisão.</p>
+<p>Você receberá, depois de alguns segundos, a tabela de decisão.</p>
 <h4 id="um-script-com-interação-no-terminal-um-programa">5.3.3.3 Um script com interação no terminal (um programa)</h4>
-<p>A solução anterior é muito útil, mas ainda ficamos com a sensação de que poderia melhorar … Por exemplo, seria possível criarmos um programa que perguntásse-nos a porcentagem do desconto e, depois de digitado o valor, ele retornasse a tabela de decisão? Sim! Isso é possível! Basta acrescentarmos, depois da função construída, os comandos (notem o “;”, ao final dos comandos):</p>
+<p>A solução anterior é muito útil, mas ainda ficamos com a sensação de que poderia ser melhor… Por exemplo, seria possível criarmos um programa que exibisse uma perguta sobre a porcentagem do desconto; e, depois de digitado o valor, ele retornasse a tabela de decisão? Sim! Isso é possível! Basta acrescentarmos, depois da função construída, os comandos (notem o “;”, ao final dos comandos):</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span><span class='op'>(</span><span class='st'>"Digite uma porcentagem para o desconto: "</span><span class='op'>)</span>; <span class='co'># exibe uma mensagem na tela e aguarda um valor</span>
@@ -3327,6 +3327,13 @@ Script para Tabela de Decisão (Modo Interativo)
 <blockquote>
 <p>“O IBM é uma associação voltada à produção e à disseminação de estudos econômicos e de ciências sociais que promovam os princípios de livre mercado e de uma sociedade livre.”</p>
 </blockquote>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/include_graphics.html'>include_graphics</a></span><span class='op'>(</span><span class='st'>"img/site_mises.png"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<p><img src="img/site_mises.png" width="2134" /></p>
+</div>
 <p>Ao entrarmos na parte de “Artigos”, subseção “arquivo”; encontraremos uma lista de todos os artigos disponibilizados pelo site. São 25 páginas que pretendemos raspar os <code>títulos</code>, os <code>autores</code> e as <code>datas</code>.</p>
 <p>A url considerada (clicando na página 1) é:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3337,7 +3344,11 @@ Script para Tabela de Decisão (Modo Interativo)
 </div>
 <p>Quando extraimos dados de várias páginas, as requisições no servidor almentam consideravelmente. Respeitar a regra estabelecida por cada site é fundamental.</p>
 <p>O pacote <a href="https://dmi3kno.github.io/polite/"><code>polite</code></a> fornece-nos duas funções estremamente úteis nesse processo “polido” (<em>polite</em>) de fazer requisições ao servidor.</p>
-<p>A primeira função é a <a href="https://dmi3kno.github.io/polite/reference/bow.html"><code>bow(url, user_agent = ...)</code></a>. Ela, basicamente, apresenta suas requisições às regras do site pretendido e as respeita. Inclusive você pode adicionar seu nome ou projeto no argumento <code>user_agent</code>, mas não é obrigatório.</p>
+<p>A primeira função é a:</p>
+<p align="center">
+<a href="https://dmi3kno.github.io/polite/reference/bow.html"><code>bow(url, user_agent = ...)</code></a>.
+</p>
+<p>Ela, basicamente, apresenta suas requisições às regras do site pretendido e as respeita. Inclusive você pode adicionar seu nome ou projeto no argumento <code>user_agent</code>, mas não é obrigatório.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/bow.html'>bow</a></span><span class='op'>(</span><span class='va'>url_mises</span>, user_agent <span class='op'>=</span> <span class='st'>"Curso de Extensão: Raspando os Dados da Web com o R"</span><span class='op'>)</span>
@@ -3402,13 +3413,13 @@ Script para Tabela de Decisão (Modo Interativo)
 <pre><code># A tibble: 7 × 3
   data       autor                          titulo                    
   &lt;date&gt;     &lt;chr&gt;                          &lt;chr&gt;                     
-1 2022-03-02 Helio Beltrão e Anthony Geller As devastadoras e atômica…
-2 2022-03-01 Jeffrey Tucker                 Demonstre apreço pelos co…
-3 2022-02-28 Jeffrey Herbener               Liberdade e guerra - uma …
-4 2022-02-25 Hans-Hermann Hoppe             As consequências ignorada…
-5 2022-02-24 Felipe Lange                   Eis as medidas já adotada…
-6 2022-02-23 James Bovard                   Alguns fatos cômicos (e p…
-7 2022-02-22 John Tamny                     Para se criar empregos bo…</code></pre>
+1 2022-03-05 Roberto Ellery                 &quot;\&quot;Não comemos PIB!\&quot;, gr…
+2 2022-03-02 Helio Beltrão e Anthony Geller &quot;As devastadoras e atômic…
+3 2022-03-01 Jeffrey Tucker                 &quot;Demonstre apreço pelos c…
+4 2022-02-28 Jeffrey Herbener               &quot;Liberdade e guerra - uma…
+5 2022-02-25 Hans-Hermann Hoppe             &quot;As consequências ignorad…
+6 2022-02-24 Felipe Lange                   &quot;Eis as medidas já adotad…
+7 2022-02-23 James Bovard                   &quot;Alguns fatos cômicos (e …</code></pre>
 </div>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
