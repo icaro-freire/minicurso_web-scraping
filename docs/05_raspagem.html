@@ -2138,6 +2138,7 @@ Material Teórico
 <li><a href="#raspagem-com-várias-páginas">5.4 Raspagem com várias páginas</a>
 <ul>
 <li><a href="#raspagem-na-primeira-página">5.4.1 Raspagem na primeira página</a></li>
+<li><a href="#raspagem-nas-25-páginas">5.4.2 Raspagem nas 25 páginas</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -3371,7 +3372,7 @@ Script para Tabela de Decisão (Modo Interativo)
 </code></pre>
 </div>
 </div>
-<p>São 25 páginas, mas é importante fazermos a raspagem de uma das páginas (no caso, a primrira) para visualizarmos algum padrão e, assim, formarmos a ideia de generalização às outras.</p>
+<p>São 25 páginas, mas é importante fazermos a raspagem de uma delas inicialmente (no caso, a primrira) para visualizarmos as estruturas básicas de repetição; e, assim, formarmos a ideia de generalização às outras páginas.</p>
 <h3 id="raspagem-na-primeira-página">5.4.1 Raspagem na primeira página</h3>
 <p>Usando corretamente o SelectorGadget, podemos extrair os elementos CSS associados, respectivamente à <em>data</em>, <em>autor</em> e <em>título</em>, bem como usar as ferramentas de limpeza para separá-los. O código abaixo resume essas ideias:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -3394,7 +3395,7 @@ Script para Tabela de Decisão (Modo Interativo)
 </code></pre>
 </div>
 </div>
-<p>Na raspagem das datas, usamos a função <code>dmy()</code>, do pacote <code>lubridate</code> (que é um dos pacotes do <code>tidyverse</code>). O seu uso foi necessário, pois, quando extraímos as datas, na realidade extraímos um conjunto de caracteres. A função <code>dmy()</code> diz ao <code>R</code> que esse conjunto de caracteres, são datas!</p>
+<p>Na raspagem das datas, usamos a função <code>dmy()</code>, do pacote <code>lubridate</code> (que é um dos pacotes do <code>tidyverse</code>). O seu uso foi necessário, pois, quando extraímos as datas, na realidade extraímos um conjunto de caracteres. A função <code>dmy()</code> diz ao <code>R</code> que esse conjunto de caracteres, são datas! Isso é importante, pois é possível fazer cálculos com datas, mas não com caracteres.</p>
 <p>Feito isso, como exibir esses dados de forma conveniente? Bom, uma tabela já seria suficiente para nossos fins:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
@@ -3421,7 +3422,188 @@ Script para Tabela de Decisão (Modo Interativo)
 6 2022-02-24 Felipe Lange                   &quot;Eis as medidas já adotad…
 7 2022-02-23 James Bovard                   &quot;Alguns fatos cômicos (e …</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Pinçamos as 7 primeiras linhas, pois nossa tabela possui 100 linhas!</p>
+<p>Isso é, basicamente, o que desejamos fazer em cada uma das 25 páginas. Então, é natural perguntar-nos: o que muda de uma página para outra, visto que essas estruturas do CSS são mantidas? Como iterar nas outras páginas?</p>
+<h3 id="raspagem-nas-25-páginas">5.4.2 Raspagem nas 25 páginas</h3>
+<p>Para responder a pergunta antrior, você deve encontrar algum padrão na <code>url</code> de cada página.</p>
+<p>Veja, abaixo, a <code>url</code> das 5 primeiras páginas:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>www.mises.org.br<span class="sc">/</span>Articles_Thumbs.aspx?page<span class="ot">=</span><span class="dv">0</span><span class="sc">&amp;</span>type<span class="ot">=</span><span class="dv">0</span><span class="sc">&amp;</span>text<span class="ot">=</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>www.mises.org.br<span class="sc">/</span>Articles_Thumbs.aspx?page<span class="ot">=</span><span class="dv">1</span><span class="sc">&amp;</span>type<span class="ot">=</span><span class="dv">0</span><span class="sc">&amp;</span>text<span class="ot">=</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>www.mises.org.br<span class="sc">/</span>Articles_Thumbs.aspx?page<span class="ot">=</span><span class="dv">2</span><span class="sc">&amp;</span>type<span class="ot">=</span><span class="dv">0</span><span class="sc">&amp;</span>text<span class="ot">=</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>www.mises.org.br<span class="sc">/</span>Articles_Thumbs.aspx?page<span class="ot">=</span><span class="dv">3</span><span class="sc">&amp;</span>type<span class="ot">=</span><span class="dv">0</span><span class="sc">&amp;</span>text<span class="ot">=</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>https<span class="sc">:</span><span class="er">//</span>www.mises.org.br<span class="sc">/</span>Articles_Thumbs.aspx?page<span class="ot">=</span><span class="dv">4</span><span class="sc">&amp;</span>type<span class="ot">=</span><span class="dv">0</span><span class="sc">&amp;</span>text<span class="ot">=</span></span></code></pre></div>
+</div>
+<p>O que mudou? Ora, apenas o número da página (de <span class="math inline">\(0\)</span> até <span class="math inline">\(4\)</span>). Se denominarmos esse número da página por <code>nPg</code>, podemos separar as <code>urls</code> em três partes:</p>
+<ol type="1">
+<li>“<a href="https://www.mises.org.br/Articles_Thumbs.aspx?page=" class="uri">https://www.mises.org.br/Articles_Thumbs.aspx?page=</a>”</li>
+<li>nPg</li>
+<li>“&amp;type=0&amp;text=”</li>
+</ol>
+<blockquote>
+<p>Como são 25 páginas, <code>nPg</code> terá uma variação de <span class="math inline">\(0\)</span> até <span class="math inline">\(24\)</span></p>
+</blockquote>
+<p>Essas informações são muito importantes; pois, vimos que, para a iteração ocorrer com as funções do pacote <code>purrr</code>, devemos criar uma função específica com as propriedades que desejamos na raspagem. É o que faremos, passo a passo, a seguir.</p>
+<p>Vamos denominar a função que faz a raspagem dos dados de uma página genérica do site Mises Brasil, por <strong><code>raspa_mises</code></strong>, cuja variável será <code>nPg</code> (número da página): <code>raspa_mises(nPg)</code>. Assim, se desejo extrair a <em>data</em>, o <em>autor</em> e o <em>título</em> de todos os artigos que estão na página 17, por exemplo, faço: <code>raspa_mises(17)</code>.</p>
+<p>Mas, como seria essa função?</p>
+<ol type="1">
+<li>Bom, a primeira coisa a se fazer é preparar a <code>url</code> do site dessa página. Como vimos, podemos separar em 3 partes e a função <code>str_c()</code>, do pacote <code>stringr</code><br />
+pode concatenar essas partes.</li>
+<li>Em seguida, fazermos as requisições necessárias e extraírmos o html da página para nosso computador. Como são muitas páginas, usaremos o pacote <code>polite</code>, com suas funções <strong><code>bow()</code></strong> e <strong><code>scrape()</code></strong>.</li>
+<li>Por fim, seguimos os passos da extração que foi realizada na primeira página.</li>
+</ol>
+<p>O código fica assim:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>raspa_mises</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>nPg</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='co'># preparação ----------------------------------------------------------------</span>
+  <span class='co'># preparando a url</span>
+  <span class='va'>url_mises</span> <span class='op'>&lt;-</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span>
+    <span class='st'>"https://www.mises.org.br/Articles_Thumbs.aspx?page="</span>,  <span class='co'># 1º parte</span>
+    <span class='va'>nPg</span>,                                                    <span class='co'># 2º parte (variável)</span>
+    <span class='st'>"&amp;type=0&amp;text="</span>                                         <span class='co'># 3º parte</span>
+  <span class='op'>)</span>
+  <span class='co'># preparando o site</span>
+  <span class='va'>site_mises</span> <span class='op'>&lt;-</span> <span class='va'>url_mises</span> |&gt; 
+    <span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/bow.html'>bow</a></span><span class='op'>(</span>user_agent <span class='op'>=</span> <span class='st'>"Curso de Extensão da UFRB: Raspando os Dados da Web com o R"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/scrape.html'>scrape</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspagem ------------------------------------------------------------------</span>
+  <span class='co'># raspando a data</span>
+  <span class='va'>data_mises</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".mis-text-sans span:nth-child(1)"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='https://lubridate.tidyverse.org/reference/ymd.html'>dmy</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspando o autor</span>
+  <span class='va'>autor_mises_pg1</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".mis-text"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspando o título</span>
+  <span class='va'>titulo_mises_pg1</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".thumbsArticle"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># exibição dos resultados ---------------------------------------------------</span>
+  <span class='co'># criando uma tabela com os dados</span>
+  <span class='va'>tabela_mises</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+    data   <span class='op'>=</span> <span class='va'>data_mises_pg1</span>,
+    autor  <span class='op'>=</span> <span class='va'>autor_mises_pg1</span>,
+    titulo <span class='op'>=</span> <span class='va'>titulo_mises_pg1</span>
+  <span class='op'>)</span>
+  <span class='co'># exibindo a tabela</span>
+  <span class='va'>tabela_mises</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<p>Vamos testar essa função! Qual seriam as 7 primeiras linhas da saída dessa função, quando aplicada à primeira página? Vimos que a primeira página começa do “0”; logo, devemos calcular <code>raspa_mises(7)</code>, além se pinçar as sete primeiras linhas, como no código abaixo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>raspa_mises</span><span class='op'>(</span><span class='fl'>0</span><span class='op'>)</span> |&gt;
+  <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/slice.html'>slice</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>7</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 7 × 3
+  data       autor                          titulo                    
+  &lt;date&gt;     &lt;chr&gt;                          &lt;chr&gt;                     
+1 2022-03-05 Roberto Ellery                 &quot;\&quot;Não comemos PIB!\&quot;, gr…
+2 2022-03-02 Helio Beltrão e Anthony Geller &quot;As devastadoras e atômic…
+3 2022-03-01 Jeffrey Tucker                 &quot;Demonstre apreço pelos c…
+4 2022-02-28 Jeffrey Herbener               &quot;Liberdade e guerra - uma…
+5 2022-02-25 Hans-Hermann Hoppe             &quot;As consequências ignorad…
+6 2022-02-24 Felipe Lange                   &quot;Eis as medidas já adotad…
+7 2022-02-23 James Bovard                   &quot;Alguns fatos cômicos (e …</code></pre>
+</div>
+<p>Igualzinho, não?</p>
+<p>Como já temos nossa função, podemos iterar isso com o <code>purrr</code>, da seguinte forma:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tabela_mises_total</span> <span class='op'>&lt;-</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_df</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>24</span>, <span class='va'>raspa_mises</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Note que atribuí à variável <code>tabela_mises_total</code> à saída do resultado, ou seja, uma tabela, com três colunas (data, autor e título) das 25 páginas do site. Se você quiser exibir essa tabela no console do programa, basta digitar:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tabela_mises_total</span>
+</code></pre>
+</div>
+</div>
+<p>Porém, é interessante salvar essa tabela em um arquivo <code>.csv</code>, para que você crie uma base de dados que poderá ser usado em uma análise separada.</p>
+<p>Para tanto, usamos a função <code>write_csv()</code> do pacote <code>readr</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>tabela_mises_total</span>, <span class='st'>"dados/tabela_mises_total.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Veja que salvamos o <code>.csv</code> numa pasta denominada “dados”, que deverá ser criada.</p>
+<p>O <em>script</em> completo pode ser visto abaixo.</p>
+<details>
+<summary>
+Script para raspagem de 25 páginas do site Mises Brasil
+</summary>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#==============================================================================</span>
+<span class='co'># Raspando data, autor e título de artigos, em 25 páginas, do site Mises Brasil</span>
+<span class='co'># Ícaro Vidal Freire</span>
+<span class='co'># 2022-03-05</span>
+<span class='co'>#==============================================================================</span>
+
+<span class='co'># criando a função de raspagem ________________________________________________</span>
+
+<span class='va'>raspa_mises</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>nPg</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='co'># preparação ----------------------------------------------------------------</span>
+  <span class='co'># preparando a url</span>
+  <span class='va'>url_mises</span> <span class='op'>&lt;-</span> <span class='fu'>stringr</span><span class='fu'>::</span><span class='fu'><a href='https://stringr.tidyverse.org/reference/str_c.html'>str_c</a></span><span class='op'>(</span>
+    <span class='st'>"https://www.mises.org.br/Articles_Thumbs.aspx?page="</span>,  <span class='co'># 1º parte</span>
+    <span class='va'>nPg</span>,                                                    <span class='co'># 2º parte (variável)</span>
+    <span class='st'>"&amp;type=0&amp;text="</span>                                         <span class='co'># 3º parte</span>
+  <span class='op'>)</span>
+  <span class='co'># preparando o site</span>
+  <span class='va'>site_mises</span> <span class='op'>&lt;-</span> <span class='va'>url_mises</span> |&gt; 
+    <span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/bow.html'>bow</a></span><span class='op'>(</span>user_agent <span class='op'>=</span> <span class='st'>"Curso de Extensão da UFRB: Raspando os Dados da Web com o R"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>polite</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/polite/man/scrape.html'>scrape</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspagem ------------------------------------------------------------------</span>
+  <span class='co'># raspando a data</span>
+  <span class='va'>data_mises</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".mis-text-sans span:nth-child(1)"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='https://lubridate.tidyverse.org/reference/ymd.html'>dmy</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspando o autor</span>
+  <span class='va'>autor_mises_pg1</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".mis-text"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># raspando o título</span>
+  <span class='va'>titulo_mises_pg1</span> <span class='op'>&lt;-</span> <span class='va'>site_mises</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_element.html'>html_elements</a></span><span class='op'>(</span><span class='st'>".thumbsArticle"</span><span class='op'>)</span> |&gt; 
+    <span class='fu'>rvest</span><span class='fu'>::</span><span class='fu'><a href='https://rvest.tidyverse.org/reference/html_text.html'>html_text2</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='co'># exibição dos resultados ---------------------------------------------------</span>
+  <span class='co'># criando uma tabela com os dados</span>
+  <span class='va'>tabela_mises</span> <span class='op'>&lt;-</span> <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+    data   <span class='op'>=</span> <span class='va'>data_mises_pg1</span>,
+    autor  <span class='op'>=</span> <span class='va'>autor_mises_pg1</span>,
+    titulo <span class='op'>=</span> <span class='va'>titulo_mises_pg1</span>
+  <span class='op'>)</span>
+  <span class='co'># exibindo a tabela</span>
+  <span class='va'>tabela_mises</span>
+<span class='op'>}</span>
+
+<span class='co'># iterando nas 25 páginas _____________________________________________________</span>
+
+<span class='va'>tabela_mises_total</span> <span class='op'>&lt;-</span> <span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>map2_df</a></span><span class='op'>(</span><span class='fl'>0</span><span class='op'>:</span><span class='fl'>24</span>, <span class='va'>raspa_mises</span><span class='op'>)</span>
+
+<span class='co'># criando um arquivo `.csv` para futuras análises</span>
+<span class='co'># criando diretório "dados"</span>
+<span class='va'>dados</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"dados"</span><span class='op'>)</span>
+<span class='co'># escrevendo em disco</span>
+<span class='fu'>readr</span><span class='fu'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>tabela_mises_total</span>, <span class='st'>"dados/tabela_mises_total.csv"</span><span class='op'>)</span>
+
+<span class='co'>#==============================================================================</span>
+</code></pre>
+</div>
+</div>
+</details>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

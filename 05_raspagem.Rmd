@@ -1197,9 +1197,9 @@ site_mises <- url_mises |>
   polite::scrape()
 ```
 
-São 25 páginas, mas é importante fazermos a raspagem de uma das páginas (no caso,
-a primrira) para visualizarmos algum padrão e, assim, formarmos a ideia de 
-generalização às outras.
+São 25 páginas, mas é importante fazermos a raspagem de uma delas inicialmente 
+(no caso, a primrira) para visualizarmos as estruturas básicas de repetição; e, 
+assim, formarmos a ideia de generalização às outras páginas.
 
 ### 5.4.1 Raspagem na primeira página
 
@@ -1232,6 +1232,7 @@ dos pacotes do `tidyverse`).
 O seu uso foi necessário, pois, quando extraímos as datas, na realidade extraímos 
 um conjunto de caracteres.
 A função `dmy()` diz ao `R` que esse conjunto de caracteres, são datas!
+Isso é importante, pois é possível fazer cálculos com datas, mas não com caracteres.
 
 Feito isso, como exibir esses dados de forma conveniente?
 Bom, uma tabela já seria suficiente para nossos fins:
@@ -1249,4 +1250,203 @@ tabela_mises_pg1 |>
   dplyr::slice(1:7)                # seleciona as 7 primeiras linhas da tibble
 ```
 
+Pinçamos as 7 primeiras linhas, pois nossa tabela possui 100 linhas!
 
+Isso é, basicamente, o que desejamos fazer em cada uma das 25 páginas.
+Então, é natural perguntar-nos: o que muda de uma página para outra, visto que 
+essas estruturas do CSS são mantidas? 
+Como iterar nas outras páginas?
+
+### 5.4.2 Raspagem nas 25 páginas
+
+Para responder a pergunta antrior, você deve encontrar algum padrão na `url` de cada
+página.
+
+Veja, abaixo, a `url` das 5 primeiras páginas:
+
+```{r, eval=FALSE}
+https://www.mises.org.br/Articles_Thumbs.aspx?page=0&type=0&text=
+https://www.mises.org.br/Articles_Thumbs.aspx?page=1&type=0&text=
+https://www.mises.org.br/Articles_Thumbs.aspx?page=2&type=0&text=
+https://www.mises.org.br/Articles_Thumbs.aspx?page=3&type=0&text=
+https://www.mises.org.br/Articles_Thumbs.aspx?page=4&type=0&text=
+```
+
+O que mudou?
+Ora, apenas o número da página (de $0$ até $4$).
+Se denominarmos esse número da página por `nPg`, podemos separar as `urls` em 
+três partes:
+
+1. "https://www.mises.org.br/Articles_Thumbs.aspx?page="
+2. nPg
+3. "&type=0&text="
+
+> Como são 25 páginas, `nPg` terá uma variação de $0$ até $24$
+
+Essas informações são muito importantes; pois, vimos que, para a iteração ocorrer
+com as funções do pacote `purrr`, devemos criar uma função específica com as 
+propriedades que desejamos na raspagem.
+É o que faremos, passo a passo, a seguir.
+
+Vamos denominar a função que faz a raspagem dos dados de uma página genérica do
+site Mises Brasil, por **`raspa_mises`**, cuja variável será `nPg` (número da 
+página): `raspa_mises(nPg)`.
+Assim, se desejo extrair a _data_, o _autor_ e o _título_ de todos os artigos que 
+estão na página 17, por exemplo, faço: `raspa_mises(17)`.
+
+Mas, como seria essa função?
+
+1. Bom, a primeira coisa a se fazer é preparar a `url` do site dessa página.
+Como vimos, podemos separar em 3 partes e a função `str_c()`, do pacote `stringr`  
+pode concatenar essas partes.
+2. Em seguida, fazermos as requisições necessárias e extraírmos o html da página
+para nosso computador. Como são muitas páginas, usaremos o pacote `polite`, com
+suas funções **`bow()`** e **`scrape()`**.
+3. Por fim, seguimos os passos da extração que foi realizada na primeira página.
+
+O código fica assim:
+
+```{r}
+raspa_mises <- function(nPg){
+  # preparação ----------------------------------------------------------------
+  # preparando a url
+  url_mises <- stringr::str_c(
+    "https://www.mises.org.br/Articles_Thumbs.aspx?page=",  # 1º parte
+    nPg,                                                    # 2º parte (variável)
+    "&type=0&text="                                         # 3º parte
+  )
+  # preparando o site
+  site_mises <- url_mises |> 
+    polite::bow(user_agent = "Curso de Extensão da UFRB: Raspando os Dados da Web com o R") |> 
+    polite::scrape()
+  # raspagem ------------------------------------------------------------------
+  # raspando a data
+  data_mises <- site_mises |> 
+    rvest::html_elements(".mis-text-sans span:nth-child(1)") |> 
+    rvest::html_text2() |> 
+    lubridate::dmy()
+  # raspando o autor
+  autor_mises_pg1 <- site_mises |> 
+    rvest::html_elements(".mis-text") |> 
+    rvest::html_text2()
+  # raspando o título
+  titulo_mises_pg1 <- site_mises |> 
+    rvest::html_elements(".thumbsArticle") |> 
+    rvest::html_text2()
+  # exibição dos resultados ---------------------------------------------------
+  # criando uma tabela com os dados
+  tabela_mises <- tibble::tibble(
+    data   = data_mises_pg1,
+    autor  = autor_mises_pg1,
+    titulo = titulo_mises_pg1
+  )
+  # exibindo a tabela
+  tabela_mises
+}
+```
+
+Vamos testar essa função!
+Qual seriam as 7 primeiras linhas da saída dessa função, quando aplicada à 
+primeira página?
+Vimos que a primeira página começa do "0"; logo, devemos calcular `raspa_mises(7)`,
+além se pinçar as sete primeiras linhas, como no código abaixo:
+
+```{r}
+raspa_mises(0) |>
+  dplyr::slice(1:7)
+```
+
+Igualzinho, não?
+
+Como já temos nossa função, podemos iterar isso com o `purrr`, da seguinte forma:
+
+```{r, eval=FALSE}
+tabela_mises_total <- purrr::map_df(0:24, raspa_mises)
+```
+
+Note que atribuí à variável `tabela_mises_total` à saída do resultado, ou seja,
+uma tabela, com três colunas (data, autor e título) das 25 páginas do site.
+Se você quiser exibir essa tabela no console do programa, basta digitar:
+
+```{r, eval=FALSE}
+tabela_mises_total
+```
+
+Porém, é interessante salvar essa tabela em um arquivo `.csv`, para que você crie
+uma base de dados que poderá ser usado em uma análise separada.
+
+Para tanto, usamos a função `write_csv()` do pacote `readr`:
+
+```{r, eval=FALSE}
+readr::write_csv(tabela_mises_total, "dados/tabela_mises_total.csv")
+```
+
+Veja que salvamos o `.csv` numa pasta denominada "dados", que deverá ser criada.
+
+O _script_ completo pode ser visto abaixo.
+
+<details>
+  <summary>
+    Script para raspagem de 25 páginas do site Mises Brasil
+  </summary>
+  
+```{r, eval=FALSE}
+#==============================================================================
+# Raspando data, autor e título de artigos, em 25 páginas, do site Mises Brasil
+# Ícaro Vidal Freire
+# 2022-03-05
+#==============================================================================
+
+# criando a função de raspagem ________________________________________________
+
+raspa_mises <- function(nPg){
+  # preparação ----------------------------------------------------------------
+  # preparando a url
+  url_mises <- stringr::str_c(
+    "https://www.mises.org.br/Articles_Thumbs.aspx?page=",  # 1º parte
+    nPg,                                                    # 2º parte (variável)
+    "&type=0&text="                                         # 3º parte
+  )
+  # preparando o site
+  site_mises <- url_mises |> 
+    polite::bow(user_agent = "Curso de Extensão da UFRB: Raspando os Dados da Web com o R") |> 
+    polite::scrape()
+  # raspagem ------------------------------------------------------------------
+  # raspando a data
+  data_mises <- site_mises |> 
+    rvest::html_elements(".mis-text-sans span:nth-child(1)") |> 
+    rvest::html_text2() |> 
+    lubridate::dmy()
+  # raspando o autor
+  autor_mises_pg1 <- site_mises |> 
+    rvest::html_elements(".mis-text") |> 
+    rvest::html_text2()
+  # raspando o título
+  titulo_mises_pg1 <- site_mises |> 
+    rvest::html_elements(".thumbsArticle") |> 
+    rvest::html_text2()
+  # exibição dos resultados ---------------------------------------------------
+  # criando uma tabela com os dados
+  tabela_mises <- tibble::tibble(
+    data   = data_mises_pg1,
+    autor  = autor_mises_pg1,
+    titulo = titulo_mises_pg1
+  )
+  # exibindo a tabela
+  tabela_mises
+}
+
+# iterando nas 25 páginas _____________________________________________________
+
+tabela_mises_total <- purrr::map2_df(0:24, raspa_mises)
+
+# criando um arquivo `.csv` para futuras análises
+# criando diretório "dados"
+dados <- fs::dir_create("dados")
+# escrevendo em disco
+readr::write_csv(tabela_mises_total, "dados/tabela_mises_total.csv")
+
+#==============================================================================
+```
+  
+</details>
