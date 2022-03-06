@@ -37,4 +37,5 @@
 
 ## 6. Raspando em mais de uma página
 
+- https://www.mises.org.br/Articles_Thumbs.aspx?page=0&type=0&text=
 - https://mises.org.br/Articles_Thumbs.aspx?page=0&type=1&text=

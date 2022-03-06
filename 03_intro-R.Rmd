@@ -44,7 +44,26 @@ stats | graphics | grDevices | utils | datasets | methods | base
  ---  | ---      | ---       | ---   | ---      | ---     | ---
 
 Estes são carregados automaticamente.
-Os outros deverão ser instalados e carregados convenientemente (falaremos disso mais adiante, no curso).
+Os outros deverão ser instalados e carregados convenientemente.
+
+Para instalarmos um pacote, no `R`, basta usarmos a função, no console:
+
+```{r, eval=FALSE}
+install.packages("nome-do-pacote")
+```
+
+Por exemplo, precisaremos instalar o pacote [`polite`](https://dmi3kno.github.io/polite/)
+para fazermos a raspagem de dados em mais de uma página.
+Portanto, antes de usarmos as funções disponíveis nesse pacote, digitamos no
+console:
+
+```{r, eval=FALSE}
+install.packages("polite")
+```
+
+Note as "aspas" no nome do pacote!
+
+> Não se preocupe, pois veremos como se faz isso na prática!
 
 ### 3.1.2 Palavras iniciais sobre o tidyverse
 
@@ -250,6 +269,10 @@ O código ficaria assim:
 ```{r}
 iconv(musica, to = "ASCII//TRANSLIT")
 ```
+
+**Obs.:** O `tidyverse`, por meio do pacote `stringi` fornece uma função semelhante:
+`stri_trans_general()`, que podemos passar o argumento `"Latin-ASCII"`; ou seja,
+poderíamos, para o exemplo acima, usar `stringi::stri_trans_general(musica, "Latin-ASCII")`.
 
 ## 3.3 Operadores Lógicos
 

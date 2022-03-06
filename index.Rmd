@@ -1,7 +1,7 @@
 ---
-title: "Raspando os Dados da Web"
+title: "Raspando os Dados da Web com o R"
 description: |
-  Uma Indrodução ao R
+  (uma indrodução)
 site: distill::distill_website
 author:
   - name: Ícaro Vidal Freire
@@ -54,14 +54,28 @@ diários exibidos, já com o desconto efetivado, para que pudéssemos tomar uma
 decisão rapidamente?
 
 ::: 
+::: {.panel}
+### 3º Situação
+
+Nessa situação, considere o caso em que você necessite extrair informações em 
+mais de uma página, por exemplo.
+
+Existem sites que armazenam conteúdo em várias páginas.
+Por exemplo, suponha que em sua pesquisa, você deseja coletar informações sobre
+certos artigos hospedados em um site ao longo dos anos.
+Vamos supor que as informações de seu interesse sejam: _data_, _autor_ e _título_,
+para que você monte uma base de dados e a analise.
+Como extrair esses informações ao longo de 10, 20, 40 ou 100 páginas?
+
+:::
 :::
 
 ### Formalizando o objetivo
 
-Essas duas situações são comumente encontradas no trabalho do professor ou 
+Essas três situações são comumente encontradas no trabalho do professor ou 
 estudante.
 
-O objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as duas
+O objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as três
 situações, acima expostas, possam ser resolvidas de maneira racional, rápida
 e prazerosa.
 
@@ -72,7 +86,8 @@ unificam uma estrutura de linguagem em **R**.
 Veremos que tal característica facilita muito o aprendizado das funções e 
 potencialidades do **R**.
 
-> **Não** é objetivo desse minicurso uma exaustiva análise ou exibição de funções, estruturas, ou objetos em **R**.
+> **Não** é objetivo desse minicurso uma exaustiva análise ou exibição de 
+funções, estruturas, ou objetos em **R**.
 
 Apenas tangenciaremos alguns pacotes para usarmos as funções neles contidas, 
 necessárias para solucionarmos as duas situações expostas no início desse texto.
@@ -86,6 +101,14 @@ possível.
 
 Espero que gostem! 
 
+## Horário Geral desse minicurso
+
+| Horário         | Atividade                             |
+| :-------------- | :------------------------------------ |
+| 19h até 20:45h  | `r emo::ji("book")` _Parte Teórica I_ |
+| 20:45 até 21h   | `r emo::ji("breakfast")` Intervalo    |
+| 21h até 22h     | `r emo::ji("book")` _Parte Teórica_ ou `r emo::ji("computer")` _Prática_ |
+
 # Estruturação do Minicurso
 
 ::: {.panelset}
@@ -94,11 +117,12 @@ Espero que gostem!
   
   - Apresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;
   - O que é Webscraping?
-  - Tangenciando a estrutura de um arquivo `html`;
+  - Tangenciando a estrutura de um arquivo `html` ;
   - Usando o *SelectorGadget*;
   - INTERVALO (~ 15 min)
   - Vendo como funciona na prática!
-    + Download simultâneo de vários arquivos de texto plano
+    + Rodando um programa para criação de tabela de decisão em compras;
+    + Download simultâneo de vários arquivos de texto plano.
 
 :::
 
@@ -110,10 +134,14 @@ Espero que gostem!
     + Objetos e Funções Básicas no R
   - INTERVALO (~ 15 min)
   - Algo sobre o Tidyverse
-    + tibble, dplyr;
+    + tibble; 
+    + readr;
+    + dplyr;
     + stringr;
+    + stringr;
+    + lubridate;
     + rvest
-  - Duas funções do pacote `fs` (File System)
+  - Pacotes amigos: `fs` (File System) e `polite` (educado)
 :::
 
 ::: {.panel}  
@@ -125,3 +153,6 @@ Espero que gostem!
 
 :::
 :::
+
+
+

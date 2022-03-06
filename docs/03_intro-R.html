@@ -87,30 +87,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Minicurso: Raspando os Dados da Web com o R</title>
+  <title>Minicurso: Introdução ao R</title>
 
-  <meta property="description" itemprop="description" content="(uma indrodução)"/>
+  <meta property="description" itemprop="description" content="Uma introdução absurdamente breve"/>
 
 
-  <meta name="article:author" content="Ícaro Vidal Freire"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Minicurso: Raspando os Dados da Web com o R"/>
+  <meta property="og:title" content="Minicurso: Introdução ao R"/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="(uma indrodução)"/>
+  <meta property="og:description" content="Uma introdução absurdamente breve"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Minicurso"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Minicurso: Raspando os Dados da Web com o R"/>
-  <meta property="twitter:description" content="(uma indrodução)"/>
+  <meta property="twitter:title" content="Minicurso: Introdução ao R"/>
+  <meta property="twitter:description" content="Uma introdução absurdamente breve"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","site","author"]}},"value":[{"type":"character","attributes":{},"value":["Raspando os Dados da Web com o R"]},{"type":"character","attributes":{},"value":["(uma indrodução)\n"]},{"type":"character","attributes":{},"value":["distill::distill_website"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","affiliation"]}},"value":[{"type":"character","attributes":{},"value":["Ícaro Vidal Freire"]},{"type":"character","attributes":{},"value":["<a href='https://ufrb.edu.br/portal/'> Centro de Formação de Professores<\/a>, UFRB, Amargosa"]}]}]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","output"]}},"value":[{"type":"character","attributes":{},"value":["Introdução ao R"]},{"type":"character","attributes":{},"value":["Uma introdução absurdamente breve\n"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc"]}},"value":[{"type":"logical","attributes":{},"value":[true]}]}]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2039,8 +2038,6 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
   <!--/radix_placeholder_distill-->
   <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
-  <link href="site_libs/panelset-0.2.6/panelset.css" rel="stylesheet" />
-  <script src="site_libs/panelset-0.2.6/panelset.js"></script>
   <script src="site_libs/popper-2.6.0/popper.min.js"></script>
   <link href="site_libs/tippy-6.2.7/tippy.css" rel="stylesheet" />
   <link href="site_libs/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
@@ -2060,7 +2057,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"Raspando os Dados da Web com o R","description":"(uma indrodução)","authors":[{"author":"Ícaro Vidal Freire","authorURL":"#","affiliation":"<a href='https://ufrb.edu.br/portal/'> Centro de Formação de Professores<\/a>, UFRB, Amargosa","affiliationURL":"#","orcidID":""}]}
+{"title":"Introdução ao R","description":"Uma introdução absurdamente breve","authors":[]}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2105,123 +2102,468 @@ Material Teórico
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>Raspando os Dados da Web com o R</h1>
+<h1>Introdução ao R</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>(uma indrodução)</p></p>
+<p><p>Uma introdução absurdamente breve</p></p>
 </div>
 
-<div class="d-byline">
-  Ícaro Vidal Freire  (<a href='https://ufrb.edu.br/portal/'> Centro de Formação de Professores</a>, UFRB, Amargosa)
-  
-
-</div>
 
 <div class="d-article">
-<h1 id="objetivo-do-minicurso">Objetivo do Minicurso</h1>
-<p>Antes de falarmos formalmente sobre o objetivo do Minicurso, considereremos as seguintes situações:</p>
-<div class="panelset">
-<section id="º-situação" class="panel">
-<h3>1º Situação</h3>
-<p>Encontramos um <em>site</em> que disponibiliza, gratuitamente, vários materiais que julgamos importantes armazenar também em nosso computador — para o caso de usá-los quando não estiver com <em>internet</em> disponível, por exemplo.</p>
-<p>Vamos supor que são 30 arquivos no formato <code>pdf</code>.</p>
-<p>O que faríamos?</p>
-<p>Clicaríamos em cada um deles e faríamos <em>download</em> desses arquivos manualmente? Bom, essa é uma opção válida, mas seria muito mais produtivo e elegante, se pudéssemos fazer o <em>download</em> de forma automatizada, não? Todos os 30 arquivos, de “uma só vez”, salvos num diretório (pasta) específico de nosso computador! Seria uma maravilha, não?</p>
-</section>
-<section id="º-situação-1" class="panel">
-<h3>2º Situação</h3>
-<p>Suponha, agora, que desejamos comprar alguns livros de um <em>site</em> que sempre oferece promoções interessantes. Mas, previamente estabelecemos que a compra seria realizada se esses livros estivessem com 30% de desconto.</p>
-<p>Obviamente poderíamos entrar no <em>site</em> todos os dias; procurar um a um; e, calcularmos se o desconto aconteceu. Mas, e se criássemos um <em>script</em> (uma sequência, encadeada, de comandos para que um programa execute uma ação) que possui como resultado uma tabela com os preços diários exibidos, já com o desconto efetivado, para que pudéssemos tomar uma decisão rapidamente?</p>
-</section>
-<section id="º-situação-2" class="panel">
-<h3>3º Situação</h3>
-<p>Nessa situação, considere o caso em que você necessite extrair informações em mais de uma página, por exemplo.</p>
-<p>Existem sites que armazenam conteúdo em várias páginas. Por exemplo, suponha que em sua pesquisa, você deseja coletar informações sobre certos artigos hospedados em um site ao longo dos anos. Vamos supor que as informações de seu interesse sejam: <em>data</em>, <em>autor</em> e <em>título</em>, para que você monte uma base de dados e a analise. Como extrair esses informações ao longo de 10, 20, 40 ou 100 páginas?</p>
-</section>
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#algo-sobre-o-r-base">3. Algo sobre o R Base</a>
+<ul>
+<li><a href="#introdução">3.1 Introdução</a>
+<ul>
+<li><a href="#palavras-iniciais-sobre-o-r-base">3.1.1 Palavras iniciais sobre o R Base</a></li>
+<li><a href="#palavras-iniciais-sobre-o-tidyverse">3.1.2 Palavras iniciais sobre o tidyverse</a></li>
+</ul></li>
+<li><a href="#r-como-uma-super-calculadora">3.2 R como uma super calculadora</a>
+<ul>
+<li><a href="#atribuição-no-r">3.2.1 Atribuição, no R</a></li>
+</ul></li>
+<li><a href="#operadores-lógicos">3.3 Operadores Lógicos</a></li>
+<li><a href="#tipos-de-dados">3.4 Tipos de dados</a></li>
+<li><a href="#estruturas-dos-dados">3.5 Estruturas dos dados</a>
+<ul>
+<li><a href="#vetores">3.5.1 Vetores</a></li>
+<li><a href="#listas">3.5.2 Listas</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
 </div>
-<h3 id="formalizando-o-objetivo">Formalizando o objetivo</h3>
-<p>Essas três situações são comumente encontradas no trabalho do professor ou estudante.</p>
-<p>O objetivo desse minicurso é oferecer ferramentas para que, pelo menos, as três situações, acima expostas, possam ser resolvidas de maneira racional, rápida e prazerosa.</p>
-<p>Para isso, introduziremos uma <strong>linguagem</strong> (e <strong>ambiente</strong>) de programação, denominada <strong>R</strong>. Na realidade, nosso foco será voltado a certos pacotes desenvolvidos que unificam uma estrutura de linguagem em <strong>R</strong>. Veremos que tal característica facilita muito o aprendizado das funções e potencialidades do <strong>R</strong>.</p>
+<h1 id="algo-sobre-o-r-base">3. Algo sobre o R Base</h1>
+<h2 id="introdução">3.1 Introdução</h2>
+<h3 id="palavras-iniciais-sobre-o-r-base">3.1.1 Palavras iniciais sobre o R Base</h3>
+<p>De acordo com a <a href="https://www.r-project.org/about.html">página oficial</a>, o <code>R</code> é uma <strong>linguagem</strong> e <strong>ambiente</strong> de programação. Por ser um <em>ambiente de programação</em>, fornece um espaço planejado e coerente para que as amplas variedades de testes e ferramentas estatísticas sejam implementadas. O <code>R</code> também é um <em>software</em> livre!!</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="img/Rlogo.png" width="30%" style="display: block; margin: auto;" /></p>
+</div>
+<p>Ainda por ser uma <em>linguagem de programação</em>, poder ser estendido (implementado) por meio de <strong>pacotes</strong> (<em>packages</em>) que facilitam (e muito) nosso fluxo de trabalho nele.</p>
 <blockquote>
-<p><strong>Não</strong> é objetivo desse minicurso uma exaustiva análise ou exibição de funções, estruturas, ou objetos em <strong>R</strong>.</p>
+<p>Um pacote é constituido de funções e objetos do <code>R</code>.</p>
 </blockquote>
-<p>Apenas tangenciaremos alguns pacotes para usarmos as funções neles contidas, necessárias para solucionarmos as duas situações expostas no início desse texto. Logo, será uma <strong>Introdução ao R</strong>, mostrando que, dentre outras coisas, podemos fazer <strong>web scrape</strong> (“raspagem” de dados na <em>internet</em>) de maneira bem intuitiva e racional, ao mesmo tempo!</p>
-<p>Para isso, dividimos esse minicurso em três dias, para que a sedimentação das informações seja adequada e, assim, o minicurso seja usufruído da melhor maneira possível.</p>
-<p>Espero que gostem!</p>
-<h2 id="horário-geral-desse-minicurso">Horário Geral desse minicurso</h2>
+<p>Pacotes facilitam rotinas! Isso para que não precisemos reperir um conjunto de códigos, geralmente extenso, em atividades rotineiras.</p>
+<p>Na instalação do <code>R</code>, já vem disponíveis 7 (sete) pacotes:</p>
 <table>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Horário</th>
-<th style="text-align: left;">Atividade</th>
+<th>stats</th>
+<th>graphics</th>
+<th>grDevices</th>
+<th>utils</th>
+<th>datasets</th>
+<th>methods</th>
+<th>base</th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>Estes são carregados automaticamente. Os outros deverão ser instalados e carregados convenientemente.</p>
+<p>Para instalarmos um pacote, no <code>R</code>, basta usarmos a função, no console:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"nome-do-pacote"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Por exemplo, precisaremos instalar o pacote <a href="https://dmi3kno.github.io/polite/"><code>polite</code></a> para fazermos a raspagem de dados em mais de uma página. Portanto, antes de usarmos as funções disponíveis nesse pacote, digitamos no console:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span><span class='op'>(</span><span class='st'>"polite"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Note as “aspas” no nome do pacote!</p>
+<blockquote>
+<p>Não se preocupe, pois veremos como se faz isso na prática!</p>
+</blockquote>
+<h3 id="palavras-iniciais-sobre-o-tidyverse">3.1.2 Palavras iniciais sobre o tidyverse</h3>
+<p>Um dos inúmeros pacotes implementados para o <code>R</code> é o <a href="https://www.tidyverse.org/"><strong>tidyverse</strong></a>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="img/tidyverse.png" width="30%" style="display: block; margin: auto;" /></p>
+</div>
+<p>Este se destaca por ser um conjunto de outros pacotes amplamente usados para análise de dados, fornecendo uma uniformidade na escrita de comandos, bem como uma comunidade ativa em sua implementação.</p>
+<blockquote>
+<p>Tidyverse: um conjunto de pacotes para análise de dados</p>
+</blockquote>
+<p>Nesse minicurso, <strong>usaremos o</strong> <code>R</code> <strong>na perspectiva do</strong> <strong><em>tidyverse</em></strong>. Então, não será nosso objetivo um aprofundamento na linguagem <code>R</code> (que é algo muito maior e demandaria muito tempo). Apenas falaremos, brevemente, sobre aspectos essenciais dessa linguagem que utilizaremos nos pacotes do <em>tidyverse</em>.</p>
+<p>Esse texto foi planejado para aprenderemos alguns aspectos básicos da linguagem <code>R</code> que nos fornecerão instrumentos para o desenvolvimento da extração de dados na web com as ferramentas e linguagem do <em>tidyverse</em>.</p>
+<p>Vamos começar?</p>
+<h2 id="r-como-uma-super-calculadora">3.2 R como uma super calculadora</h2>
+<p>O <code>R</code> pode ser usado como uma excelente calculadora! Sim! Você pode <em>somar</em> (<code>+</code>), <em>subtrair</em> (<code>-</code>), <em>multiplicar</em> (<code>*</code>) e <em>dividir</em> (<code>/</code>) dois números reais, dentro do dominio dessas operações.</p>
+<p>Existem outras funções matemáticas notáveis que certamente serão úteis em muitos aspectos:</p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">codigo</th>
+<th style="text-align: center;">saída</th>
+<th style="text-align: center;">nome</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">19h até 20:45h</td>
-<td style="text-align: left;">📖 <em>Parte Teórica I</em></td>
+<td style="text-align: center;"><code>a ^ b</code></td>
+<td style="text-align: center;"><span class="math inline">\(a^b\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(a\)</span> evelado a <span class="math inline">\(b\)</span></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">20:45 até 21h</td>
-<td style="text-align: left;">🍵 Intervalo</td>
+<td style="text-align: center;"><code>sqrt(x)</code></td>
+<td style="text-align: center;"><span class="math inline">\(\sqrt{x}\)</span></td>
+<td style="text-align: center;">raiz quadrada de <span class="math inline">\(x\)</span></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">21h até 22h</td>
-<td style="text-align: left;">📖 <em>Parte Teórica</em> ou 💻 <em>Prática</em></td>
+<td style="text-align: center;"><code>exp(x)</code></td>
+<td style="text-align: center;"><span class="math inline">\(\exp{x}\)</span></td>
+<td style="text-align: center;">exponencial de <span class="math inline">\(x\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>log(x)</code></td>
+<td style="text-align: center;"><span class="math inline">\(\ln{x}\)</span></td>
+<td style="text-align: center;">logarítimo natural de <span class="math inline">\(x\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><code>log10(x)</code></td>
+<td style="text-align: center;"><span class="math inline">\(\log{x}\)</span></td>
+<td style="text-align: center;">logarítimo de <span class="math inline">\(x\)</span> na base 10</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><code>log(x, b)</code></td>
+<td style="text-align: center;"><span class="math inline">\(\log_{b}{x}\)</span></td>
+<td style="text-align: center;">log de <span class="math inline">\(x\)</span> na base <span class="math inline">\(b\)</span></td>
 </tr>
 </tbody>
 </table>
-<h1 id="estruturação-do-minicurso">Estruturação do Minicurso</h1>
-<div class="panelset">
-<section id="º-dia" class="panel">
-<h3>1º Dia</h3>
-<ul>
-<li>Apresentação dos objetivos, da plataforma RStudio Cloud e da metodologia;</li>
-<li>O que é Webscraping?</li>
-<li>Tangenciando a estrutura de um arquivo <code>html</code> ;</li>
-<li>Usando o <em>SelectorGadget</em>;</li>
-<li>INTERVALO (~ 15 min)</li>
-<li>Vendo como funciona na prática!
-<ul>
-<li>Rodando um programa para criação de tabela de decisão em compras;</li>
-<li>Download simultâneo de vários arquivos de texto plano.</li>
-</ul></li>
-</ul>
-</section>
-<section id="º-dia-1" class="panel">
-<h3>2º Dia</h3>
-<ul>
-<li>Introdução ao R
-<ul>
-<li>O que é o <code>R</code>?</li>
-<li>Objetos e Funções Básicas no R</li>
-</ul></li>
-<li>INTERVALO (~ 15 min)</li>
-<li>Algo sobre o Tidyverse
-<ul>
-<li>tibble;</li>
-<li>readr;</li>
-<li>dplyr;</li>
-<li>stringr;</li>
-<li>stringr;</li>
-<li>lubridate;</li>
-<li>rvest</li>
-</ul></li>
-<li>Pacotes amigos: <code>fs</code> (File System) e <code>polite</code> (educado)</li>
-</ul>
-</section>
-<section id="º-dia-2" class="panel">
-<h3>3º Dia</h3>
-<ul>
-<li>Download simultâneo de vários arquivos binários (pdf);</li>
-<li>Download e limpeza de vários arquivos binários (pdf);</li>
-<li>Montando uma lista de preços para tomada de decisão;</li>
-<li>Raspagem de dados em mais de uma página.</li>
-</ul>
-</section>
+<p>Usando as funções adequadas, podemos calcular a expressão abaixo: <span class="math display">\[\log{(\exp{1})} + 3^2 - \sqrt{100}.\]</span></p>
+<p>Para isso, podemos usar o código:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fl'>3</span> <span class='op'>^</span> <span class='fl'>2</span> <span class='op'>-</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>
+</code></pre>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<pre><code>[1] 0</code></pre>
+</div>
+<p>Mas, não para por aí! O <code>R</code> também é, principalmente, uma excelente calculadora estatística! Existem testes e funções específicas que auxiliam muito as análises estatísticas para qualquer conjunto de dados. Vale a pena um aprofundamento depois desse minicurso!</p>
+<h3 id="atribuição-no-r">3.2.1 Atribuição, no R</h3>
+<p>O simbolo <code>&lt;-</code> (“menor do que” com “menos”, justapostos) serve para fazermos atribuições de objetos no <code>R</code>. Tais atribuições seguem o sentido da “seta”, ou seja, supondo que “a” seja um número real, ao escrever <code>x &lt;- a</code> significa que “x” assume o valor de “a”. Mas, obviamente, “a” pode ser um <em>vetor</em>, uma <em>matriz</em>, uma <em>lista</em>, etc.</p>
+<p>Isso é útil para trabalharmos com grandes informações usando apenas um símbolo, ou nomenclatura adequada.</p>
+<p>Mas, vamos começar com coisas pequenas nesse minicurso, não?</p>
+<p>Se fizermos</p>
+<ul>
+<li><code>a &lt;- log(exp(1))</code>;</li>
+<li><code>b &lt;- 3^2</code>;</li>
+<li><code>c &lt;- -sqrt(100)</code>;</li>
+</ul>
+<p>ao somarmos <code>a + b + c</code> deve retornar o mesmo valor da solução do exercício anterior, a saber, 0 (zero).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/Log.html'>exp</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>3</span><span class='op'>^</span><span class='fl'>2</span>
+<span class='va'>c</span> <span class='op'>&lt;-</span> <span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>100</span><span class='op'>)</span>
+
+<span class='va'>a</span> <span class='op'>+</span> <span class='va'>b</span> <span class='op'>+</span> <span class='va'>c</span>
+</code></pre>
+</div>
+<pre><code>[1] 0</code></pre>
+</div>
+<p>Observe que, quando atribuimos um valor a um objeto, ele fica “armazenado”. Para aparecer, deve retornar o objeto novamente.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>um_objeto</span> <span class='op'>&lt;-</span> <span class='fl'>7</span>
+<span class='va'>um_objeto</span>
+</code></pre>
+</div>
+</div>
+<h4 id="exemplificando">3.2.1.1 Exemplificando</h4>
+<p>Vamos usar o que aprendemos com a ferramenta “atribuição”, para conhecermos a função <code>download.file()</code>, que pertence ao pacote <code>utils</code> (já incluso no R Base).</p>
+<p>Essa função possui, por exemplo, a seguinte estrutura:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='st'>"url"</span>, <span class='st'>"destino/nome-e-extensao-do-arquivo"</span>, mode <span class='op'>=</span> <span class='st'>"xx"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Onde,</p>
+<ul>
+<li><strong>url</strong>: é o <em>link</em> do arquivo que você deseja fazer o <em>download</em>;</li>
+<li><strong>destino/nome-e-extensao-do-arquivo</strong>: diretório (pasta) e o nome do arquivo explicitando a sua extensão. A barra “/” delimita o caminho relativo;</li>
+<li><strong>mode</strong>: por padrão é “w”, para arquivos de texto plano. Mas, se for, por exemplo, arquivos <code>.pdf</code>, deve-se colocar o argumento “wb” (arquivos binários).</li>
+</ul>
+<p>Vamos fazer dois exemplos para deixar claro as coisas:</p>
+<details>
+<summary>
+<strong>Exemplo 01:</strong> <em>download</em> de arquivo <code>.R</code>
+</summary>
+<p>Vamos fazer o <em>download</em> do arquivo de texto <code>CIR.00_apresentacao.R</code>, que se encontra na página:</p>
+<p align="center">
+<a href="https://lec.pro.br/avale-es/r" class="uri">https://lec.pro.br/avale-es/r</a>
+</p>
+<p>Vamos atribuir à variável <code>url_uesc</code> o endereço do <em>link</em> desse arquivo (notem as aspas):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>url_uesc</span> <span class='op'>&lt;-</span> <span class='st'>"https://lec.pro.br/download/R/cir/CIR.00_apresentacao.R"</span>
+</code></pre>
+</div>
+</div>
+<p>Além disso, vamos determinar que o arquivo “CIR.00_apresentacao.R” seja colocado na pasta “arquivos_teste”. Logo, depois de criar esse diretório, podemos fazer a seguinte atribuição para o caminho relativo desse arquivo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>destino_arquivo</span> <span class='op'>&lt;-</span> <span class='st'>"arquivos_teste/CIR.00_apresentacao.R"</span>
+</code></pre>
+</div>
+</div>
+<p>Portanto, o <em>download</em> pode ser feito assim:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>url_uesc</span>, <span class='va'>destino_arquivo</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+</details>
+<details>
+<summary>
+<strong>Exemplo 02:</strong> <em>download</em> de arquivo em <code>.pdf</code>
+</summary>
+<p>Abaixo encontram-se a nossa <code>url</code> e <code>destino-do-arquivo</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>url_sbm</span> <span class='op'>&lt;-</span> <span class='st'>"https://sbm.org.br/wp-content/uploads/2021/10/belos-problemas-de-matematica_ebook.pdf"</span>
+
+<span class='va'>destino</span> <span class='op'>&lt;-</span> <span class='st'>"arquivos_teste/belos-problemas.pdf"</span>
+</code></pre>
+</div>
+</div>
+<p>Agora, se você usa o sistema operacional Windows, para que seja feito o <em>download</em> corretamente precisamos colocar o argrumento <code>mode = "wb"</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>url_sbm</span>, <span class='va'>destino</span>, mode <span class='op'>=</span> <span class='st'>"wb"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Depois, apenas por curiosidade, tente fazer esse <em>download</em> sem passar o argumento <code>mode = "wb"</code> … O que aconteceu com o conteúdo do PDF?</p>
+</details>
+<p>Ainda falando sobre atribuições, podemos armazenar uma cadeia de caracteres, como uma frase. Por exemplo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>musica</span> <span class='op'>&lt;-</span> <span class='st'>"Pois tê-Lo e nada mais, não é menos que tê-Lo e tudo o mais"</span>
+</code></pre>
+</div>
+</div>
+<p>Em alguns casos, é conveniente retirarmos toda a acentuação de uma frase, ou conjunto de caracteres. O R Base possui uma função muito conveniente para isso: <code>iconv()</code>. Ela possui alguns argumentos, todavia usaremos apenas dois: o objeto que queremos mudar a codificação; e, a codificação que desejamos (sem acentuação). No que se refere a codificação sem acentuação, podemos “transliterar” a frase usamos usando <code>ASCII//TRANSLIT</code>, no argumento <code>to =</code>. O código ficaria assim:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/iconv.html'>iconv</a></span><span class='op'>(</span><span class='va'>musica</span>, to <span class='op'>=</span> <span class='st'>"ASCII//TRANSLIT"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Pois te-Lo e nada mais, nao e menos que te-Lo e tudo o mais&quot;</code></pre>
+</div>
+<p><strong>Obs.:</strong> O <code>tidyverse</code>, por meio do pacote <code>stringi</code> fornece uma função semelhante: <code>stri_trans_general()</code>, que podemos passar o argumento <code>"Latin-ASCII"</code>; ou seja, poderíamos, para o exemplo acima, usar <code>stringi::stri_trans_general(musica, "Latin-ASCII")</code>.</p>
+<h2 id="operadores-lógicos">3.3 Operadores Lógicos</h2>
+<p>Os seguintes operadores lógicos serão de muita importância na escrita de nossos códigos, em análises futuras:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Operadores</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>a == b</code></td>
+<td><span class="math inline">\(a\)</span> é <strong>igual</strong> a <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="even">
+<td><code>a != b</code></td>
+<td><span class="math inline">\(a\)</span> é <strong>diferente</strong> de <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="odd">
+<td><code>a &lt; b</code></td>
+<td><span class="math inline">\(a\)</span> é <strong>menor do que</strong> <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="even">
+<td><code>a &gt; b</code></td>
+<td><span class="math inline">\(a\)</span> é <strong>maior do que</strong> <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="odd">
+<td><code>a &lt;= b</code></td>
+<td><span class="math inline">\(a\)</span> é <strong>menor ou igua a</strong> <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="even">
+<td><code>a &gt;= b</code></td>
+<td><span class="math inline">\(a\)</span> é <strong>maior ou igua a</strong> <span class="math inline">\(b\)</span></td>
+</tr>
+<tr class="odd">
+<td><code>a &amp; b</code></td>
+<td>Ocorre <span class="math inline">\(a\)</span> <strong>e</strong> <span class="math inline">\(b\)</span> (simultaneamente)</td>
+</tr>
+<tr class="even">
+<td><code>a | b</code></td>
+<td>Ocorre <span class="math inline">\(a\)</span> <strong>ou</strong> <span class="math inline">\(b\)</span> (união)</td>
+</tr>
+</tbody>
+</table>
+<p>Eles retornarão, algum dos seguintes valores lógicos:</p>
+<ul>
+<li><code>TRUE</code>: valor lógico <strong>Verdadeiro</strong>;</li>
+<li><code>FALSE</code>: valor lógico <strong>Falso</strong>.</li>
+</ul>
+<p>Ou relacionarão variáveis numa <code>tibble</code> (falaremos sobre isso em outra oportunidade).</p>
+<h2 id="tipos-de-dados">3.4 Tipos de dados</h2>
+<p>Quando nos deparamos com dados, as variáveis que os representam podem ser, basicamente: <em>quantitativas</em> (fruto de alguma medição, ou relacionado a contagem) ou <em>qualitativas</em> (relacionadas a algum atributo).</p>
+<blockquote>
+<p>Variáveis <strong>quantitativas</strong> também são chamadas de <strong>numéricas</strong>. </br> Variáveis <strong>qualitativas</strong> também são chamadas de <strong>categóricas</strong>.</p>
+</blockquote>
+<p>O <code>R</code> possui uma forma própria de relacionar esses dados e os separam em algumas categorias, por exemplo:</p>
+<ul>
+<li><em>numeric</em> (<strong>numéricos</strong>); são os números reais (1, 1/2, <span class="math inline">\(\sqrt{3}\)</span>, <span class="math inline">\(\pi\)</span>, etc.)</li>
+<li><em>integer</em> (inteiros); devemos colocar “L” (<span class="math inline">\(1L\)</span>, <span class="math inline">\(2L\)</span>, etc.)</li>
+<li><em>complex</em> (números complexos); representados assim: <span class="math inline">\(1+3i,\, 5+i\sqrt{5}\)</span>, etc.</li>
+<li><em>character</em> (<strong>caracteres</strong>); sempre entre aspas (“1”, “Olá pessoal!”, “3&lt;4”, “livros”, etc.)
+<ul>
+<li><em>factor</em> (fatores) quando há ordenação por níveis (“classe baixa”, “classe média”, “classe alta”)</li>
+</ul></li>
+<li><em>logical</em> (lógicos) quando relacionamos objetos com algum operador lógico ( <code>1 == 3</code>, <code>2 &lt; 7</code>, <code>"olá" != "ola"</code>) )</li>
+</ul>
+<p>Em nosso minicurso, grande parte dos dados serão <em>numeric</em> ou <em>character</em>.</p>
+<h2 id="estruturas-dos-dados">3.5 Estruturas dos dados</h2>
+<p>No <code>R</code> existem várias estruturas para armazenamento de dados. Podemos armazenar em linha, tabela e até em formato espacial. Algumas dessas estruturas são mostradas abaixo:</p>
+<ul>
+<li><strong>Vetores.</strong> Estruturas unidimensionais. Usamos a função <em>concatenar</em>, <code>c()</code>, para criar um vetor. </br> <strong>Obs.:</strong> Num vetor, seus elementos devem ser todos do mesmo tipo;</li>
+<li><strong>Matrizes.</strong> Estruturas de dados bidimensionais. Usamos o comando <code>matrix(x, nrow = m, ncol = n )</code>.</li>
+<li><strong>Listas.</strong> Estrutura mais gerais de armazenamento. Em uma <em>lista</em> pode conter um vetor, uma matriz, um data frame ou, até mesmo, outras listas! Usamos o comando <code>list(var1 = ..., var2 = ..., ...)</code></li>
+<li><strong>Data Frames.</strong> É um caso especial de <em>lista</em>. “Data Frame” significa “quadro de dados”, ou seja, a ideia é de uma tabela em que as linhas representam observações e as diferentes variáveis definem as colunas. Usamos o comando <code>data.frame(var1 = ..., var2 = ..., ...)</code>. </br> <strong>Obs.:</strong> Num Data Frame, o número de linhas deve ser o mesmo em cada variável (coluna).</li>
+</ul>
+<p>Nesse minicurso, precisamos saber um mínimo sobre <strong>vetores</strong> e <strong>listas</strong>, de forma direta; e sobre <strong>data frames</strong>, de forma indireta (pois aprenderemos uma forma melhorada de um <em>data frame</em> que será uma <em>tibble</em>, disponibilizada por um dos pacote do <code>tidyverse</code>, a saber, de mesmo nome: <code>tibble</code>). Logo, vamos conhecer um pouco mais sobre os dois primeiros, agora.</p>
+<h3 id="vetores">3.5.1 Vetores</h3>
+<p>Aqui a ideia não é apenas matemática, mas qualquer agrupamento simples de objetos que sejam números ou caracteres. Devemos lembrar que a separação dos elementos é dada por “vírgula” e a separação decimal com “ponto”.</p>
+<p>Abaixo um vetor numérico:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>notas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>4.28</span>, <span class='fl'>4.71</span>, <span class='fl'>4.06</span>, <span class='fl'>5.30</span>, <span class='fl'>5.28</span>, <span class='fl'>4.76</span>, <span class='fl'>4.66</span>, <span class='fl'>4.91</span>, <span class='fl'>4.18</span>, <span class='fl'>5.34</span><span class='op'>)</span>
+<span class='va'>notas</span>
+</code></pre>
+</div>
+<pre><code> [1] 4.28 4.71 4.06 5.30 5.28 4.76 4.66 4.91 4.18 5.34</code></pre>
+</div>
+<p>Se quisermos selecionar o terceito elemento desse objeto, usamos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>notas</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] 4.06</code></pre>
+</div>
+<p>Considere, agora, um vetor de caracteres:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>dias_da_semama</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"dom"</span>, <span class='st'>"seg"</span>, <span class='st'>"ter"</span>, <span class='st'>"qua"</span>, <span class='st'>"qui"</span>, <span class='st'>"sex"</span>, <span class='st'>"sab"</span><span class='op'>)</span>
+<span class='va'>dias_da_semama</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;dom&quot; &quot;seg&quot; &quot;ter&quot; &quot;qua&quot; &quot;qui&quot; &quot;sex&quot; &quot;sab&quot;</code></pre>
+</div>
+<p>Uma pergunta que surge é: e se misturarmos os dois?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>misto</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='st'>"1"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>misto</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;character&quot;</code></pre>
+</div>
+<p>No código acima, temos um “vetor” com o primeiro argumento sendo numérico e o segundo como caractere. Mas, a classe desse objeto em <code>R</code> foi definida como “character”.</p>
+<p>Se quisermos algo que armazene dados numéricos ou categóricos, precisamos da classe <em>list</em> (lista), do <code>R</code>.</p>
+<h3 id="listas">3.5.2 Listas</h3>
+<p>As listas são estruturações mais gerais do <code>R</code>, pois podem conter outros agrupamentos já vistos, bem como outra lista!!</p>
+<p>O comando para criar uma lista é <code>list()</code>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>numerico <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>, caractere <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"1"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>lista</span>
+</code></pre>
+</div>
+<pre><code>$numerico
+[1] 1
+
+$caractere
+[1] &quot;1&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>lista</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;list&quot;</code></pre>
+</div>
+<p>Note, no exemplo acima, que criamos uma lista com dois objetos de tipos diferentes: um “numeric” e outro “character”.</p>
+<p>No próximo exemplo, considere uma lista (<code>lista_mae</code>) que é composta de outras quatro listas (<code>data</code>, <code>nome</code>, <code>despesa</code>, <code>cargo</code>):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># nomeando as listas</span>
+<span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"2021-10-01"</span>, <span class='st'>"2021-09-01"</span>, <span class='st'>"2021-08-01"</span>, <span class='st'>"2021-07-01"</span><span class='op'>)</span>
+<span class='va'>nome</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Asponjo"</span>, <span class='st'>"Luderval"</span>, <span class='st'>"Chinchila"</span>, <span class='st'>"Locobel"</span><span class='op'>)</span>
+<span class='va'>despesa</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2000</span>, <span class='fl'>800</span>, <span class='fl'>1000</span>, <span class='fl'>6000</span><span class='op'>)</span>
+<span class='va'>cargo</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"prefeito"</span>, <span class='st'>"acessor"</span>, <span class='st'>"vereador"</span>, <span class='st'>"advogado"</span><span class='op'>)</span>
+
+<span class='co'># criando a lista_mae  </span>
+<span class='va'>lista_mae</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>nome</span>, <span class='va'>despesa</span>, <span class='va'>cargo</span> <span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Para selecionarmos os elementos da <code>lista_mae</code>, mantendo-os dentro da estrutura da mesma, usamos <code>[]</code> (calchetes simples).</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista_mae</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+[1] &quot;2021-10-01&quot; &quot;2021-09-01&quot; &quot;2021-08-01&quot; &quot;2021-07-01&quot;</code></pre>
+</div>
+<p>Se quisermos selecionar os elementos, sem depender da hierarquia da lista, usamos <code>[[]]</code> (colchetes duplos):</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista_mae</span><span class='op'>[[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;2021-10-01&quot; &quot;2021-09-01&quot; &quot;2021-08-01&quot; &quot;2021-07-01&quot;</code></pre>
+</div>
+<p>A diferença é sutil, mas crucial.</p>
+<p>Para perceber essa diferença, suponha que você queira acessar o segundo elemento da <code>despesa</code>, ou seja, o elemento “800”. Para isso, precisamos usar <code>lista_mae[[3]]</code> para selecionarmos os elementos da <code>despesa</code> e, para escolher o segundo elemento dessa estrutura, colocamos <code>lista_mae[[3]][2]</code>.</p>
+<p>Veja na prática:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista_mae</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+NULL</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista_mae</span><span class='op'>[[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>]</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[1] 800</code></pre>
+</div>
+<p>Agora, se quisermos selecionar uma sequência de objetos da <code>lista_mae</code>, por exemplo, de <code>nome</code> até o <code>cargo</code>, podemos usar <code>lista_mae[2:4]</code>:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista_mae</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>:</span><span class='fl'>4</span><span class='op'>]</span>
+</code></pre>
+</div>
+<pre><code>[[1]]
+[1] &quot;Asponjo&quot;   &quot;Luderval&quot;  &quot;Chinchila&quot; &quot;Locobel&quot;  
+
+[[2]]
+[1] 2000  800 1000 6000
+
+[[3]]
+[1] &quot;prefeito&quot; &quot;acessor&quot;  &quot;vereador&quot; &quot;advogado&quot;</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2229,6 +2571,15 @@ Material Teórico
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->

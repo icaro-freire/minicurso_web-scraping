@@ -2092,7 +2092,7 @@ Material Teórico
 </div>
 <span class="nav-dropdown-header">Slides</span>
 <a href="about.html">Sobre</a>
-<a href="https://github.com/icaro-freire/site_webscraping">
+<a href="https://github.com/icaro-freire/minicurso_web-scraping">
 <i class="fab fa-github" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2129,7 +2129,10 @@ Material Teórico
 <li><a href="#dplyr">4.2.3 dplyr</a></li>
 <li><a href="#rvest">4.2.4 rvest</a></li>
 <li><a href="#stringr">4.2.5 stringr</a></li>
-<li><a href="#purrr">4.2.6 purrr</a></li>
+<li><a href="#stringi">4.2.6 stringi</a></li>
+<li><a href="#lubridate">4.2.7 lubridate</a></li>
+<li><a href="#purrr">4.2.8 purrr</a></li>
+<li><a href="#fs">4.2.9 fs</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2153,12 +2156,14 @@ Material Teórico
 [25] &quot;rvest&quot;         &quot;stringr&quot;       &quot;tibble&quot;        &quot;tidyr&quot;        
 [29] &quot;xml2&quot;          &quot;tidyverse&quot;    </code></pre>
 </div>
-<p>Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:</p>
+<p>Entretanto, usaremos, apenas, oito desses pacotes nesse minicurso:</p>
 <ul>
-<li><strong>readr</strong>; só usaremos a função <code>parse_double()</code> que, como o nome sugere, passa um conjunto de caracteres para a categoria numérica. Uma função do R Base que poderia fazer o mesmo papel seria <code>as.numeric()</code>.</li>
+<li><strong>readr</strong>; usaremos a função <code>parse_double()</code> que, como o nome sugere, passa um conjunto de caracteres para a categoria numérica. Uma função do R Base que poderia fazer o mesmo papel seria <code>as.numeric()</code>. também usaremos a função <code>write_csv()</code>, para formarmos uma saída com arquivo de extensão <code>csv</code>.</li>
 <li><strong>tibble</strong>; para construirmos “tabelas” (<code>tibbles</code>) especiais e visualizarmos o resultado.</li>
 <li><strong>dplyr</strong>; para manipulação de dados (agrupar, selecionar, filtrar, arrumar, etc., certas características desejadas nas <code>tibbles</code>)</li>
 <li><strong>stringr</strong>; para manipulação de cadeias de caracteres, como frases, texto, símbolos, etc. É bem útil para “limpeza” dos dados coletados numa raspagem da internet (as coisas, geralmente, não vem “arrumadinhas”).</li>
+<li><strong>stringi</strong>; apenas usaremos a função <code>stri_trans_general()</code>, com o argumento “Latin-ASCII”, para retirar a acentuação das palavras.</li>
+<li><strong>lubridate</strong>; é uma ferramenta importantíssima para cálculos e conversões com data. Mas, apenas usaremos a função <code>dmy()</code> que converte um conjunto de caracteres “xx/yy/zzzz” em datas, realmente.</li>
 <li><strong>purrr</strong>; para interações. Substitui as ideias das estruturas de repetições (<code>loops</code>) na programação, como <code>for</code> ou <code>while</code>, por exemplo.</li>
 <li><strong>rvest</strong>; para raspagem de dados em documentos html. É o principal pacote de nosso minicurso.</li>
 </ul>
@@ -2171,9 +2176,9 @@ Material Teórico
 </div>
 <pre><code>── Attaching packages ───────────────────────────── tidyverse 1.3.1 ──</code></pre>
 <pre><code>✓ ggplot2 3.3.5     ✓ purrr   0.3.4
-✓ tibble  3.1.6     ✓ dplyr   1.0.7
-✓ tidyr   1.1.4     ✓ stringr 1.4.0
-✓ readr   2.1.0     ✓ forcats 0.5.1</code></pre>
+✓ tibble  3.1.6     ✓ dplyr   1.0.8
+✓ tidyr   1.2.0     ✓ stringr 1.4.0
+✓ readr   2.1.2     ✓ forcats 0.5.1</code></pre>
 <pre><code>── Conflicts ──────────────────────────────── tidyverse_conflicts() ──
 x tidyr::extract()   masks magrittr::extract()
 x dplyr::filter()    masks stats::filter()
@@ -2201,7 +2206,7 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 </div>
 </div>
 <h3 id="uso-dos-pipes">4.1.1 Uso dos pipes</h3>
-<p>A ideia do “pipe” (existem diversas traduções, mas a que me faz comprender a ideia é a de “tubo”, como em uma “encanação”: você conecta as coisas) é, basicamente, escrever o encadeamento do código como pensamos; bem como escrevê-lo em etapas bem delimitadas, trazendo clareza em cada linha de código.</p>
+<p>A ideia do “pipe” (existem diversas traduções, mas a que me faz comprender a ideia é a de “tubo”, como em uma “encanação”: você conecta as coisas) é, basicamente, escrever o encadeamento do código como pensamos; bem como escrevê-lo em etapas sutilmente delimitadas, trazendo clareza em cada linha de código.</p>
 <p>O tidyverse, por meio do pacote <code>magrittr</code>, disponibiliza o pipe <code>%&gt;%</code>, que pode ser acessado por meio do comando <code>Ctrl + Shift + M</code>.</p>
 <p>Para entendermos um pouco mais sobre o <code>%&gt;%</code>, lembremos das funções compostas. Ao compormos três funções, por exemplo, escrevemos:</p>
 <p><span class="math display">\[
@@ -2324,6 +2329,22 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 </div>
 <pre><code>[1] &quot;numeric&quot;</code></pre>
 </div>
+<p>Dentro desse mesmo pacote há a função <code>write_csv()</code>. Ela possui a seguinte estrutura:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>variavel</span><span class='op'>-</span><span class='va'>formada</span>, <span class='st'>"caminho/nome-com-extensao.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Onde, <code>variavel-formada</code> é algum objeto (<em>data-frame</em>, por exemplo) que você atribuiu à alguma variável e deseja salvar em <code>.csv</code>; e, <code>"caminho/nome-com-extensao"</code> (notem as aspas!) é o caminho relativo que deseja-se “escrever” esse arquivo no disco.</p>
+<p>Por exemplo, suponha que nosso objetivo seja salvar a <code>tibble</code> <strong>tabela_livros</strong> no diretório <code>downloads</code> (dentro de sua área de trabalho no R). Basta, então, fazermos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://readr.tidyverse.org/reference/write_delim.html'>write_csv</a></span><span class='op'>(</span><span class='va'>tabela_livros</span>, <span class='st'>"downloads/tabela-livros.csv"</span><span class='op'>)</span>
+</code></pre>
+</div>
+</div>
+<p>Note que dei o mesmo nome “tabela_livros” ao arquivo formado.</p>
 <h3 id="dplyr">4.2.3 dplyr</h3>
 <p>O pacote <a href="https://dplyr.tidyverse.org/">dplyr</a> fornece uma estruturação de funções que seguem uma certa “gramática de manipulação de dados”. Isso fornece um conjunto consistente de “verbos” (os nomes das funções são verbos , em Inglês, que lembram a sua utilidade) que resolvem os desafios mais comuns na manipulação de dados.</p>
 <p>É um pacote fabuloso e que precisaríamos de um curso só para falar dele.</p>
@@ -2403,7 +2424,7 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="er">&lt;</span>h2<span class="sc">&gt;</span>Seção <span class="dv">01</span><span class="sc">:</span> Lista de links<span class="sc">&lt;</span><span class="er">/</span>h2<span class="sc">&gt;</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>      <span class="er">&lt;</span>p<span class="sc">&gt;</span>Lista de links <span class="sc">&lt;</span><span class="er">/</span>p<span class="sc">&gt;</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>      <span class="er">&lt;</span>ul<span class="sc">&gt;</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://www.mathunion.org/&#39;</span><span class="sc">&gt;</span> União Internaciional de Matemática (IMU)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://www.mathunion.org/&#39;</span><span class="sc">&gt;</span> União Internacional de Matemática (IMU)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://sbm.org.br/&#39;</span><span class="sc">&gt;</span> Sociedade Brasileira de Matemática (SBM)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>        <span class="er">&lt;</span>li<span class="sc">&gt;</span><span class="er">&lt;</span>a href<span class="ot">=</span><span class="st">&#39;https://www.sbmac.org.br/&#39;</span><span class="sc">&gt;</span> Sociedade Brasileira de Matemática Aplicada e <span class="fu">Computacional</span> (SBMAC)<span class="sc">&lt;</span><span class="er">/</span>a<span class="sc">&gt;</span><span class="er">&lt;/</span>li<span class="sc">&gt;</span></span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>      <span class="er">&lt;/</span>ul<span class="sc">&gt;</span></span>
@@ -2766,138 +2787,164 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 [3] &quot;livros-matemática_algebra-linear&quot;                  </code></pre>
 </div>
 <p>Temos, então, o suficiente do pacote <code>stringr</code> para nosso minicurso!</p>
-<h3 id="purrr">4.2.6 purrr</h3>
-<p>Por fim, mas não menos importante, precisamos de estruturas de <em>loops</em>. De fato, quando efetuamos uma raspagem de dados que consiste, por exemplo, do <em>download</em> de vários arquivos, a ideia é aplicar uma estrutura de repetição do <em>download</em> de um deles, nos outros arquivos.</p>
+<h3 id="stringi">4.2.6 stringi</h3>
+<p>Do pacote <code>stringi</code> só usaremos a função <code>stri_trans_general()</code>, com o argumento “Latin-ASCII”.</p>
+<p>Nem sempre a função <code>incov()</code> retorna convenientemente os dados, por isso usaremos a função acima.</p>
+<p>Veja o exemplo:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># fazendo  um nome com muita acentução e exibindo -----------------------------</span>
+<span class='va'>nome_doido</span> <span class='op'>&lt;-</span> <span class='st'>"Àáäbcdéèëçã"</span>
+<span class='va'>nome_doido</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Àáäbcdéèëçã&quot;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># usando a função stri_trans_general ------------------------------------------</span>
+<span class='fu'>stringi</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/stringi/man/stri_trans_general.html'>stri_trans_general</a></span><span class='op'>(</span><span class='va'>nome_doido</span>, <span class='st'>"Latin-ASCII"</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Aaabcdeeeca&quot;</code></pre>
+</div>
+<h3 id="lubridate">4.2.7 lubridate</h3>
+<p>Para conhecermos a função <code>dmy()</code> do pacote <a href="https://lubridate.tidyverse.org/"><code>lubridate</code></a>, vamos considerar o seguite vetor:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>possiveis_datas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"01/01/2020"</span>, <span class='st'>"01/01/2021"</span>, <span class='st'>"01/01/2022"</span><span class='op'>)</span>
+<span class='va'>possiveis_datas</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;01/01/2020&quot; &quot;01/01/2021&quot; &quot;01/01/2022&quot;</code></pre>
+</div>
+<p>À primeira vista, parecem datas, não? O formato seria: “dia/mês/ano” (que em inglês é “day/month/year”, daí o nome da função: <code>dmy()</code>); mas será que está no formato adequado?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>possiveis_datas</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;character&quot;</code></pre>
+</div>
+<p>Não são datas, mas “caracteres”. Para transformar em datas, fazemos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datas_verdadeiras</span> <span class='op'>&lt;-</span> <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='https://lubridate.tidyverse.org/reference/ymd.html'>dmy</a></span><span class='op'>(</span><span class='va'>possiveis_datas</span><span class='op'>)</span>
+
+<span class='va'>datas_verdadeiras</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;2020-01-01&quot; &quot;2021-01-01&quot; &quot;2022-01-01&quot;</code></pre>
+</div>
+<p>Agora, verificando sua classe, encontrados como saída “datas”, realmente.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>datas_verdadeiras</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Date&quot;</code></pre>
+</div>
+<p>Pode parecer um detalhe, mas isso para uso em cálculos que envolvem datas é muito importante. Não é possível realizarmos cálculos com caractéres.</p>
+<h3 id="purrr">4.2.8 purrr</h3>
+<p>Por fim, mas não menos importante, precisamos de estruturas de <em>loops</em>. Com efeito, quando efetuamos raspagem de dados em muitas páginas que seguem um mesmo padrão, apenas com mofificações pontuais, uma estrutura de repetição, torna-se imperativa.</p>
+<blockquote>
 <p>No R Base existem os “for” e “while” da vida, mas o pacote <code>purrr</code> torna isso tudo mais simples!</p>
-<p>Para entendermos a usabilidade de certas funções do pacote <code>purrr</code>, vamos considerar duas categorias de arquivos: arquivo de texto (como <em>scripts</em> “.R”); e, arquivos binários (como, por exemplo, “.pdf”).</p>
+</blockquote>
+<p>A estruturação das funções do pacote <code>purrr</code> tem o seguinte formato:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>links_R</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-  <span class='st'>"https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_pi-ggplot.R"</span>,
-  <span class='st'>"https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_pi.R"</span>,
-  <span class='st'>"https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_primos.R"</span>,
-  <span class='st'>"https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/grafico_apresentacao.R"</span>,
-  <span class='st'>"https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/pontos-aleatorios_ggplot2.R"</span>
-<span class='op'>)</span>
-
-<span class='va'>links_pdf</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>
-  <span class='st'>"https://sbm.org.br/wp-content/uploads/2021/10/Introducao-a-Geometria-Diferencial_Ronaldo-Freire-Lima.pdf"</span>,
-  <span class='st'>"https://sbm.org.br/wp-content/uploads/2021/10/Sistemas-Dinamicos-Lineares-Joao-Socorro-Pinheiro-Ferreira.pdf"</span>,
-  <span class='st'>"https://sbm.org.br/wp-content/uploads/2021/10/Teoria-de-Green-e-Escoamento-de-Poiseuille-Gilberlandio-Dias.pdf"</span>,
-  <span class='st'>"https://sbm.org.br/wp-content/uploads/2021/10/Topicos-na-intersecao-ente-a-Teoria-dos-Grafos-e-Algebra-Abel-Ortiz_Thiago-Moreira.pdf"</span>
-<span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'>funcao_purrr</span><span class='op'>(</span><span class='va'>args</span>, <span class='va'>funcao</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p>Antes de começarmos os downloads, vamos organizar nosso espaço de trabalho.</p>
-<p>Uma coisa simples é criar um diretório para salvar os arquivos. Podemos fazer isso de muitas formas, mas vamos usar uma função do pacote <code>fs</code>, intitulada, <strong>dir_create()</strong>. Isso será importante para criarmos uma variável com o mesmo nome do diretório onde salvaremos os arquivos; para que, possamos manipular adequadamente os argumentos da função <code>download.file()</code> dentro do <code>purrr</code>.</p>
-<p>O nome do nosso diretório (pasta) será “download_arquivos”:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>download_arquivos</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"download_arquivos"</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Agora, vamos relembrar como funciona a função <code>download.file()</code> fazendo o <em>download</em>, por exemplo, do primeiro arquivo “.R” de nossa lista, ou seja, o arquivo do link <code>links_R[1]</code>.</p>
-<p>Para isso, precisamos de duas coisas: a url do link, que já sabemos como obter; e o destino junto com o nome desse arquivo, que, aliás, vamos deixar com o nome original. Ora, a url é obtida fazendo <code>links_R[1]</code> e, como o nome desse arquivo é (tem que olhar o nome final do link) “funcao_pi-ggplot.R”, podemos estabelecer o destino do download como: “download_arquivos/funcao_pi-ggplot.R”, ou seja, dentro do diretório “download_arquivos”, vamos salvar um arquivo de extensão “.R”, por nome “funcao_pi-ggplot”. O código ficaria assim:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>links_R</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='st'>"download_arquivos/funcao_pi-ggplot.R"</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Nesse ponto, já começamos perceber o quanto seria bom extraírmmos os nomes dos arquivos de forma rápida, sem precisar ver o nome “um por um”; pois, caso nossa lista de link seja consideravelmente maior, ficaria inviável.</p>
-<p>Portanto, ainda falando sobre organização, vamos extrair os nomes dos arquivos acima com o auxílio, mais uma vez, do pacote <code>fs</code>, já que a função <strong>path_file()</strong> faz esse serviço brilhantemente.</p>
-<p>Podemos extrair o nome original dos arquivos “.R” com o comando:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nomes_links_R</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='va'>links_R</span><span class='op'>)</span>
-
-<span class='va'>nomes_links_R</span>
-</code></pre>
-</div>
-<pre><code>[1] &quot;funcao_pi-ggplot.R&quot;          &quot;funcao_pi.R&quot;                
-[3] &quot;funcao_primos.R&quot;             &quot;grafico_apresentacao.R&quot;     
-[5] &quot;pontos-aleatorios_ggplot2.R&quot;</code></pre>
-</div>
-<p>E, para os arquivos “.pdf” assim:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>nomes_links_pdf</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='va'>links_pdf</span><span class='op'>)</span>
-
-<span class='va'>nomes_links_pdf</span>
-</code></pre>
-</div>
-<pre><code>[1] &quot;Introducao-a-Geometria-Diferencial_Ronaldo-Freire-Lima.pdf&quot;                            
-[2] &quot;Sistemas-Dinamicos-Lineares-Joao-Socorro-Pinheiro-Ferreira.pdf&quot;                        
-[3] &quot;Teoria-de-Green-e-Escoamento-de-Poiseuille-Gilberlandio-Dias.pdf&quot;                      
-[4] &quot;Topicos-na-intersecao-ente-a-Teoria-dos-Grafos-e-Algebra-Abel-Ortiz_Thiago-Moreira.pdf&quot;</code></pre>
-</div>
-<p>Para nossos fins, vamos considerar até três argumentos da função <code>download.file()</code>, dependendo do seu Sistema Operacional. Quem usa GNU/Linux, só precisa de dois argumentos; mas, quem usa Windows, pode precisar de três argumentos.</p>
+<p>Onde:</p>
 <ul>
-<li><strong>GNU/Linux</strong>: <code>dowload.file(url, destfile)</code></li>
-<li><strong>Windows</strong>: <code>dowload.file(url, destfile, mode = "wb")</code></li>
+<li><strong><code>funcao_purrr</code></strong>: é alguma função disponível no pacote. Existem muitas, mas usaremos a <code>map_df()</code> que transforma a saída em um <em>data frame</em> (na realidade numa <code>tibble</code>);</li>
+<li><strong><code>args</code></strong>: são os argumentos necessários para iteração. Dependendo da função, pode haver mais de um argumento. Mas, para o nosso caso, será apenas um argumento.</li>
+<li><strong><code>funcao</code></strong>: as funções do <code>purrr</code> iteram de acordo com a estrutura de uma “função” pré-determinada. Geralmente, criamos essa função com o padrão de repetição que observamos ser necessário.</li>
 </ul>
-<p>O GNU/Linux consegue identificar os tipos de arquivos (texto ou binário) de forma automática, mas o Windows não. Para esse últuimo sistema operacional, os arquivos binários precisam ser especificados com o argumento <code>mode = "wb"</code>.</p>
-<p>Portanto, na parte do download dos arquivos “.pdf”, vamos diferenciar as coisas. Por enquanto, para arquivos de texto, vamos seguir de forma indistinta entre os sistemas operacionais.</p>
-<p>O código abaixo substitui o primeiro download realizado:</p>
+<p>Pra explicarmos essas funcionaliddes, vamos criar um exemplo bem artificial, mas adequado aos nossos fins.</p>
+<p>Dado um número natural, suponha que deseja-se criar uma tabela que exiba: na primeira coluna, o próprio número; e, na segunda coluna, o dobro desse número.</p>
+<p>Por exemplo, se o número em questão for “3”, queremos algo assim:</p>
+<div class="layout-chunk" data-layout="l-body">
+<pre><code># A tibble: 1 × 2
+  numero dobro
+   &lt;dbl&gt; &lt;dbl&gt;
+1      3     6</code></pre>
+</div>
+<p>Como montar uma função com essas ideias? Simples: usaremos a estrutura do R Base <code>function(variável){estruturação}</code> com a função <code>tibble</code>, do pacote de mesmo nome. Uma possibilidade seria:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/utils/download.file.html'>download.file</a></span><span class='op'>(</span><span class='va'>links_R</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>, <span class='va'>download_arquivos</span><span class='op'>/</span><span class='va'>nomes_links_R</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>tabela_dobro</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='fu'>tibble</span><span class='fu'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tibble.html'>tibble</a></span><span class='op'>(</span>
+    numero <span class='op'>=</span> <span class='va'>x</span>,
+    dobro  <span class='op'>=</span> <span class='fl'>2</span> <span class='op'>*</span> <span class='op'>(</span><span class='va'>x</span><span class='op'>)</span>
+  <span class='op'>)</span>
+<span class='op'>}</span>
 </code></pre>
 </div>
 </div>
-<p>Ok … Mas, como seria para todos os downloads? É aqui que entra o pacote <code>purrr</code>: a função <strong>walk2()</strong> nos ajudará nisso! Ela possui a seguinte estruturação:</p>
+<p>Veja que atribuímos à variável “<code>tabela_dobro</code>” a estrutura de função; logo, podemos usar tal variável, como se fosse uma função: <code>tabela_dobro()</code>.</p>
+<p>Vamos testar para o caso do número “3”, tal como fizemos anteriormente:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>walk2</a></span><span class='op'>(</span><span class='va'>arg1</span>, <span class='va'>arg2</span>, <span class='va'>função</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>tabela_dobro</span><span class='op'>(</span><span class='fl'>3</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 1 × 2
+  numero dobro
+   &lt;dbl&gt; &lt;dbl&gt;
+1      3     6</code></pre>
+</div>
+<p>A saída é a mesma, não?</p>
+<p>Mas, onde entra o <code>purrr</code>?</p>
+<p>Suponha, agora, que desejamos aplicar nossa função criada para TODOS os naturais de 1 até 10, agrupando-os em uma só tabela! Para esse processo iterativo, usaremos a função <code>map_df()</code> do pacote <code>purrr</code>. Antes, porém, devemos lembrar que essa sequência de números, pode ser obtida de muitas maneiras, mas ficaremos com <code>1:10</code> (poderíamos usar a função <code>seq()</code>, do R Base, da seguinte forma: <code>seq(1, 10)</code>), por simplicidade. Portanto, a iteração ocorre assim:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map.html'>map_df</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='va'>tabela_dobro</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code># A tibble: 10 × 2
+   numero dobro
+    &lt;int&gt; &lt;dbl&gt;
+ 1      1     2
+ 2      2     4
+ 3      3     6
+ 4      4     8
+ 5      5    10
+ 6      6    12
+ 7      7    14
+ 8      8    16
+ 9      9    18
+10     10    20</code></pre>
+</div>
+<p>Massa, não?</p>
+<h3 id="fs">4.2.9 fs</h3>
+<p>Por fim, por questções de organização, usaremos um pacote que não faz parte do <code>tidyverse</code>, mas que posui a mesma filosofia de sintaxe nas suas funções. Com o pacote <code>fs</code> (de <em>File System</em> ) podemos criar um diretório/pasta por meio de códigos em R, usando a dinção <code>dir_create()</code>; bem como extrair nomes de arquivos, com a função <code>path_file()</code>!</p>
+<p>Por exemplo, o comando:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>pasta_arquivos</span> <span class='op'>&lt;-</span> <span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/create.html'>dir_create</a></span><span class='op'>(</span><span class='st'>"downloads/pasta_arquivos"</span><span class='op'>)</span>
 </code></pre>
 </div>
 </div>
-<p>Ou seja, ela passa os dois argumentos para a função! Em nosso exemplo, a função é <code>download.file</code> e os argumentos são:</p>
-<ul>
-<li><code>arg1 = links_R</code></li>
-<li><code>arg2 = download_arquivos/nomes_links_R</code>.</li>
-</ul>
-<p>Portando, temos o seguinte código para obtermos o download de todos os arquivos “.R” listados:</p>
+<p>Atribui à variável <code>pasta_arquivos</code> à criação de um subdiretório de mesmo nome (<code>pasta_arquivos</code>), dentro de um diretório por nome <code>downloads</code>. Ele criará os dois diretórios, caso não existam, ou criará o subdiretório <code>pasta_arquivos</code> se <code>downloads</code> já exista. )</p>
+<p>O código abaixo mostra como usar a outra função considerada:</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>walk2</a></span><span class='op'>(</span><span class='va'>links_R</span>, <span class='va'>download_arquivos</span><span class='op'>/</span><span class='va'>nomes_links_R</span>, <span class='va'>download.file</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># link do site, com nome do arquivo ao final (exrtensão .Rmd)</span>
+<span class='va'>nome_arquivo</span> <span class='op'>&lt;-</span> <span class='st'>"https://github.com/icaro-freire/minicurso_web-scraping/blob/feature/raspagem/04_intro-tidyverse.Rmd"</span>
+<span class='va'>nome_arquivo</span>
 </code></pre>
 </div>
-</div>
-<p>Agora, para download dos arquivos “.pdf”, caso esteja no GNU/linux, fazemos:</p>
-<div class="layout-chunk" data-layout="l-body">
+<pre><code>[1] &quot;https://github.com/icaro-freire/minicurso_web-scraping/blob/feature/raspagem/04_intro-tidyverse.Rmd&quot;</code></pre>
 <div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>walk2</a></span><span class='op'>(</span><span class='va'>links_pdf</span>, <span class='va'>download_arquivos</span><span class='op'>/</span><span class='va'>nomes_links_pdf</span>, <span class='va'>download.file</span><span class='op'>)</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># usando a função path_dir()</span>
+<span class='fu'>fs</span><span class='fu'>::</span><span class='fu'><a href='https://fs.r-lib.org/reference/path_file.html'>path_file</a></span><span class='op'>(</span><span class='va'>nome_arquivo</span><span class='op'>)</span>
 </code></pre>
 </div>
+<pre><code>[1] &quot;04_intro-tidyverse.Rmd&quot;</code></pre>
 </div>
-<p>Mas, caso esteja no Windows, não poderemos usar mais a função <code>walk2</code>, pois ela APENAS passas dois argumentos; todavia, agora, aparecerá um terceito: <code>mode = "wb"</code>.</p>
-<p>Para três ou mais parâmetros, a função que estamos procurando é a <strong>pwalk()</strong>. Ela possui a seguinte estrutura:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>pwalk</a></span><span class='op'>(</span><span class='va'>lista</span>, <span class='va'>função</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>No argumento “lista” criaremos uma lista com todos os argumentos necessários para a função.</p>
-<p>Para nosso exemplo, uma lista adequada seria:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lista_args</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>links_pdf</span>, <span class='va'>download_arquivos</span><span class='op'>/</span><span class='va'>nomes_links_pdf</span>, mode <span class='op'>=</span> <span class='st'>"wb"</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Portanto, o download de todos os arquivos “.pdf”, no Windows, fica:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'>purrr</span><span class='fu'>::</span><span class='fu'><a href='https://purrr.tidyverse.org/reference/map2.html'>pwalk</a></span><span class='op'>(</span><span class='va'>lista_args</span>, <span class='va'>download.file</span><span class='op'>)</span>
-</code></pre>
-</div>
-</div>
-<p>Todas as considerações acima, capacita-nos à raspagem dos dados!!!</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>Todas essas considerações, capacita-nos à raspagem dos dados!!!</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

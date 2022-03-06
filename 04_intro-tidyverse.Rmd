@@ -29,11 +29,13 @@ Podemos listá-los com o seguinte comando:
 tidyverse::tidyverse_packages()
 ```
 
-Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:
+Entretanto, usaremos, apenas, oito desses pacotes nesse minicurso:
 
-- **readr**; só usaremos a função `parse_double()` que, como o nome sugere, 
+- **readr**; usaremos a função `parse_double()` que, como o nome sugere, 
   passa um conjunto de caracteres para a categoria numérica. 
   Uma função do R Base que poderia fazer o mesmo papel seria `as.numeric()`.
+  também usaremos a função `write_csv()`, para formarmos uma saída com arquivo 
+  de extensão `csv`.
 - **tibble**; para construirmos "tabelas" (`tibbles`) especiais e visualizarmos 
   o resultado.
 - **dplyr**; para manipulação de dados (agrupar, selecionar, filtrar, arrumar, 
@@ -42,6 +44,11 @@ Entretanto, usaremos, apenas, seis desses pacotes nesse minicurso:
   símbolos, etc. 
   É bem útil para "limpeza" dos dados coletados numa raspagem da internet (as 
   coisas, geralmente, não vem "arrumadinhas").
+- **stringi**; apenas usaremos a função `stri_trans_general()`, com o argumento
+"Latin-ASCII", para retirar a acentuação das palavras.
+- **lubridate**; é uma ferramenta importantíssima para cálculos e conversões
+com data. Mas, apenas usaremos a função `dmy()` que converte um conjunto de
+caracteres "xx/yy/zzzz" em datas, realmente.
 - **purrr**; para interações. Substitui as ideias das estruturas de repetições 
   (`loops`) na programação, como `for` ou `while`, por exemplo. 
 - **rvest**; para raspagem de dados em documentos html. 
@@ -91,7 +98,7 @@ pacote::nome_funcao()
 A ideia do "pipe" (existem diversas traduções, mas a que me faz comprender a ideia 
 é a de “tubo”, como em uma “encanação”: você conecta as coisas) é, basicamente, 
 escrever o encadeamento do código como pensamos; bem como escrevê-lo em etapas 
-bem delimitadas, trazendo clareza em cada linha de código.
+sutilmente delimitadas, trazendo clareza em cada linha de código.
 
 O tidyverse, por meio do pacote `magrittr`, disponibiliza o pipe `%>%`, que pode
 ser acessado por meio do comando `Ctrl + Shift + M`.
@@ -254,6 +261,29 @@ Ao verificarmos a classe, percebemos que os dados passaram a ser numéricos:
 ```{r}
 class(valores_num)
 ```
+
+Dentro desse mesmo pacote há a função `write_csv()`.
+Ela possui a seguinte estrutura:
+
+```{r, eval=FALSE}
+write_csv(variavel-formada, "caminho/nome-com-extensao.csv")
+```
+
+Onde, `variavel-formada` é algum objeto (_data-frame_, por exemplo) que você 
+atribuiu à alguma variável e deseja salvar em `.csv`; e, `"caminho/nome-com-extensao"` 
+(notem as aspas!) é o caminho relativo que deseja-se "escrever" esse arquivo no 
+disco.
+
+Por exemplo, suponha que nosso objetivo seja salvar a `tibble` **tabela_livros** 
+no diretório `downloads` (dentro de sua área de trabalho no R).
+Basta, então, fazermos:
+
+```{r, eval=FALSE}
+write_csv(tabela_livros, "downloads/tabela-livros.csv")
+```
+
+Note que dei o mesmo nome "tabela_livros" ao arquivo formado.
+
 ### 4.2.3 dplyr
 
 O pacote [dplyr](https://dplyr.tidyverse.org/) fornece uma estruturação de funções
@@ -352,7 +382,7 @@ Para isso, vamos usar como exemplo o seguinte texto em html:
     <h2>Seção 01: Lista de links</h2>
       <p>Lista de links </p>
       <ul>
-        <li><a href='https://www.mathunion.org/'> União Internaciional de Matemática (IMU)</a></li>
+        <li><a href='https://www.mathunion.org/'> União Internacional de Matemática (IMU)</a></li>
         <li><a href='https://sbm.org.br/'> Sociedade Brasileira de Matemática (SBM)</a></li>
         <li><a href='https://www.sbmac.org.br/'> Sociedade Brasileira de Matemática Aplicada e Computacional (SBMAC)</a></li>
       </ul>
@@ -728,169 +758,179 @@ livros_nomes |>
   base::iconv(to = "ASCII//TRANSLIT") %>%
   stringr::str_c("livros-matemática_", .)
 ```
+
 Temos, então, o suficiente do pacote `stringr` para nosso minicurso!
 
-### 4.2.6 purrr
+### 4.2.6 stringi
+
+Do pacote `stringi` só usaremos a função `stri_trans_general()`, com o argumento
+"Latin-ASCII".
+
+Nem sempre a função `incov()` retorna convenientemente os dados, por isso usaremos
+a função acima.
+
+Veja o exemplo:
+
+```{r}
+# fazendo  um nome com muita acentução e exibindo -----------------------------
+nome_doido <- "Àáäbcdéèëçã"
+nome_doido
+
+# usando a função stri_trans_general ------------------------------------------
+stringi::stri_trans_general(nome_doido, "Latin-ASCII")
+
+```
+
+### 4.2.7 lubridate
+
+Para conhecermos a função `dmy()` do pacote [`lubridate`](https://lubridate.tidyverse.org/),
+vamos considerar o seguite vetor:
+
+```{r}
+possiveis_datas <- c("01/01/2020", "01/01/2021", "01/01/2022")
+possiveis_datas
+```
+
+À primeira vista, parecem datas, não? 
+O formato seria: "dia/mês/ano" (que em inglês é "day/month/year", daí o nome da 
+função: `dmy()`); mas será que está no formato adequado?
+
+```{r}
+class(possiveis_datas)
+```
+
+Não são datas, mas "caracteres".
+Para transformar em datas, fazemos:
+
+```{r}
+datas_verdadeiras <- lubridate::dmy(possiveis_datas)
+
+datas_verdadeiras
+```
+
+Agora, verificando sua classe, encontrados como saída "datas", realmente.
+
+```{r}
+class(datas_verdadeiras)
+```
+
+Pode parecer um detalhe, mas isso para uso em cálculos que envolvem datas é muito 
+importante.
+Não é possível realizarmos cálculos com caractéres.
+
+### 4.2.8 purrr
 
 Por fim, mas não menos importante, precisamos de estruturas de *loops*.
-De fato, quando efetuamos uma raspagem de dados que consiste, por exemplo, do
-*download* de vários arquivos, a ideia é aplicar uma estrutura de repetição do
-*download* de um deles, nos outros arquivos.
+Com efeito, quando efetuamos raspagem de dados em muitas páginas que seguem um
+mesmo padrão, apenas com mofificações pontuais, uma estrutura de repetição, 
+torna-se imperativa.
 
-No R Base existem os "for" e "while" da vida, mas o pacote `purrr` torna isso 
+> No R Base existem os "for" e "while" da vida, mas o pacote `purrr` torna isso 
 tudo mais simples!
 
-Para entendermos a usabilidade de certas funções do pacote `purrr`, vamos 
-considerar duas categorias de arquivos: arquivo de texto (como *scripts* ".R");
-e, arquivos binários (como, por exemplo, ".pdf").
+A estruturação das funções do pacote `purrr` tem o seguinte formato:
+
+```{r, eval=FALSE}
+purrr::funcao_purrr(args, funcao)
+```
+
+Onde:
+
+- **`funcao_purrr`**: é alguma função disponível no pacote. Existem muitas, mas
+usaremos a `map_df()` que transforma a saída em um _data frame_ (na realidade
+numa `tibble`);
+- **`args`**: são os argumentos necessários para iteração. Dependendo da função,
+pode haver mais de um argumento. Mas, para o nosso caso, será apenas um argumento.
+- **`funcao`**: as funções do `purrr` iteram de acordo com a estrutura de uma 
+"função" pré-determinada. Geralmente, criamos essa função com  o padrão de 
+repetição que observamos ser necessário.
+
+Pra explicarmos essas funcionaliddes, vamos criar um exemplo bem artificial, mas
+adequado aos nossos fins.
+
+Dado um número natural, suponha que deseja-se criar uma tabela que exiba:
+na primeira coluna, o próprio número; e, na segunda coluna, o dobro desse número.
+
+Por exemplo, se o número em questão for "3", queremos algo assim:
+
+```{r, echo=FALSE}
+tibble::tibble(
+  numero = 3,
+  dobro  = 6
+)
+```
+
+Como montar uma função com essas ideias?
+Simples: usaremos a estrutura do R Base `function(variável){estruturação}` com 
+a função `tibble`, do pacote de mesmo nome.
+Uma possibilidade seria:
 
 ```{r}
-links_R <- c(
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_pi-ggplot.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_pi.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/funcao_primos.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/grafico_apresentacao.R",
-  "https://raw.githubusercontent.com/icaro-freire/scripts_exemplos/main/R/pontos-aleatorios_ggplot2.R"
+tabela_dobro <- function(x){
+  tibble::tibble(
+    numero = x,
+    dobro  = 2 * (x)
+  )
+}
+```
+
+Veja que atribuímos à variável "`tabela_dobro`" a estrutura de função; logo, 
+podemos usar tal variável, como se fosse uma função: `tabela_dobro()`.
+
+Vamos testar para o caso do número "3", tal como fizemos anteriormente:
+
+```{r}
+tabela_dobro(3)
+```
+
+A saída é a mesma, não?
+
+Mas, onde entra o `purrr`?
+
+Suponha, agora, que desejamos aplicar nossa função criada para TODOS os naturais
+de 1 até 10, agrupando-os em uma só tabela!
+Para esse processo iterativo, usaremos a função `map_df()` do pacote `purrr`.
+Antes, porém, devemos lembrar que essa sequência de números, pode ser obtida de
+muitas maneiras, mas ficaremos com `1:10` (poderíamos usar a função `seq()`, do R
+Base, da seguinte forma: `seq(1, 10)`), por simplicidade.
+Portanto, a iteração ocorre assim:
+
+```{r}
+purrr::map_df(1:10, tabela_dobro)
+```
+
+Massa, não?
+
+### 4.2.9 fs
+
+Por fim, por questções de organização, usaremos um pacote que não faz parte do 
+`tidyverse`, mas que posui a mesma filosofia de sintaxe nas suas funções.
+Com o pacote `fs` (de _File System_ ) podemos criar um diretório/pasta por meio 
+de códigos em R, usando a dinção `dir_create()`; bem como extrair nomes de 
+arquivos, com a função `path_file()`!
+
+Por exemplo, o comando:
+
+```{r, eval=FALSE}
+pasta_arquivos <- fs::dir_create("downloads/pasta_arquivos")
+```
+
+Atribui à variável `pasta_arquivos` à criação de um subdiretório de mesmo nome 
+(`pasta_arquivos`), dentro de um diretório por nome `downloads`.
+Ele criará os dois diretórios, caso não existam, ou criará o subdiretório `pasta_arquivos` se `downloads` já exista.
 )
 
-links_pdf <- c(
-  "https://sbm.org.br/wp-content/uploads/2021/10/Introducao-a-Geometria-Diferencial_Ronaldo-Freire-Lima.pdf",
-  "https://sbm.org.br/wp-content/uploads/2021/10/Sistemas-Dinamicos-Lineares-Joao-Socorro-Pinheiro-Ferreira.pdf",
-  "https://sbm.org.br/wp-content/uploads/2021/10/Teoria-de-Green-e-Escoamento-de-Poiseuille-Gilberlandio-Dias.pdf",
-  "https://sbm.org.br/wp-content/uploads/2021/10/Topicos-na-intersecao-ente-a-Teoria-dos-Grafos-e-Algebra-Abel-Ortiz_Thiago-Moreira.pdf"
-)
-
-```
-
-Antes de começarmos os downloads, vamos organizar nosso espaço de trabalho.
-
-Uma coisa simples é criar um diretório para salvar os arquivos.
-Podemos fazer isso de muitas formas, mas vamos usar uma função do pacote `fs`,
-intitulada, **dir_create()**.
-Isso será importante para criarmos uma variável com o mesmo nome do diretório 
-onde salvaremos os arquivos; para que, possamos manipular adequadamente os 
-argumentos da função `download.file()` dentro do `purrr`.
-
-O nome do nosso diretório (pasta) será "download_arquivos":
-
-```{r, eval=FALSE}
-download_arquivos <- fs::dir_create("download_arquivos")
-```
-
-Agora, vamos relembrar como funciona a função `download.file()` fazendo o 
-*download*, por exemplo, do primeiro arquivo ".R" de nossa lista, ou seja, o 
-arquivo do link `links_R[1]`.
-
-Para isso, precisamos de duas coisas: a url do link, que já sabemos como obter; 
-e o destino junto com o nome desse arquivo, que, aliás, vamos deixar com o nome 
-original.
-Ora, a url é obtida fazendo `links_R[1]` e, como o nome desse arquivo é (tem que 
-olhar o nome final do link) "funcao_pi-ggplot.R", podemos estabelecer o destino 
-do download como: "download_arquivos/funcao_pi-ggplot.R", ou seja, dentro do
-diretório "download_arquivos", vamos salvar um arquivo de extensão ".R", por 
-nome "funcao_pi-ggplot".
-O código ficaria assim:
-
-```{r, eval=FALSE}
-download.file(links_R[1], "download_arquivos/funcao_pi-ggplot.R")
-```
-
-Nesse ponto, já começamos perceber o quanto seria bom extraírmmos os nomes dos 
-arquivos de forma rápida, sem precisar ver o nome "um por um"; pois, caso nossa
-lista de link seja consideravelmente maior, ficaria inviável.
-
-Portanto, ainda falando sobre organização, vamos extrair os nomes dos arquivos 
-acima com o auxílio, mais uma vez, do pacote `fs`, já que a função **path_file()** 
-faz esse serviço brilhantemente.
-
-Podemos extrair o nome original dos arquivos ".R" com o comando:
+O código abaixo mostra como usar a outra função considerada:
 
 ```{r}
-nomes_links_R <- fs::path_file(links_R)
+# link do site, com nome do arquivo ao final (exrtensão .Rmd)
+nome_arquivo <- "https://github.com/icaro-freire/minicurso_web-scraping/blob/feature/raspagem/04_intro-tidyverse.Rmd"
+nome_arquivo
 
-nomes_links_R
-```
-E, para os arquivos ".pdf" assim:
-
-```{r}
-nomes_links_pdf <- fs::path_file(links_pdf)
-
-nomes_links_pdf
+# usando a função path_dir()
+fs::path_file(nome_arquivo)
 ```
 
-Para nossos fins, vamos considerar até três argumentos da função `download.file()`,
-dependendo do seu Sistema Operacional.
-Quem usa GNU/Linux, só precisa de dois argumentos; mas, quem usa Windows, pode
-precisar de três argumentos.
 
-- **GNU/Linux**: `dowload.file(url, destfile)`
-- **Windows**: `dowload.file(url, destfile, mode = "wb")`
+Todas essas considerações, capacita-nos à raspagem dos dados!!!
 
-O GNU/Linux consegue identificar os tipos de arquivos (texto ou binário) de forma
-automática, mas o Windows não.
-Para esse últuimo sistema operacional, os arquivos binários precisam ser
-especificados com o argumento `mode = "wb"`.
-
-Portanto, na parte do download dos arquivos ".pdf", vamos diferenciar as coisas.
-Por enquanto, para arquivos de texto, vamos seguir de forma indistinta entre os
-sistemas operacionais.
-
-O código abaixo substitui o primeiro download realizado:
-
-```{r, eval=FALSE}
-download.file(links_R[1], download_arquivos/nomes_links_R[1])
-```
-
-Ok ... Mas, como seria para todos os downloads?
-É aqui que entra o pacote `purrr`: a função **walk2()** nos ajudará nisso!
-Ela possui a seguinte estruturação:
-
-```{r, eval=FALSE}
-purrr::walk2(arg1, arg2, função)
-```
-
-Ou seja, ela passa os dois argumentos para a função!
-Em nosso exemplo, a função é `download.file` e os argumentos são: 
-
-  - `arg1 = links_R`
-  - `arg2 = download_arquivos/nomes_links_R`.
-  
-Portando, temos o seguinte código para obtermos o download de todos os arquivos
-".R" listados:
-
-```{r, eval=FALSE}
-purrr::walk2(links_R, download_arquivos/nomes_links_R, download.file)
-```
-
-Agora, para download dos arquivos ".pdf", caso esteja no GNU/linux, fazemos:
-
-```{r, eval=FALSE}
-purrr::walk2(links_pdf, download_arquivos/nomes_links_pdf, download.file)
-```
-
-Mas, caso esteja no Windows, não poderemos usar mais a função `walk2`, pois ela
-APENAS passas dois argumentos; todavia, agora, aparecerá um terceito: `mode = "wb"`.
-
-Para três ou mais parâmetros, a função que estamos procurando é a **pwalk()**.
-Ela possui a seguinte estrutura:
-
-```{r, eval=FALSE}
-purrr::pwalk(lista, função)
-```
-
-No argumento "lista" criaremos uma lista com todos os argumentos necessários para
-a função.
-
-Para nosso exemplo, uma lista adequada seria:
-
-```{r, eval=FALSE}
-lista_args <- list(links_pdf, download_arquivos/nomes_links_pdf, mode = "wb")
-```
-
-Portanto, o download de todos os arquivos ".pdf", no Windows, fica:
-
-```{r, eval=FALSE}
-purrr::pwalk(lista_args, download.file)
-```
-
-Todas as considerações acima, capacita-nos à raspagem dos dados!!!
