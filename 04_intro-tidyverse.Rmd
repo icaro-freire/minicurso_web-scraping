@@ -29,7 +29,7 @@ Podemos listá-los com o seguinte comando:
 tidyverse::tidyverse_packages()
 ```
 
-Entretanto, usaremos, apenas, sete desses pacotes nesse minicurso:
+Entretanto, usaremos, apenas, oito desses pacotes nesse minicurso:
 
 - **readr**; usaremos a função `parse_double()` que, como o nome sugere, 
   passa um conjunto de caracteres para a categoria numérica. 
@@ -46,6 +46,9 @@ Entretanto, usaremos, apenas, sete desses pacotes nesse minicurso:
   coisas, geralmente, não vem "arrumadinhas").
 - **stringi**; apenas usaremos a função `stri_trans_general()`, com o argumento
 "Latin-ASCII", para retirar a acentuação das palavras.
+- **lubridate**; é uma ferramenta importantíssima para cálculos e conversões
+com data. Mas, apenas usaremos a função `dmy()` que converte um conjunto de
+caracteres "xx/yy/zzzz" em datas, realmente.
 - **purrr**; para interações. Substitui as ideias das estruturas de repetições 
   (`loops`) na programação, como `for` ou `while`, por exemplo. 
 - **rvest**; para raspagem de dados em documentos html. 
@@ -778,8 +781,44 @@ stringi::stri_trans_general(nome_doido, "Latin-ASCII")
 
 ```
 
+### 4.2.7 lubridate
 
-### 4.2.7 purrr
+Para conhecermos a função `dmy()` do pacote [`lubridate`](https://lubridate.tidyverse.org/),
+vamos considerar o seguite vetor:
+
+```{r}
+possiveis_datas <- c("01/01/2020", "01/01/2021", "01/01/2022")
+possiveis_datas
+```
+
+À primeira vista, parecem datas, não? 
+O formato seria: "dia/mês/ano" (que em inglês é "day/month/year", daí o nome da 
+função: `dmy()`); mas será que está no formato adequado?
+
+```{r}
+class(possiveis_datas)
+```
+
+Não são datas, mas "caracteres".
+Para transformar em datas, fazemos:
+
+```{r}
+datas_verdadeiras <- lubridate::dmy(possiveis_datas)
+
+datas_verdadeiras
+```
+
+Agora, verificando sua classe, encontrados como saída "datas", realmente.
+
+```{r}
+class(datas_verdadeiras)
+```
+
+Pode parecer um detalhe, mas isso para uso em cálculos que envolvem datas é muito 
+importante.
+Não é possível realizarmos cálculos com caractéres.
+
+### 4.2.8 purrr
 
 Por fim, mas não menos importante, precisamos de estruturas de *loops*.
 Com efeito, quando efetuamos raspagem de dados em muitas páginas que seguem um
@@ -862,7 +901,7 @@ purrr::map_df(1:10, tabela_dobro)
 
 Massa, não?
 
-### 2.2.8 fs
+### 4.2.9 fs
 
 Por fim, por questções de organização, usaremos um pacote que não faz parte do 
 `tidyverse`, mas que posui a mesma filosofia de sintaxe nas suas funções.

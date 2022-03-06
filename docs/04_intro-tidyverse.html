@@ -2130,8 +2130,9 @@ Material Teórico
 <li><a href="#rvest">4.2.4 rvest</a></li>
 <li><a href="#stringr">4.2.5 stringr</a></li>
 <li><a href="#stringi">4.2.6 stringi</a></li>
-<li><a href="#purrr">4.2.7 purrr</a></li>
-<li><a href="#fs">2.2.8 fs</a></li>
+<li><a href="#lubridate">4.2.7 lubridate</a></li>
+<li><a href="#purrr">4.2.8 purrr</a></li>
+<li><a href="#fs">4.2.9 fs</a></li>
 </ul></li>
 </ul></li>
 </ul>
@@ -2155,13 +2156,14 @@ Material Teórico
 [25] &quot;rvest&quot;         &quot;stringr&quot;       &quot;tibble&quot;        &quot;tidyr&quot;        
 [29] &quot;xml2&quot;          &quot;tidyverse&quot;    </code></pre>
 </div>
-<p>Entretanto, usaremos, apenas, sete desses pacotes nesse minicurso:</p>
+<p>Entretanto, usaremos, apenas, oito desses pacotes nesse minicurso:</p>
 <ul>
 <li><strong>readr</strong>; usaremos a função <code>parse_double()</code> que, como o nome sugere, passa um conjunto de caracteres para a categoria numérica. Uma função do R Base que poderia fazer o mesmo papel seria <code>as.numeric()</code>. também usaremos a função <code>write_csv()</code>, para formarmos uma saída com arquivo de extensão <code>csv</code>.</li>
 <li><strong>tibble</strong>; para construirmos “tabelas” (<code>tibbles</code>) especiais e visualizarmos o resultado.</li>
 <li><strong>dplyr</strong>; para manipulação de dados (agrupar, selecionar, filtrar, arrumar, etc., certas características desejadas nas <code>tibbles</code>)</li>
 <li><strong>stringr</strong>; para manipulação de cadeias de caracteres, como frases, texto, símbolos, etc. É bem útil para “limpeza” dos dados coletados numa raspagem da internet (as coisas, geralmente, não vem “arrumadinhas”).</li>
 <li><strong>stringi</strong>; apenas usaremos a função <code>stri_trans_general()</code>, com o argumento “Latin-ASCII”, para retirar a acentuação das palavras.</li>
+<li><strong>lubridate</strong>; é uma ferramenta importantíssima para cálculos e conversões com data. Mas, apenas usaremos a função <code>dmy()</code> que converte um conjunto de caracteres “xx/yy/zzzz” em datas, realmente.</li>
 <li><strong>purrr</strong>; para interações. Substitui as ideias das estruturas de repetições (<code>loops</code>) na programação, como <code>for</code> ou <code>while</code>, por exemplo.</li>
 <li><strong>rvest</strong>; para raspagem de dados em documentos html. É o principal pacote de nosso minicurso.</li>
 </ul>
@@ -2804,7 +2806,44 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 </div>
 <pre><code>[1] &quot;Aaabcdeeeca&quot;</code></pre>
 </div>
-<h3 id="purrr">4.2.7 purrr</h3>
+<h3 id="lubridate">4.2.7 lubridate</h3>
+<p>Para conhecermos a função <code>dmy()</code> do pacote <a href="https://lubridate.tidyverse.org/"><code>lubridate</code></a>, vamos considerar o seguite vetor:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>possiveis_datas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"01/01/2020"</span>, <span class='st'>"01/01/2021"</span>, <span class='st'>"01/01/2022"</span><span class='op'>)</span>
+<span class='va'>possiveis_datas</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;01/01/2020&quot; &quot;01/01/2021&quot; &quot;01/01/2022&quot;</code></pre>
+</div>
+<p>À primeira vista, parecem datas, não? O formato seria: “dia/mês/ano” (que em inglês é “day/month/year”, daí o nome da função: <code>dmy()</code>); mas será que está no formato adequado?</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>possiveis_datas</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;character&quot;</code></pre>
+</div>
+<p>Não são datas, mas “caracteres”. Para transformar em datas, fazemos:</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>datas_verdadeiras</span> <span class='op'>&lt;-</span> <span class='fu'>lubridate</span><span class='fu'>::</span><span class='fu'><a href='https://lubridate.tidyverse.org/reference/ymd.html'>dmy</a></span><span class='op'>(</span><span class='va'>possiveis_datas</span><span class='op'>)</span>
+
+<span class='va'>datas_verdadeiras</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;2020-01-01&quot; &quot;2021-01-01&quot; &quot;2022-01-01&quot;</code></pre>
+</div>
+<p>Agora, verificando sua classe, encontrados como saída “datas”, realmente.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span><span class='op'>(</span><span class='va'>datas_verdadeiras</span><span class='op'>)</span>
+</code></pre>
+</div>
+<pre><code>[1] &quot;Date&quot;</code></pre>
+</div>
+<p>Pode parecer um detalhe, mas isso para uso em cálculos que envolvem datas é muito importante. Não é possível realizarmos cálculos com caractéres.</p>
+<h3 id="purrr">4.2.8 purrr</h3>
 <p>Por fim, mas não menos importante, precisamos de estruturas de <em>loops</em>. Com efeito, quando efetuamos raspagem de dados em muitas páginas que seguem um mesmo padrão, apenas com mofificações pontuais, uma estrutura de repetição, torna-se imperativa.</p>
 <blockquote>
 <p>No R Base existem os “for” e “while” da vida, mas o pacote <code>purrr</code> torna isso tudo mais simples!</p>
@@ -2878,7 +2917,7 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 10     10    20</code></pre>
 </div>
 <p>Massa, não?</p>
-<h3 id="fs">2.2.8 fs</h3>
+<h3 id="fs">4.2.9 fs</h3>
 <p>Por fim, por questções de organização, usaremos um pacote que não faz parte do <code>tidyverse</code>, mas que posui a mesma filosofia de sintaxe nas suas funções. Com o pacote <code>fs</code> (de <em>File System</em> ) podemos criar um diretório/pasta por meio de códigos em R, usando a dinção <code>dir_create()</code>; bem como extrair nomes de arquivos, com a função <code>path_file()</code>!</p>
 <p>Por exemplo, o comando:</p>
 <div class="layout-chunk" data-layout="l-body">
@@ -2905,7 +2944,7 @@ x purrr::set_names() masks magrittr::set_names()</code></pre>
 <pre><code>[1] &quot;04_intro-tidyverse.Rmd&quot;</code></pre>
 </div>
 <p>Todas essas considerações, capacita-nos à raspagem dos dados!!!</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
