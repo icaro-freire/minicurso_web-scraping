@@ -153,8 +153,67 @@ class: inverse center middle
 
 # O que é Web Scraping?
 
+---
+class: middle, left
+background-image: url(../img/cuidado.gif)
+background-position: right
+background-size: contain
+
+## Um Aviso ...
+
+--
+- Há limite temporal
+
+--
+- Há limite computacional
+
+--
+- A coisa pode, simplesmente, não dar certo!
+
+---
+class: middle, left
+background-image: url(../img/what.gif)
+background-position: right
+background-size: contain
+
+## Definição?
+
+--
+- Etmologia
+
+--
+  + _Web_ = Rede
+  
+--
+  + _Scraping_ = Raspando
+  
+--
+
+> O processo de **leitura**, **seleção**, **limpeza** </br> 
+  e **armazenagem** desses dados de forma </br> 
+  _automatizada_ é o que queremos dizer </br>
+  por  “Web Scraping”.
 
 
+---
+class: middle, left
+background-image: url(../img/workflow_scrape.png)
+background-position: right
+background-size: contain
+
+## Entendendo as etapas ...
+
+1. **Leitura**
+  - há uma Matrix (`Ctrl + u`)
+  - há uma linguagem (HTML)
+  - ferramentas especiais de leitura
+  - `rvest::read_html()`
+2. **Arrumação**
+  - _seleção_, `rvest`;
+  - _limpeza_, `stringr`
+3. **Armazenagem**
+  - `tibble::tibble`
+  - `readr::write_csv()`
 
 
 ---

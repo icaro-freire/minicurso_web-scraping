@@ -38,7 +38,7 @@ background-size: contain
 ## Começamos em ...
 
 .pull-right[
-<div class="countdown" id="timer_62263f3b" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_62265381" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
 ]
@@ -109,7 +109,7 @@ class: inverse center middle
 | Horário         | Atividade                             |
 | :-------------- | :------------------------------------ |
 | 19h até 20:45h  | 📖 _Parte Teórica I_ |
-| 20:45 até 21h   | 🍳 Intervalo    |
+| 20:45 até 21h   | 🥣 Intervalo    |
 | 21h até 22h     | 📖 _Parte Teórica_ ou 💻 _Prática_ |
 
 ]
@@ -159,8 +159,67 @@ class: inverse center middle
 
 # O que é Web Scraping?
 
+---
+class: middle, left
+background-image: url(../img/cuidado.gif)
+background-position: right
+background-size: contain
+
+## Um Aviso ...
+
+--
+- Há limite temporal
+
+--
+- Há limite computacional
+
+--
+- A coisa pode, simplesmente, não dar certo!
+
+---
+class: middle, left
+background-image: url(../img/what.gif)
+background-position: right
+background-size: contain
+
+## Definição?
+
+--
+- Etmologia
+
+--
+  + _Web_ = Rede
+  
+--
+  + _Scraping_ = Raspando
+  
+--
+
+&gt; O processo de **leitura**, **seleção**, **limpeza** &lt;/br&gt; 
+  e **armazenagem** desses dados de forma &lt;/br&gt; 
+  _automatizada_ é o que queremos dizer &lt;/br&gt;
+  por  “Web Scraping”.
 
 
+---
+class: middle, left
+background-image: url(../img/workflow_scrape.png)
+background-position: right
+background-size: contain
+
+## Entendendo as etapas ...
+
+1. **Leitura**
+  - há uma Matrix (`Ctrl + u`)
+  - há uma linguagem (HTML)
+  - ferramentas especiais de leitura
+  - `rvest::read_html()`
+2. **Arrumação**
+  - _seleção_, `rvest`;
+  - _limpeza_, `stringr`
+3. **Armazenagem**
+  - `tibble::tibble`
+  - `readr::write_csv()`
 
 
 ---
