@@ -50,23 +50,27 @@ xaringanExtra::use_extra_styles(
 xaringanExtra::use_progress_bar(color = "#0051BA", location = "top")
 ```
 
-## Typography
 
-Text can be **bold**, _italic_, ~~strikethrough~~, or `inline code`.
+---
+class: center
 
-[Link to another slide](#colors).
+![](../img/marca-vertical-UFRB-PNG.png)
+---
+class: middle, right
+background-image: url("../img/bem-vindos.png")
+background-size: cover
 
-### Lorem Ipsum
+# .white[Sejam todos]
+## .white[bem-vindos!]
+---
 
-Dolor imperdiet nostra sapien scelerisque praesent curae metus facilisis dignissim tortor. 
-Lacinia neque mollis nascetur neque urna velit bibendum. 
-Himenaeos suspendisse leo varius mus risus sagittis aliquet venenatis duis nec.
+## Como será esse minicurso?
 
-- Dolor cubilia nostra nunc sodales
+--
+### Teoria no primeiro bloco
 
-- Consectetur aliquet mauris blandit
-
-- Ipsum dis nec porttitor urna sed
+--
+### Prática no segundo bloco
 
 ---
 name: colors
@@ -370,7 +374,7 @@ layout: false
 ---
 class: center, middle
 
-# Thanks!
+# Obrigado!
 
 Slides created via the R packages:
 
