@@ -14,7 +14,9 @@ output:
       ratio: 16:9
       countIncrementalSlides: true
 ---
-
+class: middle, right
+background-image: url("../img/bem-vindos.png")
+background-size: cover
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -50,27 +52,13 @@ xaringanExtra::use_extra_styles(
 xaringanExtra::use_progress_bar(color = "#0051BA", location = "top")
 ```
 
-
----
-class: center
-
-![](../img/marca-vertical-UFRB-PNG.png)
----
-class: middle, right
-background-image: url("../img/bem-vindos.png")
-background-size: cover
-
 # .white[Sejam todos]
 ## .white[bem-vindos!]
----
 
+---
 ## Como será esse minicurso?
 
---
-### Teoria no primeiro bloco
 
---
-### Prática no segundo bloco
 
 ---
 name: colors
@@ -376,9 +364,10 @@ class: center, middle
 
 # Obrigado!
 
-Slides created via the R packages:
+</br>
+Slides criados com </br> [`xaringan`](https://github.com/yihui/xaringan) e [`xaringanthemer`](https://github.com/gadenbuie/xaringanthemer).
 
-[**xaringan**](https://github.com/yihui/xaringan)<br>
-[gadenbuie/xaringanthemer](https://github.com/gadenbuie/xaringanthemer)
-
-The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+</br>
+</br>
+</br>
+<img src="../img/rodape.png" width=600>
