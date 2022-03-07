@@ -1,25 +1,25 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>slides.knit</title>
+    <title>01_slides_web-scraping.knit</title>
     <meta charset="utf-8" />
-    <script src="slides_files/header-attrs-2.11/header-attrs.js"></script>
-    <link href="slides_files/countdown-0.3.5/countdown.css" rel="stylesheet" />
-    <script src="slides_files/countdown-0.3.5/countdown.js"></script>
-    <link href="slides_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
-    <script src="slides_files/tile-view-0.2.6/tile-view.js"></script>
-    <script src="slides_files/fabric-4.3.1/fabric.min.js"></script>
-    <link href="slides_files/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
-    <script src="slides_files/xaringanExtra-scribble-0.0.1/scribble.js"></script>
+    <script src="01_slides_web-scraping_files/header-attrs-2.11/header-attrs.js"></script>
+    <link href="01_slides_web-scraping_files/countdown-0.3.5/countdown.css" rel="stylesheet" />
+    <script src="01_slides_web-scraping_files/countdown-0.3.5/countdown.js"></script>
+    <link href="01_slides_web-scraping_files/tile-view-0.2.6/tile-view.css" rel="stylesheet" />
+    <script src="01_slides_web-scraping_files/tile-view-0.2.6/tile-view.js"></script>
+    <script src="01_slides_web-scraping_files/fabric-4.3.1/fabric.min.js"></script>
+    <link href="01_slides_web-scraping_files/xaringanExtra-scribble-0.0.1/scribble.css" rel="stylesheet" />
+    <script src="01_slides_web-scraping_files/xaringanExtra-scribble-0.0.1/scribble.js"></script>
     <script>document.addEventListener('DOMContentLoaded', function() { window.xeScribble = new Scribble({"pen_color":["#FF0000"],"pen_size":3,"eraser_size":30,"palette":[]}) })</script>
-    <link href="slides_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
-    <script src="slides_files/panelset-0.2.6/panelset.js"></script>
-    <script src="slides_files/clipboard-2.0.6/clipboard.min.js"></script>
-    <link href="slides_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
-    <script src="slides_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
+    <link href="01_slides_web-scraping_files/panelset-0.2.6/panelset.css" rel="stylesheet" />
+    <script src="01_slides_web-scraping_files/panelset-0.2.6/panelset.js"></script>
+    <script src="01_slides_web-scraping_files/clipboard-2.0.6/clipboard.min.js"></script>
+    <link href="01_slides_web-scraping_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.css" rel="stylesheet" />
+    <script src="01_slides_web-scraping_files/xaringanExtra-clipboard-0.2.6/xaringanExtra-clipboard.js"></script>
     <script>window.xaringanExtraClipboard(null, {"button":"Copy Code","success":"Copied!","error":"Press Ctrl+C to Copy"})</script>
-    <link href="slides_files/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
-    <script src="slides_files/xaringanExtra-progressBar-0.0.1/progress-bar.js"></script>
+    <link href="01_slides_web-scraping_files/xaringanExtra-extra-styles-0.2.6/xaringanExtra-extra-styles.css" rel="stylesheet" />
+    <script src="01_slides_web-scraping_files/xaringanExtra-progressBar-0.0.1/progress-bar.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
   </head>
   <body>
@@ -38,7 +38,7 @@ background-size: contain
 ## Começamos em ...
 
 .pull-right[
-<div class="countdown" id="timer_62265381" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_62267817" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
 ]
@@ -215,12 +215,223 @@ background-size: contain
   - ferramentas especiais de leitura
   - `rvest::read_html()`
 2. **Arrumação**
-  - _seleção_, `rvest`;
+  - _seleção_, `rvest` ;
   - _limpeza_, `stringr`
 3. **Armazenagem**
   - `tibble::tibble`
   - `readr::write_csv()`
 
+---
+class: inverse center middle
+
+# Entendendo o HTML
+
+---
+class: middle, left
+background-image: url(../img/jacare.gif)
+background-position: right
+background-size: contain
+
+## A tríade da Matrix
+
+--
+
+- **HTML** = Conteúdo
+
+--
+
+- **CSS** = Aparência
+
+--
+
+- **Java Script** = Interatividade
+
+&lt;!----------------------------------------------------------------------------&gt;
+
+---
+# Momento Memes
+
+.panelset[
+&lt;!----------------------------------------------------------------------------&gt;
+.panel[.panel-name[Meme 1]
+
+&lt;img src="../img/meme1.jpeg" width="30%" style="display: block; margin: auto;" /&gt;
+
+
+]
+.panel[.panel-name[Meme 2]
+
+&lt;img src="../img/meme2.jpg" style="display: block; margin: auto;" /&gt;
+
+
+]
+.panel[.panel-name[Meme 3]
+
+&lt;img src="../img/meme3.jpg" width="30%" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[Meme 4]
+
+&lt;img src="../img/meme4.jpeg" style="display: block; margin: auto;" /&gt;
+
+]
+.panel[.panel-name[Meme 5]
+
+&lt;img src="../img/meme5.jpg" style="display: block; margin: auto;" /&gt;
+
+]
+&lt;!----------------------------------------------------------------------------&gt;
+]
+
+---
+class: middle, left
+background-image: url(../img/fall.gif)
+background-position: right
+background-size: 650px
+
+# Pequeno teste ...
+
+- Extensão para Chrome
+  + [Web Developer](https://chrome.google.com/webstore/detail/web-developer/bfbameneiokkgbdmiekhjnmfkcnldhhm?hl=pt-BR)
+
+---
+class: inverse center middle
+
+# Estrutura do HTML
+
+---
+## Entendendo a estrutura
+
+.panelset[
+
+.panel[.panel-name[Uma linguagem de Marcação]
+
+&lt;img src="../img/html-code.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+]
+
+.panel[.panel-name[Intrepretação do Browser]
+
+&lt;img src="../img/html-saida.png" width="4985" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[Estruturação Básica]
+
+&lt;img src="../img/estrutura-html.png" width="50%" style="display: block; margin: auto;" /&gt;
+]
+
+.panel[.panel-name[O código]
+
+
+```r
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt; Nome da Aba &lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id='first'&gt; Título Principal &lt;/h1&gt;
+  &lt;h2&gt; Subtítulo &lt;/h2&gt;
+  &lt;p&gt;Algum pequeno texto &amp;amp; &lt;b&gt;ainda em negrito.&lt;/b&gt;&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt; Um item &lt;/li&gt;
+    &lt;li&gt; &lt;a href="https://git.io/J6xEo"&gt; Repositório GitHub &lt;/a&gt; &lt;/li&gt;
+    &lt;li&gt; &lt;a href="https://ufrb.edu.br/portal/"&gt; UFRB &lt;/a&gt; &lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;h3&gt; Inserindo imagem centralizada&lt;/h3&gt;
+  &lt;p align='center'&gt; &lt;img src='ichthys.png' width='400'&gt; &lt;/p&gt;
+&lt;/body&gt;
+```
+
+
+]
+
+]
+
+---
+## Tags &amp; Cia
+
+.panelset[
+.panel[.panel-name[Observações]
+
+#### Observe que ...
+
+- delimitamos os elementos do html por _tags_ : `&lt;elemento&gt; ... &lt;/elemento&gt;`
+- algumas _tags_ não precisam de "abertura e fechamento"
+  + `&lt;img&gt;`
+  + `&lt;/br&gt;`
+- “Elementos” no html são compostos por _tags_ que especificam **um** “elemento”, 
+seus “atributos” e o “conteúdo”
+
+]
+
+.panel[.panel-name[Composição]
+
+#### Elemento Pai, Filho, Atributos e Conteúdo
+
+
+```r
+&lt;a href='https://github.com/icaro-freire/minicurso_web-scraping'&gt; 
+  Repositório &lt;b&gt;GitHub&lt;/b&gt; 
+&lt;/a&gt;
+```
+
+- **Elemento Pai:** `a`;
+- **Elemento Filho:** `b`
+- **Atributo:** `href='https://github.com/icaro-freire/minicurso_web-scraping'`
+  + **nome:** `href`
+  + **valor:** `https://github.com/icaro-freire/minicurso_web-scraping`
+- **Conteúdo:** Repositório GitHub 
+]
+
+.panel[.panel-name[Tags Importantes]
+
+|elemento       | descrição |
+|-------------- | --------- |
+|`h1`,..., `h6` | Tamanhos decrescentes dos títulos de seções |
+|`p`            | delimita parágrafos |
+|`ol` ou `ul`	| Cria "listas ordenadas" ( _ordered list_ ) ou "listas não ordenadas" ( _unordered list_ )|
+|`li`	        | Demarca o início de um dos itens da lista |
+|`img`	      | Insere uma imagem no documento |
+|`a`          | Para hiperlinks em páginas, imagens, textos, etc. |
+|`b`          | Para negrito |
+|`i`          | Para itálico |
+|`table`      | Para tabelas |
+
+]
+
+]
+
+---
+class: inverse center middle
+
+# E o CSS?
+
+---
+## SelectorGadget
+
+- Usaremos uma extensão no Chorme, para seleção dos elementos CSS
+  + [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb)
+
+- Se seu navegador for o FireFox, salvar o código abaixo numa aba; e, marcar como 
+favorito
+  + [https://termbin.com/kx1gv](https://termbin.com/kx1gv)
+
+&lt;!-----------------------------------------------------------------------------&gt;
+
+---
+class: middle, left
+background-image: url(../img/desafio.gif)
+background-position: right
+background-size: contain
+
+# Exercício
+
+Entre no site [https://bityli.com/mRWzo](https://bityli.com/mRWzo), &lt;/br&gt; 
+etive o SelectorGadget e responda:
+
+1. Qual o elemento CSS para os &lt;/br&gt; títulos dos livros?
+2. E para o preço antigo?
+3. E para o novo?
 
 ---
 class: center, middle
@@ -236,7 +447,7 @@ Slides criados com &lt;/br&gt; [`xaringan`](https://github.com/yihui/xaringan) e
 &lt;img src="../img/rodape.png" width=600&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
-<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="../libs/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
 "slideNumberFormat": "%current%",
 "highlightStyle": "github",
