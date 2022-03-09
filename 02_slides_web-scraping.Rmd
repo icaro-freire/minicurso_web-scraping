@@ -1,0 +1,369 @@
+---
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    chakra: libs/remark-latest.min.js
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+class: middle, center
+background-image: url(img/capa2.png)
+background-size: cover
+
+---
+class: middle, right
+background-image: url(img/espera.gif)
+background-position: left
+background-size: contain
+
+## Começamos em ...
+
+.pull-right[
+```{r, echo=FALSE}
+countdown::countdown(
+  minutes = 5, 
+  seconds = 30, 
+#  left = 0, right = 0,
+  play_sound = TRUE,
+  padding = "50px", 
+#  margin = "20%",
+  font_size = "4em"
+)
+```
+]
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1F487E", #"#061A40",
+  secondary_color = "#E98A15",
+  inverse_header_color = "#FFFFFF"
+)
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_tile_view()   # para overview
+xaringanExtra::use_scribble()    # para fazer anotações
+xaringanExtra::use_panelset()    # para abas
+xaringanExtra::use_clipboard()   # botão para copiar código
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+xaringanExtra::use_progress_bar(color = "#0051BA", location = "top")
+```
+
+---
+class: middle, left
+background-image: url(img/check-list.gif)
+background-position: right
+background-size: contain
+
+## O que veremos hoje?
+
+- Algo sobre o `R`
+- Algo sobre o `tidyverse`
+
+
+---
+class: inverse center middle
+
+# Algo sobre o R
+
+---
+class: middle, left
+background-image: url(img/Rlogo.png)
+background-position: right
+background-size: 500px
+
+## Considerações iniciais
+
+--
+- `R` é uma **linguagem** e **ambiente** de programação
+  + IDE Nativa ou Terminal
+  + implementação de pacotes ( _package_ )  
+
+--
+- Desenvolvido na década de 90;
+
+--
+- "Popular" no meio acadêmico;
+
+--
+- Possui código aberto e é gratuito!
+
+--
+- Roda em Linux, Windows e Mac;
+
+--
+- Fundamental em Estatística
+  + muitas ferramentas gráficas
+  + qualidade para publicação
+
+--
+- Uma comunidade muito ativa!
+
+--
+- Extensa documentação.
+
+--
+- Fundamental para reprodutibilidade
+
+
+---
+## Estruturação do R
+
+--
+
+- Classe de Objetos
+  + `logical`; `numeric`; `integer`; `character`; `factor`; `date`
+--
+
+- Estrutura de Dados
+  + `c()` (vetores, 1D)
+  + `matrix` (matrizes, 2D)
+  + `array` (arranjos, 3D)
+  + `list` (listas)
+  + `data.frame` (subconjunto de `list`: tabelas especiais)
+--
+
+- Gráficos
+  + `plot`; `ggplot2`
+--
+
+- Programação
+  + `for`; `while`; `if`
+  + `function`
+  + `read.table`, `write.table`; `read.csv`, `write.csv`
+--
+
+- Reprodutibilidade
+  + RMarkdown
+
+---
+
+## Conhecendo algumas coisas ...
+
+.panelset[
+
+.panel[.panel-name[Rudimentos]
+
+comando   | descrição
+-------   | ---------
+`?objeto`                   | obtem ajuda sobre o `objeto`
+`str()`                     | sumário do conjunto de dados
+`class()`                   | mostra a classe do objeto
+`install.packages("nome")`  | instala um pacote (note as aspas!)
+`library(nome)`             | carrega um pacote específico
+`pacote::funcao()`          | carrega, apenas, uma função específica do pacote
+`x <- a`                    | atribui à variável `x` o objeto `a`
+`(x <- a)`  ou `x <- a; x`  | atribui e exibe a variável `x`
+`x` ou `print(x)`           | exibe a variável `x`
+`rm(list = ls())`           | remove todas as variáveis carregadas 
+
+]
+
+.panel[.panel-name[Math]
+
+comando  | descrição
+-------  | ----------
+`a + b`; `a - b`; `a * b`; `a / b` | adição, subtração, multiplicação e divisão
+`a^b` | potenciação
+`sqrt(a)` | raiz quadrada
+`exp(a)` | exponencial
+`log(a)` | logarítmo NEPERIANO (ou seja, na base `e`)
+`log10(a)` | log na base 10
+`log(a, b)` | log de `a` na base `b`
+`a%%b` | exibe o **resto** da divisão de `a` por `b`
+`a%/%b` | exibe o **quociente** da divisão de `a` por `b`
+`round(x, n)` | arredonda `x` com `n` casas decimais
+]
+
+.panel[.panel-name[Operadores Lóogicos]
+Eles retornarão um dos valores lógicos: `TRUE`, se **verdadeiro**; `FALSE`, se **falso**.
+
+comandos | descrição
+-------- | ----------
+`a == b` | `a` é **igual** a `b`
+`a != b` | `a` é **diferente** de `b`
+`a >= b` | `a` é **maior ou igual** do que `b`
+`a <= b` | `a` é **menor ou igual** do que `b`
+`a > b`  | `a` é **estritamente maior** do que `b`
+`a < b`  | `a` é **estritamente menor** do que `b`
+`a & b`  | ocorre `a` **e** `b` (simultaneamente)
+`a` &VerticalLine; `b`  | ocorre `a` **ou** `b` (união)
+]
+
+.panel[.panel-name[Vetores]
+
+comandos | descrição
+-------- | ----------
+`c(a, b, ...)` | cria os elementos `a, b, ...` de um vetor
+`a:b` | cria uma sequência inteira de `a` até `b`
+`seq(a, b)` | mesmo que anterior
+`seq(a, b, by = c)` | espaça de `c` em `c` os elementos de `a` até `b`
+`x[n]` | seleciona o `n`-ésimo elemento do vetor
+`x[-n]` | seleciona todos, menos o `n`-ésimo
+`x[a:b]` | seleciona de `a` até `b`
+`x[-(a:b)]` | seleciona todos, exceto aqueles de `a` até `b`
+`x[c(a, b)]` | seleciona os elementos na posição `a` e `b` 
+`x[ x %in% c(a, b, ...) ]` | seleciona os elementos "contidos" em `c(a, b, ...)`
+]
+
+.panel[.panel-name[Listas]
+
+.pull-left[
+- Estrutura muito geral: seu elementos podem ser quaisquer dos objetos em `R`;
+- Selecionamos seus elementos pela `posição` ou pelo `nome` 
+  + para selecionar pelo nome, usamos o `$` 
+  + Ex: `lista[3] == lista$coisa_doida`
+]
+.pull-right[
+```{r}
+lista <- list(
+  data = c("2021/10/01", "2021/09/01", "2021/08/01"),
+  despesa = c(2000, 800, 1000),
+  coisa_doida = c("Pode até um conjunto de caracteres!")
+)
+
+lista
+```
+]
+]
+
+.panel[.panel-name[Funções]
+- Estrutura geral: `nome_funcao <- function(varivavel){condicao}`
+
+.pull-left[
+
+#### Exemplo
+
+```{r, eval=FALSE}
+# estimativa de "pi" ------------------
+pi_estimativa <- function(n){
+  x <- runif(n, -1, 1) 
+  y <- runif(n, -1, 1)
+  plot(x, y)
+  raio <- sqrt(x^2 + y^2)
+  pontos_dentro <- raio[raio < 1]
+  print(4 * length(pontos_dentro) / n )
+}  
+
+# calculando para 1000 pontos ---------
+pi_estimativa(2000)
+
+
+```
+
+]
+.pull-right[
+
+```{r, echo=FALSE, out.width='70%', fig.align='center'}
+# estimativa de "pi" ------------------
+pi_estimativa <- function(n){
+  x <- runif(n, -1, 1) 
+  y <- runif(n, -1, 1)
+  plot(x, y)
+  raio <- sqrt(x^2 + y^2)
+  pontos_dentro <- raio[raio < 1]
+  print(4 * length(pontos_dentro) / n )
+}  
+
+# calculando para 1000 pontos ---------
+pi_estimativa(2000)
+
+```
+]
+]
+
+.panel[.panel-name[Classe]
+
+### Pequenos Detalhes
+
+classe      | observações
+----------  | -----------
+`logic`     | retorna `TRUE` ou `FALSE`
+`numeric`   | tanto inteiro, como decimal ( _double_ )
+`integer`   | somente inteiro (ajuda no processamento)
+`character` | são caracteres ( _strings_ ) de texto (`1 != "1"`  )
+`factor`    | são caracteres que possuem **níveis** ( _levels_ )
+]
+
+
+] 
+
+<!---------------------------------------------------------- final do panel -->
+
+---
+## Como usar o R?
+
+- Na IDE nativa;
+- No terminal;
+- No RStudio (localmente);
+- No **RStudio Cloud** (remotamente)
+- etc
+
+```{r, echo=FALSE, fig.align='center', out.width='70%'}
+knitr::include_graphics("https://www.rstudio.com/wp-content/uploads/2018/10/RStudio-Logo-Flat.png")
+```
+
+---
+## Conhecendo o RStudio Cloud
+
+```{r, echo=FALSE, fig.align='center', out.width='85%'}
+knitr::include_graphics("img/panel.png")
+```
+
+---
+class: inverse center middle
+
+# Intervalo
+
+---
+class: middle, right
+background-image: url(img/espera.gif)
+background-position: left
+background-size: contain
+
+## Voltamos em ...
+
+.pull-right[
+```{r, echo=FALSE}
+countdown::countdown(
+  minutes = 15, 
+  seconds = 00, 
+#  left = 0, right = 0,
+  play_sound = TRUE,
+  padding = "50px", 
+#  margin = "20%",
+  font_size = "4em"
+)
+```
+]
+
+---
+class: inverse center middle
+
+# Algo sobre o Tidyverse
+
+```{r, echo=FALSE, fig.align='center', out.width='30%'}
+knitr::include_graphics("img/tidyverse.png")
+```
+
+<!---------------------------------------------------------------------------->
+---
+class: center, middle
+
+# Obrigado!
+
+</br>
+Slides criados com </br> [`xaringan`](https://github.com/yihui/xaringan) e [`xaringanthemer`](https://github.com/gadenbuie/xaringanthemer).
+
+</br>
+</br>
+</br>
+<img src="img/rodape.png" width=600>
