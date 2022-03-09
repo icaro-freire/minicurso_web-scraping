@@ -2,7 +2,7 @@
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
-    chakra: ../libs/remark-latest.min.js
+    chakra: libs/remark-latest.min.js
     nature:
       slideNumberFormat: "%current%"
       highlightStyle: github
@@ -11,12 +11,12 @@ output:
       countIncrementalSlides: true
 ---
 class: middle, center
-background-image: url(../img/capa.png)
+background-image: url(img/capa.png)
 background-size: cover
 
 ---
 class: middle, right
-background-image: url(../img/espera.gif)
+background-image: url(img/espera.gif)
 background-position: left
 background-size: contain
 
@@ -59,7 +59,7 @@ xaringanExtra::use_progress_bar(color = "#0051BA", location = "top")
 
 ---
 class: middle, left
-background-image: url(../img/bem-vindos.gif)
+background-image: url(img/bem-vindos.gif)
 background-position: right
 background-size: contain
 
@@ -90,7 +90,7 @@ class: inverse center middle
 
 .pull-right[
 ```{r, echo=FALSE, fig.align='center', out.width='150%'}
-knitr::include_graphics("../img/hacker.gif")
+knitr::include_graphics("img/hacker.gif")
 ```
 ]
 
@@ -136,7 +136,7 @@ knitr::include_graphics("../img/hacker.gif")
 .panel[.panel-name[Site]
 
 ```{r, echo=FALSE, fig.align='center', out.width='30%'}
-knitr::include_graphics("../img/github-nome.png")
+knitr::include_graphics("img/github-nome.png")
 ```
 
 <p align='center'>
@@ -156,7 +156,7 @@ class: inverse center middle
 
 ---
 class: middle, left
-background-image: url(../img/cuidado.gif)
+background-image: url(img/cuidado.gif)
 background-position: right
 background-size: contain
 
@@ -173,7 +173,7 @@ background-size: contain
 
 ---
 class: middle, left
-background-image: url(../img/what.gif)
+background-image: url(img/what.gif)
 background-position: right
 background-size: contain
 
@@ -198,7 +198,7 @@ background-size: contain
 
 ---
 class: middle, left
-background-image: url(../img/workflow_scrape.png)
+background-image: url(img/workflow_scrape.png)
 background-position: right
 background-size: contain
 
@@ -223,7 +223,7 @@ class: inverse center middle
 
 ---
 class: middle, left
-background-image: url(../img/jacare.gif)
+background-image: url(img/jacare.gif)
 background-position: right
 background-size: contain
 
@@ -251,7 +251,7 @@ background-size: contain
 .panel[.panel-name[Meme 1]
 
 ```{r, echo=FALSE, fig.align='center', out.width='30%'}
-knitr::include_graphics("../img/meme1.jpeg")
+knitr::include_graphics("img/meme1.jpeg")
 ```
 
 
@@ -259,7 +259,7 @@ knitr::include_graphics("../img/meme1.jpeg")
 .panel[.panel-name[Meme 2]
 
 ```{r, echo=FALSE, fig.align='center'}
-knitr::include_graphics("../img/meme2.jpg")
+knitr::include_graphics("img/meme2.jpg")
 ```
 
 
@@ -267,21 +267,21 @@ knitr::include_graphics("../img/meme2.jpg")
 .panel[.panel-name[Meme 3]
 
 ```{r, echo=FALSE, fig.align='center', out.width='30%'}
-knitr::include_graphics("../img/meme3.jpg")
+knitr::include_graphics("img/meme3.jpg")
 ```
 
 ]
 .panel[.panel-name[Meme 4]
 
 ```{r, echo=FALSE, fig.align='center'}
-knitr::include_graphics("../img/meme4.jpeg")
+knitr::include_graphics("img/meme4.jpeg")
 ```
 
 ]
 .panel[.panel-name[Meme 5]
 
 ```{r, echo=FALSE, fig.align='center'}
-knitr::include_graphics("../img/meme5.jpg")
+knitr::include_graphics("img/meme5.jpg")
 ```
 
 ]
@@ -290,7 +290,7 @@ knitr::include_graphics("../img/meme5.jpg")
 
 ---
 class: middle, left
-background-image: url(../img/fall.gif)
+background-image: url(img/fall.gif)
 background-position: right
 background-size: 650px
 
@@ -312,7 +312,7 @@ class: inverse center middle
 .panel[.panel-name[Uma linguagem de Marcação]
 
 ```{r, echo=FALSE, out.width='50%', fig.align='center'}
-knitr::include_graphics("../img/html-code.png")
+knitr::include_graphics("img/html-code.png")
 ```
 
 ]
@@ -320,14 +320,14 @@ knitr::include_graphics("../img/html-code.png")
 .panel[.panel-name[Intrepretação do Browser]
 
 ```{r, echo=FALSE, fig.align='center'}
-knitr::include_graphics("../img/html-saida.png")
+knitr::include_graphics("img/html-saida.png")
 ```
 ]
 
 .panel[.panel-name[Estruturação Básica]
 
 ```{r, echo=FALSE, out.width='50%', fig.align='center'}
-knitr::include_graphics("../img/estrutura-html.png")
+knitr::include_graphics("img/estrutura-html.png")
 ```
 ]
 
@@ -429,7 +429,7 @@ favorito
 
 ---
 class: middle, left
-background-image: url(../img/desafio.gif)
+background-image: url(img/desafio.gif)
 background-position: right
 background-size: contain
 
@@ -453,4 +453,4 @@ Slides criados com </br> [`xaringan`](https://github.com/yihui/xaringan) e [`xar
 </br>
 </br>
 </br>
-<img src="../img/rodape.png" width=600>
+<img src="img/rodape.png" width=600>
