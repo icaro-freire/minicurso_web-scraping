@@ -38,7 +38,7 @@ background-size: contain
 ## Começamos em ...
 
 .pull-right[
-<div class="countdown" id="timer_62290054" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_622923ad" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">05</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">30</span></code>
 </div>
 ]
@@ -256,6 +256,32 @@ lista
 ]
 ]
 
+.panel[.panel-name[Data Frame]
+- Tipo especial de Lista: todas as variáveis possuem as mesmas dimensões
+- É o equivalente às "tabelas", que já conhecemos
+- Veremos que as `tibbles` melhorarão a ideia dos `data.frame`
+- Selecionamos as variáveis com "`$`" (por exemplo: `tabela_livros$livro`)
+
+
+```r
+tabela_livros &lt;- data.frame(
+  livro = c("Álgebra", "Geometria", "Análise"),
+  preco_antigo = c("R$ 45.99", "R$ 30.50", "R$ 80.00"),
+  preco_novo = c("R$ 32.1", "R$ 25.50", "R$ 72.00")
+)
+
+tabela_livros
+```
+
+```
+##       livro preco_antigo preco_novo
+## 1   Álgebra     R$ 45.99    R$ 32.1
+## 2 Geometria     R$ 30.50   R$ 25.50
+## 3   Análise     R$ 80.00   R$ 72.00
+```
+
+]
+
 .panel[.panel-name[Funções]
 - Estrutura geral: `nome_funcao &lt;- function(varivavel){condicao}`
 
@@ -282,10 +308,10 @@ pi_estimativa(2000)
 ]
 .pull-right[
 
-&lt;img src="02_slides_web-scraping_files/figure-html/unnamed-chunk-4-1.png" width="70%" style="display: block; margin: auto;" /&gt;
+&lt;img src="02_slides_web-scraping_files/figure-html/unnamed-chunk-5-1.png" width="70%" style="display: block; margin: auto;" /&gt;
 
 ```
-## [1] 3.116
+## [1] 3.208
 ```
 ]
 ]
@@ -338,7 +364,7 @@ background-size: contain
 ## Voltamos em ...
 
 .pull-right[
-<div class="countdown" id="timer_6229021d" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
+<div class="countdown" id="timer_62292417" style="right:0;bottom:0;padding:50px;font-size:4em;" data-audio="true" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">15</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 ]
@@ -350,6 +376,523 @@ class: inverse center middle
 
 &lt;img src="img/tidyverse.png" width="30%" style="display: block; margin: auto;" /&gt;
 
+---
+# Estabilidade vs Flexibilidade
+
+- `R` é uma **linguagem** e **ambiente** de programação estatística
+
+--
+
+- É um projeto amplo e muito bem estabelecido.
+
+--
+
+- Essa _estabilidade_ da linguagem `R` é um dos aspectos buscados por seus desenvolvedores.
+
+--
+
+- O `R` permite que usuários desenvolvam seus próprios pacotes: aí está sua _flexibilidade_.
+
+--
+
+.pull-left[
+### Por que criar um pacote em R?
+
+- Automatizar certos procedimentos usuais (repetitivos); 
+
+- Simplificar um conjunto de procedimentos que as funções do `R Base` disponibilizam;
+
+- Preferências individuais.
+]
+
+--
+
+.pull-right[
+### Qual é um pacote popular para análise de dados?
+
+&lt;img src="img/tidyverse.png" width="20%" style="display: block; margin: auto;" /&gt;
+]
+
+---
+name: tidyverse
+background-image: url(img/tidyverse.png)
+background-size: 90px
+background-position: 1020px 60px
+
+# O que é o Tidyverse?
+
+--
+
+&gt; O tidyverse é um conjunto de pacotes que funcionam em harmonia porque compartilham representações de dados comuns e design de API. 
+&gt; O pacote tidyverse é projetado para facilitar a instalação e o carregamento de pacotes principais do próprio tidyverse em um único comando.
+
+--
+
+- Ou seja, o Tidyverse é um pacote que _instala_ e _carrega_ outros pacotes.
+
+--
+
+.pull-left[
+- Ele instala cerca de 26 pacotes
+]
+
+--
+
+.pull-right[
+- Mas, só carrega 8 pacotes diretamente!
+]
+
+--
+
+.pull-left[
+&lt;img src="img/tabela-01.png" width="6243" /&gt;
+]
+
+--
+
+.pull-right[
+&lt;img src="img/tabela-02.png" width="6264" /&gt;
+
+]
+
+---
+# Aqueles que são carregados ...
+
+--
+
+.pull-left[
+&lt;img src="img/os-oitos.png" width="3076" /&gt;
+]
+
+--
+
+.pull-right[
+- [**readr**][LER]: para importação de dados (`.csv`, dentre outras variações);
+- [**stringr**][STR]: para _strings_, ou seja, manipulação de fragmentos de texto;
+- [**forcats**][CATS]: para manipular variáveis categóricas (qualitativas);  
+- [**tibble**][TIB]: uma melhora substancial nos antigos _data frames_;
+- [**tidyr**][TIDY]: para organização dos dados (pivotagem de dados);
+- [**dplyr**][DPLY]: para manipulação de dados (limpeza, transformação, etc.);
+- [**ggplot2**][GRAF]: para visualização de dados (graficos em alto nível);
+- [**purrr**][PURR]: para programação funcional.
+
+[LER]:  https://readr.tidyverse.org/
+[CATS]: https://forcats.tidyverse.org/
+[PIPE]: https://magrittr.tidyverse.org/
+[TIB]:  https://tibble.tidyverse.org/
+[TIDY]: https://tidyr.tidyverse.org/
+[STR]:  https://stringr.tidyverse.org/
+[DPLY]: https://dplyr.tidyverse.org/
+[GRAF]: https://ggplot2.tidyverse.org/
+[PURR]: https://purrr.tidyverse.org/
+]
+
+---
+## Ideia sobre as Tibbles
+
+--
+
+- O pacote `tibble` modifica a ideia dos `data frames` (do `R Base`)
+
+--
+
+- Evita coerções indesejadas de alguns elementos para vetor;
+
+--
+
+- Mostra, no console, de forma mais enxuta o conjunto de dados.
+
+--
+
+&lt;img src="img/df-dt.png" width="40%" style="display: block; margin: auto;" /&gt;
+
+
+---
+## Data Frame
+
+
+```
+##     Sepal.Length Sepal.Width Petal.Length Petal.Width    Species
+## 1            5.1         3.5          1.4         0.2     setosa
+## 2            4.9         3.0          1.4         0.2     setosa
+## 3            4.7         3.2          1.3         0.2     setosa
+## 4            4.6         3.1          1.5         0.2     setosa
+## 5            5.0         3.6          1.4         0.2     setosa
+## 6            5.4         3.9          1.7         0.4     setosa
+## 7            4.6         3.4          1.4         0.3     setosa
+## 8            5.0         3.4          1.5         0.2     setosa
+## 9            4.4         2.9          1.4         0.2     setosa
+## 10           4.9         3.1          1.5         0.1     setosa
+## 11           5.4         3.7          1.5         0.2     setosa
+## 12           4.8         3.4          1.6         0.2     setosa
+## 13           4.8         3.0          1.4         0.1     setosa
+## 14           4.3         3.0          1.1         0.1     setosa
+## 15           5.8         4.0          1.2         0.2     setosa
+## 16           5.7         4.4          1.5         0.4     setosa
+## 17           5.4         3.9          1.3         0.4     setosa
+## 18           5.1         3.5          1.4         0.3     setosa
+## 19           5.7         3.8          1.7         0.3     setosa
+## 20           5.1         3.8          1.5         0.3     setosa
+## 21           5.4         3.4          1.7         0.2     setosa
+## 22           5.1         3.7          1.5         0.4     setosa
+## 23           4.6         3.6          1.0         0.2     setosa
+## 24           5.1         3.3          1.7         0.5     setosa
+## 25           4.8         3.4          1.9         0.2     setosa
+## 26           5.0         3.0          1.6         0.2     setosa
+## 27           5.0         3.4          1.6         0.4     setosa
+## 28           5.2         3.5          1.5         0.2     setosa
+## 29           5.2         3.4          1.4         0.2     setosa
+## 30           4.7         3.2          1.6         0.2     setosa
+## 31           4.8         3.1          1.6         0.2     setosa
+## 32           5.4         3.4          1.5         0.4     setosa
+## 33           5.2         4.1          1.5         0.1     setosa
+## 34           5.5         4.2          1.4         0.2     setosa
+## 35           4.9         3.1          1.5         0.2     setosa
+## 36           5.0         3.2          1.2         0.2     setosa
+## 37           5.5         3.5          1.3         0.2     setosa
+## 38           4.9         3.6          1.4         0.1     setosa
+## 39           4.4         3.0          1.3         0.2     setosa
+## 40           5.1         3.4          1.5         0.2     setosa
+## 41           5.0         3.5          1.3         0.3     setosa
+## 42           4.5         2.3          1.3         0.3     setosa
+## 43           4.4         3.2          1.3         0.2     setosa
+## 44           5.0         3.5          1.6         0.6     setosa
+## 45           5.1         3.8          1.9         0.4     setosa
+## 46           4.8         3.0          1.4         0.3     setosa
+## 47           5.1         3.8          1.6         0.2     setosa
+## 48           4.6         3.2          1.4         0.2     setosa
+## 49           5.3         3.7          1.5         0.2     setosa
+## 50           5.0         3.3          1.4         0.2     setosa
+## 51           7.0         3.2          4.7         1.4 versicolor
+## 52           6.4         3.2          4.5         1.5 versicolor
+## 53           6.9         3.1          4.9         1.5 versicolor
+## 54           5.5         2.3          4.0         1.3 versicolor
+## 55           6.5         2.8          4.6         1.5 versicolor
+## 56           5.7         2.8          4.5         1.3 versicolor
+## 57           6.3         3.3          4.7         1.6 versicolor
+## 58           4.9         2.4          3.3         1.0 versicolor
+## 59           6.6         2.9          4.6         1.3 versicolor
+## 60           5.2         2.7          3.9         1.4 versicolor
+## 61           5.0         2.0          3.5         1.0 versicolor
+## 62           5.9         3.0          4.2         1.5 versicolor
+## 63           6.0         2.2          4.0         1.0 versicolor
+## 64           6.1         2.9          4.7         1.4 versicolor
+## 65           5.6         2.9          3.6         1.3 versicolor
+## 66           6.7         3.1          4.4         1.4 versicolor
+## 67           5.6         3.0          4.5         1.5 versicolor
+## 68           5.8         2.7          4.1         1.0 versicolor
+## 69           6.2         2.2          4.5         1.5 versicolor
+## 70           5.6         2.5          3.9         1.1 versicolor
+## 71           5.9         3.2          4.8         1.8 versicolor
+## 72           6.1         2.8          4.0         1.3 versicolor
+## 73           6.3         2.5          4.9         1.5 versicolor
+## 74           6.1         2.8          4.7         1.2 versicolor
+## 75           6.4         2.9          4.3         1.3 versicolor
+## 76           6.6         3.0          4.4         1.4 versicolor
+## 77           6.8         2.8          4.8         1.4 versicolor
+## 78           6.7         3.0          5.0         1.7 versicolor
+## 79           6.0         2.9          4.5         1.5 versicolor
+## 80           5.7         2.6          3.5         1.0 versicolor
+## 81           5.5         2.4          3.8         1.1 versicolor
+## 82           5.5         2.4          3.7         1.0 versicolor
+## 83           5.8         2.7          3.9         1.2 versicolor
+## 84           6.0         2.7          5.1         1.6 versicolor
+## 85           5.4         3.0          4.5         1.5 versicolor
+## 86           6.0         3.4          4.5         1.6 versicolor
+## 87           6.7         3.1          4.7         1.5 versicolor
+## 88           6.3         2.3          4.4         1.3 versicolor
+## 89           5.6         3.0          4.1         1.3 versicolor
+## 90           5.5         2.5          4.0         1.3 versicolor
+## 91           5.5         2.6          4.4         1.2 versicolor
+## 92           6.1         3.0          4.6         1.4 versicolor
+## 93           5.8         2.6          4.0         1.2 versicolor
+## 94           5.0         2.3          3.3         1.0 versicolor
+## 95           5.6         2.7          4.2         1.3 versicolor
+## 96           5.7         3.0          4.2         1.2 versicolor
+## 97           5.7         2.9          4.2         1.3 versicolor
+## 98           6.2         2.9          4.3         1.3 versicolor
+## 99           5.1         2.5          3.0         1.1 versicolor
+## 100          5.7         2.8          4.1         1.3 versicolor
+## 101          6.3         3.3          6.0         2.5  virginica
+## 102          5.8         2.7          5.1         1.9  virginica
+## 103          7.1         3.0          5.9         2.1  virginica
+## 104          6.3         2.9          5.6         1.8  virginica
+## 105          6.5         3.0          5.8         2.2  virginica
+## 106          7.6         3.0          6.6         2.1  virginica
+## 107          4.9         2.5          4.5         1.7  virginica
+## 108          7.3         2.9          6.3         1.8  virginica
+## 109          6.7         2.5          5.8         1.8  virginica
+## 110          7.2         3.6          6.1         2.5  virginica
+## 111          6.5         3.2          5.1         2.0  virginica
+## 112          6.4         2.7          5.3         1.9  virginica
+## 113          6.8         3.0          5.5         2.1  virginica
+## 114          5.7         2.5          5.0         2.0  virginica
+## 115          5.8         2.8          5.1         2.4  virginica
+## 116          6.4         3.2          5.3         2.3  virginica
+## 117          6.5         3.0          5.5         1.8  virginica
+## 118          7.7         3.8          6.7         2.2  virginica
+## 119          7.7         2.6          6.9         2.3  virginica
+## 120          6.0         2.2          5.0         1.5  virginica
+## 121          6.9         3.2          5.7         2.3  virginica
+## 122          5.6         2.8          4.9         2.0  virginica
+## 123          7.7         2.8          6.7         2.0  virginica
+## 124          6.3         2.7          4.9         1.8  virginica
+## 125          6.7         3.3          5.7         2.1  virginica
+## 126          7.2         3.2          6.0         1.8  virginica
+## 127          6.2         2.8          4.8         1.8  virginica
+## 128          6.1         3.0          4.9         1.8  virginica
+## 129          6.4         2.8          5.6         2.1  virginica
+## 130          7.2         3.0          5.8         1.6  virginica
+## 131          7.4         2.8          6.1         1.9  virginica
+## 132          7.9         3.8          6.4         2.0  virginica
+## 133          6.4         2.8          5.6         2.2  virginica
+## 134          6.3         2.8          5.1         1.5  virginica
+## 135          6.1         2.6          5.6         1.4  virginica
+## 136          7.7         3.0          6.1         2.3  virginica
+## 137          6.3         3.4          5.6         2.4  virginica
+## 138          6.4         3.1          5.5         1.8  virginica
+## 139          6.0         3.0          4.8         1.8  virginica
+## 140          6.9         3.1          5.4         2.1  virginica
+## 141          6.7         3.1          5.6         2.4  virginica
+## 142          6.9         3.1          5.1         2.3  virginica
+## 143          5.8         2.7          5.1         1.9  virginica
+## 144          6.8         3.2          5.9         2.3  virginica
+## 145          6.7         3.3          5.7         2.5  virginica
+## 146          6.7         3.0          5.2         2.3  virginica
+## 147          6.3         2.5          5.0         1.9  virginica
+## 148          6.5         3.0          5.2         2.0  virginica
+## 149          6.2         3.4          5.4         2.3  virginica
+## 150          5.9         3.0          5.1         1.8  virginica
+```
+
+---
+## Tibble
+
+
+```
+## # A tibble: 150 × 5
+##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+##           &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  
+##  1          5.1         3.5          1.4         0.2 setosa 
+##  2          4.9         3            1.4         0.2 setosa 
+##  3          4.7         3.2          1.3         0.2 setosa 
+##  4          4.6         3.1          1.5         0.2 setosa 
+##  5          5           3.6          1.4         0.2 setosa 
+##  6          5.4         3.9          1.7         0.4 setosa 
+##  7          4.6         3.4          1.4         0.3 setosa 
+##  8          5           3.4          1.5         0.2 setosa 
+##  9          4.4         2.9          1.4         0.2 setosa 
+## 10          4.9         3.1          1.5         0.1 setosa 
+## # … with 140 more rows
+```
+
+
+---
+## Ideia sobre o Pipe `%&gt;%` (ou `|&gt;`)
+
+--
+
+&lt;img src="img/tubos.jpg" width="50%" style="display: block; margin: auto;" /&gt;
+
+
+--
+
+- escrever o encadeamento do código como pensamos; 
+
+--
+
+- bem como escrevê-lo em etapas bem delimitadas, trazendo clareza em cada linha de código.
+
+---
+## Relembrando funções compostas
+
+.pull-left[
+- Lembram das funções compostas?
+`$$h(g(f(x)))$$`
+- Como pensamos?
+  1. Pegue o `\(x\)`, **então**
+  1. Avalie em `\(f\)`, **então**
+  1. Avalie `\(f(x)\)` em `\(g\)`, **então**
+  1. Avalie `\(g(f(x))\)` em `\(h()\)`
+  
+&lt;img src="img/diagram.png" width="50%" style="display: block; margin: auto;" /&gt;
+
+]
+
+--
+
+.pull-right[
+- Usando o ` %&gt;% ` ficaria assim:
+
+
+```r
+x %&gt;% f() %&gt;% g() %&gt;% h()
+```
+
+- Na prátrica, escrevemos assim:
+
+
+```r
+x %&gt;% 
+  f() %&gt;% 
+  g() %&gt;% 
+  h()
+```
+
+- Onde:
+  * `\(x\)` é um conjunto de dados no formato `tibble`
+  * `\(f, g\)` e `\(h\)` são algumas das funções dos pacotes do `tidyverse`.
+]
+
+---
+## Um exemplo 
+
+.pull-left[
+- Por exemplo, se `mpg` é nosso conjunto de dados, suponha que eu queira fazer os seguintes procedimentos:
+
+1. **filtrar** (_filter_) os carros que rodem acima de 15 milhas por galão e abaixo de 35 milhas por galão, na estrada (`hwy`);
+1. **modificar** (_mutate_) a variável `hwy` criando uma coluna, por nome `km`, que transforma milhas em km (1 mi = 1.60 km, aproximadamente);
+1. **selecionar** (_select_) essas milhas em km e a classe do carro (`class`)
+1. **Plotar** (_ggplot_) um bloxplot com transparência de 50% (`alpha = 0.5`), comparando essas classes de carros com as kilometragens espalhadas pelo gráfico (`geom_jilter`).
+]
+
+--
+
+.pull-right[
+- O código `R` ficaria assim:
+
+
+```r
+mpg |&gt; 
+  filter(hwy &gt; 15  &amp; hwy &lt; 30) |&gt; 
+  mutate(km = hwy * 1.60) |&gt; 
+  select(class, km) |&gt; 
+  ggplot(aes(class, km, fill = class)) +
+  geom_boxplot(alpha = 0.5) +
+  geom_jitter(aes(color = class))  
+```
+
+
+- Veja que podemos usar o pipe nativo (`|&gt;`) ou o do pacote `magrittr` (`%&gt;%`).
+- Usaremos o `%&gt;%` quando precisarmos passar algum argumento que não esteja na 
+primeira posição.
+]
+---
+- Apenas por curiosidade, o código anterior produz o que se segue.
+
+&lt;/br&gt;
+
+&lt;img src="02_slides_web-scraping_files/figure-html/unnamed-chunk-22-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+---
+## Por que usar o Tidyverse?
+
+### Alguns argumentos
+
+--
+
+.pull-left[
+
+- Filosofia de análise
+
+- Práticas que "tentam facilitar uma conversa entre um ser humano e um computador sobre dados"
+
+- Facilitam a usabilidade (principalmente para quem está começando)
+
+- Agregam no processamento dos dados.
+    + escrever para que humanos "comuns" (fora da área de programação) usem
+    + fazer que o computador processe adequadamente os dados.
+]
+
+--
+
+.pull-right[
+
+- Pilares da filosofia `tidy`:
+  
+  1. Reutilização de estruturas de dados já existentes;
+  2. Composição entre funções de forma simples, com o ` %&gt;% `;
+  3. Utilização da [Programação Funcional](https://pt.wikipedia.org/wiki/Programa%C3%A7%C3%A3o_funcional#:~:text=Em%20ci%C3%AAncia%20da%20computa%C3%A7%C3%A3o%2C%20programa%C3%A7%C3%A3o,mudan%C3%A7as%20no%20estado%20do%20programa.);
+  4. Feito para humanos
+  
+- Ao aprender a estrutura de um único pacote do `tidyverse`, isso facilitará o aprendizado de outros pacotes da mesma família;
+- Ajuda de uma grande comunidade de usuários do pacote
+]
+
+---
+class: inverse center middle
+
+# O que vamos usar nesse minicurso?
+
+---
+## rvest
+
+.pull-left[
+&lt;img src="img/logo_rvest.png" width="20%" style="display: block; margin: auto;" /&gt;
+
+- Possui as ferramentas essenciais ao Web Scraping
+- Usamos funções adequadas para extrair e selecionar os dados no HTML
+
+#### Observações!
+- Algumas vezes ocorrem erros de certificado, em sites
+- Para esses casos, **antes** do `read_html()`, usamos o seguinte código:
+
+
+```r
+httr::GET(httr::config(ssl_verifypeer = FALSE)) 
+```
+
+]
+
+.pull-right[
+
+### Funções que usaremos
+
+função | descrição
+------ | ---------
+`read_html()` | faz a leitura do html 
+`html_elements()` | seleciona os elementos CSS 
+`html_attr()` | seleciona os atributos
+`html_text2()`  | seleciona o texto do conteúdo
+`html_table()`  | seleciona umatabela
+
+]
+
+---
+## Vamos praticar ...
+
+.pull-left[
+
+#### No link [https://git.io/JMTRO](https://git.io/JMTRO), faça:
+
+- Raspar a tabela
+- Raspar os links
+- Raspas os nomes associados aos links
+
+]
+
+.pull-right[
+
+&lt;img src="img/site_print.png" width="80%" style="display: block; margin: auto;" /&gt;
+
+]
+
+---
+## Outros pacotes que usaremos
+
+função | descrição
+------ | ----------
+`readr::parse_double()` | converte caracteres em classe numérica
+`readr::write_csv(variavel, "caminho/nome.csv")` | forma um csv
+`dplyr::if_else(cond., caso-verdade, caso-contrário)` | estabelece condicional numa tibble
+`stringr::subset()` | seleciona um padrão, dentre os fraguementos
+`stringr::str_sub(string, start = ..., end = ...)` | de onde começar a extrair em cada linha
+`stringr::str_replace_all(string, "padrão", "subs.")` | substitui tudo em algum padrão
+`stringr::str_to_lower()` | torna tudo em minúsculas
+`stringr::str_trim()` | retira os espaços em brancos
+`stringi::stri_trans_general(nome_doido, "Latin-ASCII")` | retira toda acentuação
+`lubridate::dmy(possiveis_datas)` | converte em data (dd/mm/aa)
+`purrr::map_df(x, funcao)` | para iteração e produção de uma única tibble
 &lt;!----------------------------------------------------------------------------&gt;
 ---
 class: center, middle
