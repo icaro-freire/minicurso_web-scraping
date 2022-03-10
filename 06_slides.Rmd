@@ -1,0 +1,41 @@
+---
+title: "Slides das Apresetações"
+description: |
+  Obtenha os slides aqui
+date: "`r Sys.Date()`"
+output: 
+  distill::distill_article:
+    toc: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+xaringanExtra::use_panelset()
+
+```
+
+Selecione a aba correspondente ao dia desejado; e, acesse ao _slide_ da 
+apresentação.
+
+:::{.panelset}
+
+::: {.panel}
+### 1º Dia
+
+```{r embed-xaringan, echo=FALSE}
+xaringanExtra::embed_xaringan(
+  url = "https://icaro-freire.github.io/minicurso_web-scraping/01_slides_web-scraping.html", 
+  ratio = "4:3"
+)
+```
+
+:::
+
+::: {.panel}
+### 2º Dia
+:::
+
+::: {.panel}
+### 3º Dia
+:::
+:::
