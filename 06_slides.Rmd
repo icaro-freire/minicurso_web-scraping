@@ -14,7 +14,7 @@ xaringanExtra::use_panelset()
 
 ```
 
-Selecione a aba correspondente ao dia desejado; e, acesse ao _slide_ da 
+Selecione a aba correspondente ao dia desejado e acesse ao _slide_ da 
 apresentação.
 
 :::{.panelset}
@@ -22,7 +22,7 @@ apresentação.
 ::: {.panel}
 ### 1º Dia
 
-```{r embed-xaringan, echo=FALSE}
+```{r, echo=FALSE}
 xaringanExtra::embed_xaringan(
   url = "https://icaro-freire.github.io/minicurso_web-scraping/01_slides_web-scraping.html", 
   ratio = "4:3"
@@ -33,9 +33,25 @@ xaringanExtra::embed_xaringan(
 
 ::: {.panel}
 ### 2º Dia
+
+```{r, echo=FALSE}
+xaringanExtra::embed_xaringan(
+  url = "https://icaro-freire.github.io/minicurso_web-scraping/02_slides_web-scraping.html", 
+  ratio = "4:3"
+)
+```
+
 :::
 
 ::: {.panel}
 ### 3º Dia
+
+```{r, echo=FALSE}
+xaringanExtra::embed_xaringan(
+  url = "https://icaro-freire.github.io/minicurso_web-scraping/03_slides_web-scraping.html", 
+  ratio = "4:3"
+)
+```
+
 :::
 :::
