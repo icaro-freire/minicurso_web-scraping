@@ -25,6 +25,7 @@ navbar:
         - text: "Raspando o que desejamos!"
           href: 05_raspagem.html
     - text: "Slides"
+      href: 06_slides.html
     - text: "Sobre"
       href: about.html
     - icon: fab fa-github
