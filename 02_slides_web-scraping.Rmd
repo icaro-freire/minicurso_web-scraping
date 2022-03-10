@@ -751,7 +751,7 @@ função | descrição
 `stringr::str_trim()` | retira os espaços em brancos
 `stringi::stri_trans_general(nome_doido, "Latin-ASCII")` | retira toda acentuação
 `lubridate::dmy(possiveis_datas)` | converte em data (dd/mm/aa)
-`purrr::map_df(x, funcao)` | para iteração e produção de uma única tibble
+`purrr::map_df(x, funcao)` | para iteração com tibbles
 <!---------------------------------------------------------------------------->
 ---
 class: center, middle

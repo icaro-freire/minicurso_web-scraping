@@ -1,0 +1,100 @@
+---
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    chakra: libs/remark-latest.min.js
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+---
+class: middle, center
+background-image: url(img/capa3.png)
+background-size: cover
+
+---
+class: middle, right
+background-image: url(img/espera.gif)
+background-position: left
+background-size: contain
+
+## Começamos em ...
+
+.pull-right[
+```{r, echo=FALSE}
+countdown::countdown(
+  minutes = 5, 
+  seconds = 30, 
+#  left = 0, right = 0,
+  play_sound = TRUE,
+  padding = "50px", 
+#  margin = "20%",
+  font_size = "4em"
+)
+```
+]
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_duo_accent(
+  primary_color = "#1F487E", #"#061A40",
+  secondary_color = "#E98A15",
+  inverse_header_color = "#FFFFFF"
+)
+```
+
+```{r xaringanExtra, echo=FALSE}
+xaringanExtra::use_tile_view()   # para overview
+xaringanExtra::use_scribble()    # para fazer anotações
+xaringanExtra::use_panelset()    # para abas
+xaringanExtra::use_clipboard()   # botão para copiar código
+xaringanExtra::use_extra_styles(
+  hover_code_line = TRUE,         #<<
+  mute_unhighlighted_code = TRUE  #<<
+)
+xaringanExtra::use_progress_bar(color = "#0051BA", location = "top")
+```
+
+---
+class: middle, left
+background-image: url(img/check-list.gif)
+background-position: right
+background-size: contain
+
+## O que veremos hoje?
+
+- Algo sobre o `R`
+- Algo sobre o `tidyverse`
+
+---
+## Resumo dos pacotes que usaremos
+
+função | descrição
+------ | ----------
+`readr::parse_double()` | converte caracteres em classe numérica
+`readr::write_csv(variavel, "caminho/nome.csv")` | forma um csv
+`dplyr::if_else(cond., caso-verdade, caso-contrário)` | estabelece condicional numa tibble
+`stringr::subset()` | seleciona um padrão, dentre os fraguementos
+`stringr::str_sub(string, start = ..., end = ...)` | de onde começar a extrair em cada linha
+`stringr::str_replace_all(string, "padrão", "subs.")` | substitui tudo em algum padrão
+`stringr::str_to_lower()` | torna tudo em minúsculas
+`stringr::str_trim()` | retira os espaços em brancos
+`stringi::stri_trans_general(nome_doido, "Latin-ASCII")` | retira toda acentuação
+`lubridate::dmy(possiveis_datas)` | converte em data (dd/mm/aa)
+`purrr::map_df(x, funcao)` | para iteração com tibbles
+
+<!---------------------------------------------------------------------------->
+---
+class: center, middle
+
+# Obrigado!
+
+</br>
+Slides criados com </br> [`xaringan`](https://github.com/yihui/xaringan) e [`xaringanthemer`](https://github.com/gadenbuie/xaringanthemer).
+
+</br>
+</br>
+</br>
+<img src="img/rodape.png" width=600>
