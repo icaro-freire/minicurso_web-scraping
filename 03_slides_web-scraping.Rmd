@@ -69,6 +69,14 @@ background-size: contain
 - Algo sobre o `tidyverse`
 
 ---
+## Panorama do Tabalho
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics("img/ideia-raspagem.png")
+```
+
+
+---
 ## Resumo dos pacotes que usaremos
 
 função | descrição
