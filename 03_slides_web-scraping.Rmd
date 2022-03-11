@@ -65,8 +65,9 @@ background-size: contain
 
 ## O que veremos hoje?
 
-- Algo sobre o `R`
-- Algo sobre o `tidyverse`
+- Pacotes e funções para Web Scraping;
+- Ética no Web Scraping
+- Praticando o que aprendemos ...
 
 ---
 ## Panorama do Tabalho
@@ -74,6 +75,146 @@ background-size: contain
 ```{r, echo=FALSE, fig.align='center'}
 knitr::include_graphics("img/ideia-raspagem.png")
 ```
+
+---
+## Relembrando o rvest
+
+.panelset[
+
+.panel[.panel-name[`read_html()`]
+
+- Faz a leitura do site!
+- Estrutura: `rvest::read_html("url-do-site")`
+
+```{r}
+rvest::read_html("https://git.io/JMTRO")
+```
+.pull-left[
+- Forma indireta:
+
+```{r}
+# prepara url -------------------------
+url_teste <- "https://git.io/JMTRO"
+
+# salva a leitura do site -------------
+site_teste <- rvest::read_html(url_teste)
+```
+
+]
+
+.pull-right[
+- Se ocorrer erro de certificação
+
+```{r, eval=FALSE}
+site_teste <- url |> 
+  httr::GET(httr::config(ssl_verifypeer = FALSE)) |> 
+  rvest::read_html()
+```
+
+
+]
+
+]
+.panel[.panel-name[`html_elements()`]
+
+.pull-left[
+- Seleciona os elementos HTML ou CSS associados.
+- Use o SelectorGadget para auxiliar na escolha do CSS em questão
+- A escolha adequada do elemento CSS pode reduzir o tempo de processamento e 
+aliviar a memória de sua máquina!
+- Sempre verifique se a extração ocorreu como desejada!
+
+
+```{r}
+site_teste |> 
+  rvest::html_elements("a")
+```
+]
+
+.pull-right[
+nome          | descrição
+-----------   | ----------
+`h1` ... `h6` | seções
+`p`           | parágrafo
+`a`           | hyperlinks
+`table`       | tabela
+`ol`; `ul`    | listas
+`li`          | item de lista
+`b`           | negrito
+`i`           | itálico
+
+]
+
+]
+.panel[.panel-name[`html_attr()`]
+
+- Seleciona o atributo associado a alguma _tag_
+- Em nosso caso, um atributo associado à _tag_ `a` é a **referência do hyperlink**,
+chamada `href`
+  + ela possui um "nome" e um "valor"
+  + desejamos extrair o "valor", geralmente
+
+```{r, eval=FALSE}
+site_teste |> 
+  rvest::html_elements("a") |> 
+  rvest::html_attr("href")
+```
+
+```{r, eval=FALSE}
+https://www.mathunion.org/
+https://sbm.org.br/
+https://www.sbmac.org.br/
+```
+
+]
+.panel[.panel-name[`html_text2()`]
+- Seleciona o texto associado à _tag_, eliminando os espaços em branco, sempre que
+possível.
+
+```{r, eval=FALSE}
+site_teste |> 
+  rvest::html_elements("a") |> 
+  rvest::html_text2()
+```
+
+```{r, eval=FALSE}
+[1] "União Internaciional de Matemática (IMU)"                           
+[2] "Sociedade Brasileira de Matemática (SBM)"                           
+[3] "Sociedade Brasileira de Matemática Aplicada e Computacional (SBMAC)"
+```
+
+
+]
+.panel[.panel-name[`html_table()`]
+- Extrai uma tabela específica, se indicado o CSS;
+- Extrai TODAS as tabelas, armazenando-as numa lista; se não indicado o CSS
+- Se houver cabeçalho, usamos o argumento: `header = TRUE`
+
+```{r}
+site_teste |> 
+  rvest::html_table(header = TRUE)
+```
+
+]
+]
+
+--- 
+## Conhecendo o stringr
+
+.panelset[
+
+.panel[.panel0-name[]
+]
+.panel[.panel0-name[]
+]
+.panel[.panel0-name[]
+]
+.panel[.panel0-name[]
+]
+.panel[.panel0-name[]
+]
+
+]
 
 
 ---
