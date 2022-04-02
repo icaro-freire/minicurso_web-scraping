@@ -456,8 +456,32 @@ tabela_teste <- tibble::tibble(
 tabela_teste
 ```
 
+]
+
+.panel[.panel-name[`dplyr::filter`]
+- Como o próprio nome sugere, essa função do pacote `dplyr`, filtra o resultado 
+desejado, de acordo com alguma condição lógica.
+  + Sempre deve ser aplicada em `tibbles`.
+
+```{r}
+lista_desejada <- c(2, 7)
+
+tabela_comparada <- tibble::tibble(
+  nomes = LETTERS[1:10],
+  valores = seq(1, 10),
+)
+
+tabela_comparada |> 
+  dplyr::filter(valores %in% lista_desejada)
+
+
+
+```
+
+
 
 ]
+
 .panel[.panel-name[`purrr`]
 
 .pull-left[
@@ -543,6 +567,13 @@ knitr::include_graphics("img/fluxo-requi.png")
 - Uma forma de saber se o site permite a Raspagem de dados é acessar os **robots.txt**
   + [https://www.obm.org.br/robots.txt](https://www.obm.org.br/robots.txt)
 - Sempre devemos ler o site para obtermos as informações devidas!
+
+### Raspando páginas com educação: polite
+
+- O pacote `polite` possui duas funções que são essenciais para raspagem de dados em várias páginas:
+  + `bow()`; que acessa os robots.txt do site e cumpre as requisições nele contidas;
+  + `scrape()`; que faz a leitura do HTML, ou seja, substitui o `rvest::read_html()`
+  
 ]
 .pull-right[
 
